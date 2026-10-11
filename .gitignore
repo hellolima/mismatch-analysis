@@ -1,0 +1,18 @@
+# segredos
+.env
+
+# ambiente
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# dados gerados (reproduziveis pelo pipeline; capas e caches sao pesados)
+data/covers/
+data/cache/
+data/processed/
+outputs/
+
+# mantem as listas de seeds e o checkpoint/seed versionaveis ou nao, a seu criterio:
+# data/seeds/seed_gbooks_ptbr_v3.csv
+# data/seeds/queries_done.jsonl
