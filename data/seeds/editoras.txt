@@ -1,0 +1,42 @@
+# editoras.txt  --  formato:  nome | tipo
+# Usado em DOIS lugares:
+#   1) canal 'editora' do seed:  inpublisher:"<nome>" + termo auxiliar (--termo-editora, padrao "romance")
+#   2) ponte: infere Tipo_Editorial_Editora por EDICAO (substring normalizada de Editora_PT).
+#      E a covariavel da analise associativa 'editoras tradicionais x indie/autopublicacao' do POC II.
+# tipo: trad | trad_nicho | selfpub
+# Este e o canal que mede a lacuna do projeto: sem ele o seed so enxerga best-sellers de grandes selos.
+# CONFIRA os nomes reais no campo 'publisher' do Google Books (os rotulos variam: "Verus Editora", "Galera"...).
+# Entradas marcadas com (verificar) sao palpites; troque pelo que aparecer na sua coluna Editora.
+
+Verus | trad
+Harlequin | trad
+Buzz | trad
+# (verificar) 'Alt' apareceu 6x no seu teste; confirme o tipo desta editora
+Alt | trad_nicho
+Galera Record | trad
+Galera | trad
+Record | trad
+Arqueiro | trad
+Intrínseca | trad
+Faro Editorial | trad
+Paralela | trad
+Seguinte | trad
+HarperCollins | trad
+Planeta | trad
+Globo Livros | trad
+Rocco | trad
+Gutenberg | trad
+Suma | trad
+Novo Conceito | trad
+Universo dos Livros | trad
+Alta Novel | trad
+Pandorga | trad
+Butterfly | trad_nicho
+Charme | trad_nicho
+Editora Wish | trad_nicho
+Livros Ilimitados | trad_nicho
+Outro Planeta | trad
+Independently published | selfpub
+Clube de Autores | selfpub
+Amazon Digital Services | selfpub
+Kindle Direct Publishing | selfpub

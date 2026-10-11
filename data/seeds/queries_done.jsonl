@@ -1,0 +1,401 @@
+{"key": "autora|inauthor:\"Colleen Hoover\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:53:38"}
+{"key": "autora|inauthor:\"Ana Huang\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:53:41"}
+{"key": "autora|inauthor:\"Kandi Steiner\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:53:43"}
+{"key": "autora|inauthor:\"Mia Sheridan\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:53:45"}
+{"key": "autora|inauthor:\"Brittainy C. Cherry\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:53:47"}
+{"key": "termo|\"dark romance\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T13:53:49"}
+{"key": "termo|\"dark romance\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T13:53:52"}
+{"key": "termo|\"romance sombrio\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T13:53:54"}
+{"key": "termo|\"romance sombrio\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T13:53:56"}
+{"key": "termo|\"new adult\"|relevance", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T13:53:58"}
+{"key": "termo|\"new adult\"|newest", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T13:54:01"}
+{"key": "editora|inpublisher:\"Verus\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:02"}
+{"key": "editora|inpublisher:\"Verus\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:04"}
+{"key": "editora|inpublisher:\"Galera Record\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:05"}
+{"key": "editora|inpublisher:\"Galera Record\" romance|newest", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T13:54:07"}
+{"key": "editora|inpublisher:\"Galera\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:09"}
+{"key": "editora|inpublisher:\"Galera\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:10"}
+{"key": "editora|inpublisher:\"Record\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:11"}
+{"key": "editora|inpublisher:\"Record\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:13"}
+{"key": "editora|inpublisher:\"Arqueiro\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:15"}
+{"key": "editora|inpublisher:\"Arqueiro\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:21"}
+{"key": "editora|inpublisher:\"Intrínseca\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:23"}
+{"key": "editora|inpublisher:\"Intrínseca\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:25"}
+{"key": "editora|inpublisher:\"Faro Editorial\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:26"}
+{"key": "editora|inpublisher:\"Faro Editorial\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:29"}
+{"key": "editora|inpublisher:\"Paralela\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:30"}
+{"key": "editora|inpublisher:\"Paralela\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:32"}
+{"key": "editora|inpublisher:\"Seguinte\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:34"}
+{"key": "editora|inpublisher:\"Seguinte\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:35"}
+{"key": "editora|inpublisher:\"HarperCollins\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:37"}
+{"key": "editora|inpublisher:\"HarperCollins\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:38"}
+{"key": "editora|inpublisher:\"Planeta\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:39"}
+{"key": "editora|inpublisher:\"Planeta\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:41"}
+{"key": "editora|inpublisher:\"Globo Livros\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:43"}
+{"key": "editora|inpublisher:\"Globo Livros\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:45"}
+{"key": "editora|inpublisher:\"Rocco\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:47"}
+{"key": "editora|inpublisher:\"Rocco\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:49"}
+{"key": "editora|inpublisher:\"Gutenberg\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:51"}
+{"key": "editora|inpublisher:\"Gutenberg\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:53"}
+{"key": "editora|inpublisher:\"Suma\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:56"}
+{"key": "editora|inpublisher:\"Suma\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:58"}
+{"key": "editora|inpublisher:\"Novo Conceito\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:54:59"}
+{"key": "editora|inpublisher:\"Novo Conceito\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:02"}
+{"key": "editora|inpublisher:\"Universo dos Livros\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:03"}
+{"key": "editora|inpublisher:\"Universo dos Livros\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:05"}
+{"key": "editora|inpublisher:\"Alta Novel\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:06"}
+{"key": "editora|inpublisher:\"Alta Novel\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:09"}
+{"key": "editora|inpublisher:\"Pandorga\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:10"}
+{"key": "editora|inpublisher:\"Pandorga\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:12"}
+{"key": "editora|inpublisher:\"Butterfly\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:13"}
+{"key": "editora|inpublisher:\"Butterfly\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:15"}
+{"key": "editora|inpublisher:\"Charme\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:17"}
+{"key": "editora|inpublisher:\"Charme\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:18"}
+{"key": "editora|inpublisher:\"Editora Wish\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:20"}
+{"key": "editora|inpublisher:\"Editora Wish\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:22"}
+{"key": "editora|inpublisher:\"Livros Ilimitados\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:23"}
+{"key": "editora|inpublisher:\"Livros Ilimitados\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:25"}
+{"key": "editora|inpublisher:\"Outro Planeta\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:26"}
+{"key": "editora|inpublisher:\"Outro Planeta\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T13:55:28"}
+{"key": "autora|inauthor:\"Renee Carlino\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:19"}
+{"key": "autora|inauthor:\"Tammara Webber\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:21"}
+{"key": "autora|inauthor:\"Abbi Glines\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:22"}
+{"key": "autora|inauthor:\"Samantha Young\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:25"}
+{"key": "autora|inauthor:\"Katja Millay\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:26"}
+{"key": "autora|inauthor:\"Jamie McGuire\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:28"}
+{"key": "autora|inauthor:\"K.A. Tucker\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:29"}
+{"key": "autora|inauthor:\"Jessica Sorensen\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:31"}
+{"key": "autora|inauthor:\"Katie McGarry\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:32"}
+{"key": "autora|inauthor:\"Cora Carmack\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:34"}
+{"key": "autora|inauthor:\"Molly McAdams\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:41"}
+{"key": "autora|inauthor:\"Gail McHugh\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:43"}
+{"key": "autora|inauthor:\"S.C. Stephens\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:45"}
+{"key": "autora|inauthor:\"Lexi Ryan\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:47"}
+{"key": "autora|inauthor:\"Monica Murphy\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:48"}
+{"key": "autora|inauthor:\"Siobhan Davis\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:50"}
+{"key": "autora|inauthor:\"Kirsty Moseley\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:53"}
+{"key": "autora|inauthor:\"Rachel Van Dyken\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:55"}
+{"key": "autora|inauthor:\"Jay Crownover\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:56"}
+{"key": "autora|inauthor:\"J. Sterling\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:05:58"}
+{"key": "autora|inauthor:\"Erin Watt\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:04"}
+{"key": "autora|inauthor:\"Ilsa Madden-Mills\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:06"}
+{"key": "autora|inauthor:\"Jessica Park\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:08"}
+{"key": "autora|inauthor:\"Lex Martin\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:10"}
+{"key": "autora|inauthor:\"Lisa Desrochers\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:13"}
+{"key": "termo|\"romance erótico\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T14:06:14"}
+{"key": "termo|\"romance erótico\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T14:06:16"}
+{"key": "termo|\"romantasia\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:19"}
+{"key": "termo|\"romantasia\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:21"}
+{"key": "termo|\"romantasy\"|relevance", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T14:06:23"}
+{"key": "termo|\"romantasy\"|newest", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T14:06:25"}
+{"key": "termo|\"comédia romântica\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T14:06:27"}
+{"key": "termo|\"comédia romântica\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T14:06:29"}
+{"key": "termo|\"romance universitário\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:31"}
+{"key": "termo|\"romance universitário\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:33"}
+{"key": "termo|\"romance de máfia\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:36"}
+{"key": "termo|\"romance de máfia\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:39"}
+{"key": "termo|\"romance esportivo\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:41"}
+{"key": "termo|\"romance esportivo\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:45"}
+{"key": "editora|inpublisher:\"Independently published\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:46"}
+{"key": "editora|inpublisher:\"Independently published\" romance|newest", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T14:06:49"}
+{"key": "editora|inpublisher:\"Clube de Autores\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:51"}
+{"key": "editora|inpublisher:\"Clube de Autores\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:53"}
+{"key": "editora|inpublisher:\"Amazon Digital Services\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:56"}
+{"key": "editora|inpublisher:\"Amazon Digital Services\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:06:58"}
+{"key": "editora|inpublisher:\"Kindle Direct Publishing\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:00"}
+{"key": "editora|inpublisher:\"Kindle Direct Publishing\" romance|newest", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T14:07:02"}
+{"key": "titulo|intitle:\"Haunting Adeline\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:05"}
+{"key": "titulo|intitle:\"Hunting Adeline\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:07"}
+{"key": "titulo|intitle:\"Verity\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:09"}
+{"key": "titulo|intitle:\"É assim que acaba\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:11"}
+{"key": "titulo|intitle:\"Quarta Asa\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:12"}
+{"key": "titulo|intitle:\"Corte de espinhos e rosas\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:14"}
+{"key": "titulo|intitle:\"A hipótese do amor\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:16"}
+{"key": "titulo|intitle:\"Belo desastre\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:18"}
+{"key": "titulo|intitle:\"Amor corrompido\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:20"}
+{"key": "titulo|intitle:\"Vermelho, branco e sangue azul\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:22"}
+{"key": "titulo|intitle:\"Acorda pra vida, Chloe Brown\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:24"}
+{"key": "titulo|intitle:\"Ugly Love\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:07:26"}
+{"key": "termo|\"dark romance\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T14:07:28"}
+{"key": "termo|\"dark romance\"|relevance", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T14:07:30"}
+{"key": "termo|\"dark romance\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T14:07:33"}
+{"key": "termo|\"dark romance\"|newest", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T14:07:34"}
+{"key": "termo|\"romance sombrio\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T14:07:36"}
+{"key": "termo|\"romance sombrio\"|relevance", "next_page": 3, "complete": true, "motivo": "max_paginas", "ts": "2026-10-04T14:07:38"}
+{"key": "termo|\"romance sombrio\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T14:07:40"}
+{"key": "termo|\"romance sombrio\"|newest", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T14:07:42"}
+{"key": "termo|\"romance erótico\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T14:07:45"}
+{"key": "termo|\"romance erótico\"|relevance", "next_page": 3, "complete": true, "motivo": "max_paginas", "ts": "2026-10-04T14:07:47"}
+{"key": "termo|\"romance erótico\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T14:07:49"}
+{"key": "termo|\"romance erótico\"|newest", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T14:07:51"}
+{"key": "termo|\"comédia romântica\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T14:07:54"}
+{"key": "termo|\"comédia romântica\"|relevance", "next_page": 3, "complete": true, "motivo": "max_paginas", "ts": "2026-10-04T14:07:55"}
+{"key": "termo|\"comédia romântica\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T14:07:57"}
+{"key": "termo|\"comédia romântica\"|newest", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T14:07:59"}
+{"key": "editora|inpublisher:\"Harlequin\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:21:27"}
+{"key": "editora|inpublisher:\"Harlequin\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:21:29"}
+{"key": "editora|inpublisher:\"Buzz\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:21:31"}
+{"key": "editora|inpublisher:\"Buzz\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:21:32"}
+{"key": "editora|inpublisher:\"Alt\" romance|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:21:34"}
+{"key": "editora|inpublisher:\"Alt\" romance|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T14:21:36"}
+{"key": "autora|inauthor:\"Emery Rose\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:20"}
+{"key": "autora|inauthor:\"Penelope Douglas\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:22"}
+{"key": "autora|inauthor:\"L. J. Shen\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:24"}
+{"key": "autora|inauthor:\"Tarryn Fisher\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:26"}
+{"key": "autora|inauthor:\"Kate Stewart\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:28"}
+{"key": "autora|inauthor:\"Tillie Cole\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:30"}
+{"key": "autora|inauthor:\"J.M. Darhower\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:32"}
+{"key": "autora|inauthor:\"Shantel Tessier\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:34"}
+{"key": "autora|inauthor:\"Rina Kent\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:36"}
+{"key": "autora|inauthor:\"H.D. Carlton\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:39"}
+{"key": "autora|inauthor:\"C.M. Stunich\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:41"}
+{"key": "autora|inauthor:\"Amo Jones\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:43"}
+{"key": "autora|inauthor:\"K. Webster\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:45"}
+{"key": "autora|inauthor:\"J.T. Geissinger\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:46"}
+{"key": "autora|inauthor:\"Sam Mariano\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:48"}
+{"key": "autora|inauthor:\"Saffron A. Kent\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:50"}
+{"key": "autora|inauthor:\"Alessandra Torre\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:51"}
+{"key": "autora|inauthor:\"Cora Reilly\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:53"}
+{"key": "autora|inauthor:\"Debra Anastasia\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:55"}
+{"key": "autora|inauthor:\"Sylvia Day\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:57"}
+{"key": "autora|inauthor:\"Jodi Ellen Malpas\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:10:59"}
+{"key": "autora|inauthor:\"Ali Hazelwood\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:02"}
+{"key": "autora|inauthor:\"Abby Jimenez\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:04"}
+{"key": "autora|inauthor:\"Tessa Bailey\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:05"}
+{"key": "autora|inauthor:\"Lauren Asher\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:06"}
+{"key": "autora|inauthor:\"Emily Henry\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:08"}
+{"key": "autora|inauthor:\"Christina Lauren\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:10"}
+{"key": "autora|inauthor:\"Sally Thorne\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:13"}
+{"key": "autora|inauthor:\"Helen Hoang\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:14"}
+{"key": "autora|inauthor:\"Mariana Zapata\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:15"}
+{"key": "autora|inauthor:\"Talia Hibbert\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:17"}
+{"key": "autora|inauthor:\"Beth O'Leary\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:19"}
+{"key": "autora|inauthor:\"Casey McQuiston\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:21"}
+{"key": "autora|inauthor:\"Lucy Score\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:22"}
+{"key": "autora|inauthor:\"Meghan Quinn\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:25"}
+{"key": "autora|inauthor:\"Jasmine Guillory\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:27"}
+{"key": "autora|inauthor:\"Lynn Painter\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:29"}
+{"key": "autora|inauthor:\"Sarah Adams\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:30"}
+{"key": "autora|inauthor:\"Stephanie Archer\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:31"}
+{"key": "autora|inauthor:\"Chloe Liese\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:33"}
+{"key": "autora|inauthor:\"B.K. Borison\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:35"}
+{"key": "autora|inauthor:\"Rachel Lynn Solomon\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:37"}
+{"key": "autora|inauthor:\"R.S. Grey\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:39"}
+{"key": "autora|inauthor:\"Sophia Money-Coutts\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:41"}
+{"key": "autora|inauthor:\"Jenn Bennett\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:43"}
+{"key": "autora|inauthor:\"Kelly Siskind\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:45"}
+{"key": "autora|inauthor:\"Lizzy Dent\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:46"}
+{"key": "autora|inauthor:\"Pippa Grant\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:47"}
+{"key": "autora|inauthor:\"Elle Kennedy\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:50"}
+{"key": "autora|inauthor:\"Hannah Grace\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:52"}
+{"key": "autora|inauthor:\"Liz Tomforde\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:53"}
+{"key": "autora|inauthor:\"Kennedy Ryan\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:55"}
+{"key": "autora|inauthor:\"Kristen Callihan\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:57"}
+{"key": "autora|inauthor:\"Vi Keeland\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:58"}
+{"key": "autora|inauthor:\"Penelope Ward\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:11:59"}
+{"key": "autora|inauthor:\"Elsie Silver\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:01"}
+{"key": "autora|inauthor:\"Devney Perry\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:02"}
+{"key": "autora|inauthor:\"T.L. Swan\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:04"}
+{"key": "autora|inauthor:\"Kendall Ryan\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:06"}
+{"key": "autora|inauthor:\"Carly Phillips\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:08"}
+{"key": "autora|inauthor:\"Amy Harmon\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:10"}
+{"key": "autora|inauthor:\"Corinne Michaels\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:12"}
+{"key": "autora|inauthor:\"K. Bromberg\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:14"}
+{"key": "autora|inauthor:\"Karina Halle\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:16"}
+{"key": "autora|inauthor:\"Melanie Harlow\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:18"}
+{"key": "autora|inauthor:\"Samantha Towle\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:20"}
+{"key": "autora|inauthor:\"Rebecca Yarros\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:22"}
+{"key": "autora|inauthor:\"Sarah J. Maas\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:24"}
+{"key": "autora|inauthor:\"Jennifer L. Armentrout\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:25"}
+{"key": "autora|inauthor:\"Rachel Gillig\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:27"}
+{"key": "autora|inauthor:\"Carissa Broadbent\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:29"}
+{"key": "autora|inauthor:\"Tracy Wolff\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:31"}
+{"key": "autora|inauthor:\"Laura Thalassa\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:33"}
+{"key": "autora|inauthor:\"Raven Kennedy\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:35"}
+{"key": "autora|inauthor:\"K.F. Breene\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:37"}
+{"key": "autora|inauthor:\"Carina Rissi\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:42"}
+{"key": "autora|inauthor:\"Ray Tavares\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:44"}
+{"key": "autora|inauthor:\"Babi A. Sette\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:46"}
+{"key": "autora|inauthor:\"L.C. Rosenfield\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:47"}
+{"key": "autora|inauthor:\"A.C. Meyer\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:49"}
+{"key": "autora|inauthor:\"Frini Georgakopoulos\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:50"}
+{"key": "autora|inauthor:\"Tamires Barcellos\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:52"}
+{"key": "autora|inauthor:\"Iris Figueiredo\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:54"}
+{"key": "autora|inauthor:\"Vanessa Martinelli\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:55"}
+{"key": "autora|inauthor:\"Lola Salgado\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:57"}
+{"key": "autora|inauthor:\"Clarisse Corrêa\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:12:59"}
+{"key": "autora|inauthor:\"Pam Gonçalves\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:01"}
+{"key": "autora|inauthor:\"Lygia Barbiere\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:02"}
+{"key": "autora|inauthor:\"Laura Pozzabon\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:04"}
+{"key": "autora|inauthor:\"Mariana de Assis\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:06"}
+{"key": "autora|inauthor:\"Camila Moreira\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:07"}
+{"key": "autora|inauthor:\"Catharina Maura\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:08"}
+{"key": "autora|inauthor:\"Nicholas Sparks\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:11"}
+{"key": "autora|inauthor:\"Jojo Moyes\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:13"}
+{"key": "autora|inauthor:\"Mhairi McFarlane\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:15"}
+{"key": "autora|inauthor:\"Katherine Center\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:17"}
+{"key": "autora|inauthor:\"Harriet Evans\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:19"}
+{"key": "autora|inauthor:\"Tiffanie DeBartolo\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:21"}
+{"key": "autora|inauthor:\"Alice Oseman\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:23"}
+{"key": "autora|inauthor:\"Becky Albertalli\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:25"}
+{"key": "autora|inauthor:\"Axie Oh\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:27"}
+{"key": "autora|inauthor:\"Paula Pimenta\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:29"}
+{"key": "autora|inauthor:\"Babi Dewet\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:31"}
+{"key": "autora|inauthor:\"Kerri Maniscalco\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:33"}
+{"key": "autora|inauthor:\"Jay Kristoff\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:36"}
+{"key": "autora|inauthor:\"M. O'Keefe\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:37"}
+{"key": "autora|inauthor:\"Courtney Cole\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:39"}
+{"key": "autora|inauthor:\"A.L. Jackson\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:41"}
+{"key": "autora|inauthor:\"Avery Keelan\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:43"}
+{"key": "autora|inauthor:\"B.J. Harvey\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:45"}
+{"key": "autora|inauthor:\"Bella Jewel\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:46"}
+{"key": "autora|inauthor:\"Billie Bloom\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:48"}
+{"key": "autora|inauthor:\"Brooke Montgomery\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:51"}
+{"key": "autora|inauthor:\"C.W. Farnsworth\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:53"}
+{"key": "autora|inauthor:\"Carrie Aronstein\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:55"}
+{"key": "autora|inauthor:\"Devon Daniels\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:57"}
+{"key": "autora|inauthor:\"Donna Alam\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:58"}
+{"key": "autora|inauthor:\"Ella Maise\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:13:59"}
+{"key": "autora|inauthor:\"J. L. Perry\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:01"}
+{"key": "autora|inauthor:\"J.A. Low\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:03"}
+{"key": "autora|inauthor:\"Jane Harvey-Berrick\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:04"}
+{"key": "autora|inauthor:\"Jewel E. Ann\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:06"}
+{"key": "autora|inauthor:\"K.L. Walther\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:17"}
+{"key": "autora|inauthor:\"Kathleen Brooks\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:19"}
+{"key": "autora|inauthor:\"Kensie Stewart\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:24"}
+{"key": "autora|inauthor:\"L.A. Cotton\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:26"}
+{"key": "autora|inauthor:\"Laura Pavlo\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:27"}
+{"key": "autora|inauthor:\"M. Robinson\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:29"}
+{"key": "autora|inauthor:\"Mariah Dietz\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:31"}
+{"key": "autora|inauthor:\"R.J. Lewis\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:32"}
+{"key": "autora|inauthor:\"S.J. Sylvis\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:34"}
+{"key": "autora|inauthor:\"S.M. Shade\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:36"}
+{"key": "autora|inauthor:\"T.K. Leigh\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:38"}
+{"key": "autora|inauthor:\"Tearne Calder\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:40"}
+{"key": "autora|inauthor:\"Winter Renshaw\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:42"}
+{"key": "autora|inauthor:\"Sophie Lark\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:43"}
+{"key": "autora|inauthor:\"Katee Robert\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:46"}
+{"key": "autora|inauthor:\"Scarlett St. Clair\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:47"}
+{"key": "autora|inauthor:\"Lauren Roberts\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:49"}
+{"key": "autora|inauthor:\"Callie Hart\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:51"}
+{"key": "autora|inauthor:\"Jessa Hastings\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:52"}
+{"key": "autora|inauthor:\"Rachel Reid\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:55"}
+{"key": "autora|inauthor:\"Sierra Simone\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:14:58"}
+{"key": "autora|inauthor:\"Emily McIntire\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:00"}
+{"key": "autora|inauthor:\"Brynne Weaver\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:02"}
+{"key": "termo|\"romance de hóquei\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:04"}
+{"key": "termo|\"romance de hóquei\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:06"}
+{"key": "termo|\"romance de escritório\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:09"}
+{"key": "termo|\"romance de escritório\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:10"}
+{"key": "termo|\"inimigos para amantes\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:12"}
+{"key": "termo|\"inimigos para amantes\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:18"}
+{"key": "termo|\"de inimigos a amantes\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:20"}
+{"key": "termo|\"de inimigos a amantes\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:22"}
+{"key": "termo|\"amigos para amantes\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:24"}
+{"key": "termo|\"amigos para amantes\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:25"}
+{"key": "termo|\"enemies to lovers\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:26"}
+{"key": "termo|\"enemies to lovers\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:29"}
+{"key": "termo|\"friends to lovers\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:30"}
+{"key": "termo|\"friends to lovers\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:32"}
+{"key": "termo|\"namoro de mentira\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:34"}
+{"key": "termo|\"namoro de mentira\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:41"}
+{"key": "termo|\"fake dating\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:43"}
+{"key": "termo|\"fake dating\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:44"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:15:46"}
+{"key": "termo|\"casamento arranjado\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:15:49"}
+{"key": "termo|\"diferença de idade\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:15:50"}
+{"key": "termo|\"diferença de idade\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:15:52"}
+{"key": "termo|\"slow burn\"|relevance", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T15:15:54"}
+{"key": "termo|\"slow burn\"|newest", "next_page": 1, "complete": true, "motivo": "sondagem_zero", "ts": "2026-10-04T15:15:56"}
+{"key": "termo|\"grumpy sunshine\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:15:58"}
+{"key": "termo|\"grumpy sunshine\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:00"}
+{"key": "termo|\"romance proibido\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:02"}
+{"key": "termo|\"romance proibido\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:04"}
+{"key": "termo|\"segunda chance\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:07"}
+{"key": "termo|\"segunda chance\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:09"}
+{"key": "termo|\"romance cão e gato\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:11"}
+{"key": "termo|\"romance cão e gato\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:12"}
+{"key": "termo|\"sucesso no TikTok\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:14"}
+{"key": "termo|\"sucesso no TikTok\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:16"}
+{"key": "termo|\"fenômeno do BookTok\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:18"}
+{"key": "termo|\"fenômeno do BookTok\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:19"}
+{"key": "termo|\"viralizou no TikTok\"|relevance", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:22"}
+{"key": "termo|\"viralizou no TikTok\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:24"}
+{"key": "termo|\"BookTok\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:25"}
+{"key": "termo|\"BookTok\"|newest", "next_page": 1, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:16:27"}
+{"key": "termo|\"cenas explícitas\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:29"}
+{"key": "termo|\"cenas explícitas\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:34"}
+{"key": "termo|\"conteúdo adulto\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:36"}
+{"key": "termo|\"conteúdo adulto\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:38"}
+{"key": "termo|\"maiores de 18 anos\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:40"}
+{"key": "termo|\"maiores de 18 anos\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:42"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:44"}
+{"key": "termo|\"gatilhos\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:46"}
+{"key": "termo|\"temas sensíveis\"|relevance", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:49"}
+{"key": "termo|\"temas sensíveis\"|newest", "next_page": 1, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:51"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:54"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 3, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:56"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 4, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:58"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 5, "complete": false, "motivo": "", "ts": "2026-10-04T15:16:59"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 6, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:05"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 7, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:07"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 8, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:09"}
+{"key": "termo|\"casamento arranjado\"|relevance", "next_page": 9, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:17:11"}
+{"key": "termo|\"casamento arranjado\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:13"}
+{"key": "termo|\"casamento arranjado\"|newest", "next_page": 3, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:15"}
+{"key": "termo|\"casamento arranjado\"|newest", "next_page": 4, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:17:17"}
+{"key": "termo|\"diferença de idade\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:19"}
+{"key": "termo|\"diferença de idade\"|relevance", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:17:24"}
+{"key": "termo|\"diferença de idade\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:26"}
+{"key": "termo|\"diferença de idade\"|newest", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:17:29"}
+{"key": "termo|\"romance proibido\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:35"}
+{"key": "termo|\"romance proibido\"|relevance", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:17:37"}
+{"key": "termo|\"romance proibido\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:38"}
+{"key": "termo|\"romance proibido\"|newest", "next_page": 2, "complete": false, "motivo": "erro_http", "ts": "2026-10-04T15:17:51"}
+{"key": "termo|\"segunda chance\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:52"}
+{"key": "termo|\"segunda chance\"|relevance", "next_page": 3, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:56"}
+{"key": "termo|\"segunda chance\"|relevance", "next_page": 4, "complete": false, "motivo": "", "ts": "2026-10-04T15:17:58"}
+{"key": "termo|\"segunda chance\"|relevance", "next_page": 5, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:00"}
+{"key": "termo|\"segunda chance\"|relevance", "next_page": 6, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:02"}
+{"key": "termo|\"segunda chance\"|relevance", "next_page": 7, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:03"}
+{"key": "termo|\"segunda chance\"|relevance", "next_page": 8, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:18:05"}
+{"key": "termo|\"segunda chance\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:06"}
+{"key": "termo|\"segunda chance\"|newest", "next_page": 3, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:08"}
+{"key": "termo|\"segunda chance\"|newest", "next_page": 4, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:18:10"}
+{"key": "termo|\"BookTok\"|relevance", "next_page": 2, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:18:12"}
+{"key": "termo|\"cenas explícitas\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:14"}
+{"key": "termo|\"cenas explícitas\"|relevance", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:18:16"}
+{"key": "termo|\"cenas explícitas\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:18"}
+{"key": "termo|\"cenas explícitas\"|newest", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:18:20"}
+{"key": "termo|\"conteúdo adulto\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:22"}
+{"key": "termo|\"conteúdo adulto\"|relevance", "next_page": 3, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:24"}
+{"key": "termo|\"conteúdo adulto\"|relevance", "next_page": 4, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:26"}
+{"key": "termo|\"conteúdo adulto\"|relevance", "next_page": 5, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:28"}
+{"key": "termo|\"conteúdo adulto\"|relevance", "next_page": 6, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:18:30"}
+{"key": "termo|\"conteúdo adulto\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:32"}
+{"key": "termo|\"conteúdo adulto\"|newest", "next_page": 3, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:18:34"}
+{"key": "termo|\"maiores de 18 anos\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:36"}
+{"key": "termo|\"maiores de 18 anos\"|relevance", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:18:37"}
+{"key": "termo|\"maiores de 18 anos\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:40"}
+{"key": "termo|\"maiores de 18 anos\"|newest", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:18:42"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:43"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 3, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:46"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 4, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:49"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 5, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:52"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 6, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:53"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 7, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:56"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 8, "complete": false, "motivo": "", "ts": "2026-10-04T15:18:58"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 9, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:01"}
+{"key": "termo|\"gatilhos\"|relevance", "next_page": 10, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:19:03"}
+{"key": "termo|\"gatilhos\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:05"}
+{"key": "termo|\"gatilhos\"|newest", "next_page": 3, "complete": true, "motivo": "saturou", "ts": "2026-10-04T15:19:07"}
+{"key": "termo|\"temas sensíveis\"|relevance", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:09"}
+{"key": "termo|\"temas sensíveis\"|relevance", "next_page": 3, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:10"}
+{"key": "termo|\"temas sensíveis\"|relevance", "next_page": 4, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:12"}
+{"key": "termo|\"temas sensíveis\"|relevance", "next_page": 5, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:13"}
+{"key": "termo|\"temas sensíveis\"|relevance", "next_page": 6, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:15"}
+{"key": "termo|\"temas sensíveis\"|relevance", "next_page": 7, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:18"}
+{"key": "termo|\"temas sensíveis\"|relevance", "next_page": 8, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:19:21"}
+{"key": "termo|\"temas sensíveis\"|newest", "next_page": 2, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:23"}
+{"key": "termo|\"temas sensíveis\"|newest", "next_page": 3, "complete": false, "motivo": "", "ts": "2026-10-04T15:19:25"}
+{"key": "termo|\"temas sensíveis\"|newest", "next_page": 4, "complete": true, "motivo": "fim_resultados", "ts": "2026-10-04T15:19:27"}

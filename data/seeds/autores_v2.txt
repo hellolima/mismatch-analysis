@@ -1,0 +1,209 @@
+# autores_v2.txt  --  formato:  nome | estrato | origem | tipo_editorial
+# Separador: '|' (ou TAB). Linhas com '#' sao comentarios.
+#
+# estrato  = covariavel da analise (NAO e rotulo de spice). Valores:
+#   new_adult, dark, romcom, esportivo, contemporaneo, romantasia, nacional,
+#   indie_cauda, controle_wf, controle_ya, controle_fantasia
+#   Os "controle_*" sao CONTROLES NEGATIVOS intencionais: capa fofa + baixo spice
+#   (celula 'concordante' do 2x2 do score de discrepancia). Nao remover; analisar a parte.
+# origem   = EN | BR
+# tipo_editorial = '?' de proposito: o mesmo autor sai por editora grande e por selo indie.
+#   O tipo e inferido por EDICAO a partir de Editora_PT x editoras.txt (script v3, etapa ponte).
+#
+# A sondagem de 1 pagina no script v3 descarta sozinha quem nao tem edicao BR (rendimento zero).
+# Removido: Alison Espach (ficcao literaria). Corrigido: Jane Harvey-Berrick.
+
+# ---------------- new adult ----------------
+Colleen Hoover | new_adult | EN | ?
+Ana Huang | new_adult | EN | ?
+Kandi Steiner | new_adult | EN | ?
+Mia Sheridan | new_adult | EN | ?
+Brittainy C. Cherry | new_adult | EN | ?
+Renee Carlino | new_adult | EN | ?
+Tammara Webber | new_adult | EN | ?
+Abbi Glines | new_adult | EN | ?
+Samantha Young | new_adult | EN | ?
+Katja Millay | new_adult | EN | ?
+Jamie McGuire | new_adult | EN | ?
+K.A. Tucker | new_adult | EN | ?
+Jessica Sorensen | new_adult | EN | ?
+Katie McGarry | new_adult | EN | ?
+Cora Carmack | new_adult | EN | ?
+Molly McAdams | new_adult | EN | ?
+Gail McHugh | new_adult | EN | ?
+S.C. Stephens | new_adult | EN | ?
+Lexi Ryan | new_adult | EN | ?
+Monica Murphy | new_adult | EN | ?
+Siobhan Davis | new_adult | EN | ?
+Kirsty Moseley | new_adult | EN | ?
+Rachel Van Dyken | new_adult | EN | ?
+Jay Crownover | new_adult | EN | ?
+J. Sterling | new_adult | EN | ?
+Erin Watt | new_adult | EN | ?
+Ilsa Madden-Mills | new_adult | EN | ?
+Jessica Park | new_adult | EN | ?
+Lex Martin | new_adult | EN | ?
+Lisa Desrochers | new_adult | EN | ?
+Emery Rose | new_adult | EN | ?
+
+# ---------------- dark / erotico ----------------
+Penelope Douglas | dark | EN | ?
+L. J. Shen | dark | EN | ?
+Tarryn Fisher | dark | EN | ?
+Kate Stewart | dark | EN | ?
+Tillie Cole | dark | EN | ?
+J.M. Darhower | dark | EN | ?
+Shantel Tessier | dark | EN | ?
+Rina Kent | dark | EN | ?
+H.D. Carlton | dark | EN | ?
+C.M. Stunich | dark | EN | ?
+Amo Jones | dark | EN | ?
+K. Webster | dark | EN | ?
+J.T. Geissinger | dark | EN | ?
+Sam Mariano | dark | EN | ?
+Saffron A. Kent | dark | EN | ?
+Alessandra Torre | dark | EN | ?
+Cora Reilly | dark | EN | ?
+Debra Anastasia | dark | EN | ?
+Sylvia Day | dark | EN | ?
+Jodi Ellen Malpas | dark | EN | ?
+
+# ---------------- romcom ----------------
+Ali Hazelwood | romcom | EN | ?
+Abby Jimenez | romcom | EN | ?
+Tessa Bailey | romcom | EN | ?
+Lauren Asher | romcom | EN | ?
+Emily Henry | romcom | EN | ?
+Christina Lauren | romcom | EN | ?
+Sally Thorne | romcom | EN | ?
+Helen Hoang | romcom | EN | ?
+Mariana Zapata | romcom | EN | ?
+Talia Hibbert | romcom | EN | ?
+Beth O'Leary | romcom | EN | ?
+Casey McQuiston | romcom | EN | ?
+Lucy Score | romcom | EN | ?
+Meghan Quinn | romcom | EN | ?
+Jasmine Guillory | romcom | EN | ?
+Lynn Painter | romcom | EN | ?
+Sarah Adams | romcom | EN | ?
+Stephanie Archer | romcom | EN | ?
+Chloe Liese | romcom | EN | ?
+B.K. Borison | romcom | EN | ?
+Rachel Lynn Solomon | romcom | EN | ?
+R.S. Grey | romcom | EN | ?
+Sophia Money-Coutts | romcom | EN | ?
+Jenn Bennett | romcom | EN | ?
+Kelly Siskind | romcom | EN | ?
+Lizzy Dent | romcom | EN | ?
+Pippa Grant | romcom | EN | ?
+
+# ---------------- esportivo ----------------
+Elle Kennedy | esportivo | EN | ?
+Hannah Grace | esportivo | EN | ?
+Liz Tomforde | esportivo | EN | ?
+
+# ---------------- contemporaneo (spice variavel) ----------------
+Kennedy Ryan | contemporaneo | EN | ?
+Kristen Callihan | contemporaneo | EN | ?
+Vi Keeland | contemporaneo | EN | ?
+Penelope Ward | contemporaneo | EN | ?
+Elsie Silver | contemporaneo | EN | ?
+Devney Perry | contemporaneo | EN | ?
+T.L. Swan | contemporaneo | EN | ?
+Kendall Ryan | contemporaneo | EN | ?
+Carly Phillips | contemporaneo | EN | ?
+Amy Harmon | contemporaneo | EN | ?
+Corinne Michaels | contemporaneo | EN | ?
+K. Bromberg | contemporaneo | EN | ?
+Karina Halle | contemporaneo | EN | ?
+Melanie Harlow | contemporaneo | EN | ?
+Samantha Towle | contemporaneo | EN | ?
+
+# ---------------- romantasia ----------------
+Rebecca Yarros | romantasia | EN | ?
+Sarah J. Maas | romantasia | EN | ?
+Jennifer L. Armentrout | romantasia | EN | ?
+Rachel Gillig | romantasia | EN | ?
+Carissa Broadbent | romantasia | EN | ?
+Tracy Wolff | romantasia | EN | ?
+Laura Thalassa | romantasia | EN | ?
+Raven Kennedy | romantasia | EN | ?
+K.F. Breene | romantasia | EN | ?
+
+# ---------------- nacionais ----------------
+Carina Rissi | nacional | BR | ?
+Ray Tavares | nacional | BR | ?
+Babi A. Sette | nacional | BR | ?
+L.C. Rosenfield | nacional | BR | ?
+A.C. Meyer | nacional | BR | ?
+Frini Georgakopoulos | nacional | BR | ?
+Tamires Barcellos | nacional | BR | ?
+Iris Figueiredo | nacional | BR | ?
+Vanessa Martinelli | nacional | BR | ?
+Lola Salgado | nacional | BR | ?
+Clarisse Corrêa | nacional | BR | ?
+Pam Gonçalves | nacional | BR | ?
+Lygia Barbiere | nacional | BR | ?
+Laura Pozzabon | nacional | BR | ?
+Mariana de Assis | nacional | BR | ?
+Camila Moreira | nacional | BR | ?
+Catharina Maura | nacional | BR | ?
+
+# ---------------- controles negativos (capa fofa, baixo spice esperado) ----------------
+Nicholas Sparks | controle_wf | EN | ?
+Jojo Moyes | controle_wf | EN | ?
+Mhairi McFarlane | controle_wf | EN | ?
+Katherine Center | controle_wf | EN | ?
+Harriet Evans | controle_wf | EN | ?
+Tiffanie DeBartolo | controle_wf | EN | ?
+Alice Oseman | controle_ya | EN | ?
+Becky Albertalli | controle_ya | EN | ?
+Axie Oh | controle_ya | EN | ?
+Paula Pimenta | controle_ya | BR | ?
+Babi Dewet | controle_ya | BR | ?
+Kerri Maniscalco | controle_fantasia | EN | ?
+Jay Kristoff | controle_fantasia | EN | ?
+
+# ---------------- cauda longa indie (rendimento BR provavelmente ~0; a sondagem decide) ----------------
+M. O'Keefe | indie_cauda | EN | ?
+Courtney Cole | indie_cauda | EN | ?
+A.L. Jackson | indie_cauda | EN | ?
+Avery Keelan | indie_cauda | EN | ?
+B.J. Harvey | indie_cauda | EN | ?
+Bella Jewel | indie_cauda | EN | ?
+Billie Bloom | indie_cauda | EN | ?
+Brooke Montgomery | indie_cauda | EN | ?
+C.W. Farnsworth | indie_cauda | EN | ?
+Carrie Aronstein | indie_cauda | EN | ?
+Devon Daniels | indie_cauda | EN | ?
+Donna Alam | indie_cauda | EN | ?
+Ella Maise | indie_cauda | EN | ?
+J. L. Perry | indie_cauda | EN | ?
+J.A. Low | indie_cauda | EN | ?
+Jane Harvey-Berrick | indie_cauda | EN | ?
+Jewel E. Ann | indie_cauda | EN | ?
+K.L. Walther | indie_cauda | EN | ?
+Kathleen Brooks | indie_cauda | EN | ?
+Kensie Stewart | indie_cauda | EN | ?
+L.A. Cotton | indie_cauda | EN | ?
+Laura Pavlo | indie_cauda | EN | ?
+M. Robinson | indie_cauda | EN | ?
+Mariah Dietz | indie_cauda | EN | ?
+R.J. Lewis | indie_cauda | EN | ?
+S.J. Sylvis | indie_cauda | EN | ?
+S.M. Shade | indie_cauda | EN | ?
+T.K. Leigh | indie_cauda | EN | ?
+Tearne Calder | indie_cauda | EN | ?
+Winter Renshaw | indie_cauda | EN | ?
+
+# ---------------- candidatas NOVAS (nao ha garantia de edicao BR; a sondagem testa) ----------------
+Sophie Lark | dark | EN | ?
+Katee Robert | dark | EN | ?
+Scarlett St. Clair | romantasia | EN | ?
+Lauren Roberts | romantasia | EN | ?
+Callie Hart | romantasia | EN | ?
+Jessa Hastings | new_adult | EN | ?
+Rachel Reid | esportivo | EN | ?
+Sierra Simone | dark | EN | ?
+Emily McIntire | dark | EN | ?
+Brynne Weaver | dark | EN | ?

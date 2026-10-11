@@ -1,0 +1,52 @@
+# termos_v2.txt  --  formato:  termo | subtipo
+# subtipos: genero | tropo | booktok | conteudo
+# Cada termo vira uma busca de FRASE EXATA no Google Books (langRestrict=pt), rodada em
+# orderBy=relevance e orderBy=newest (newest alcanca melhor a era BookTok, 2020+).
+#
+# ATENCAO (circularidade): o subtipo 'conteudo' enviesa o seed para alto spice e se sobrepoe
+# ao rotulo derivado de sinopse. Trate-o como ESTRATO DE SENSIBILIDADE: rode a analise
+# com e sem Tipos_Origem contendo 'termo:conteudo'.
+# Termos em PT e EN de proposito: as descricoes das editoras brasileiras usam as duas formas.
+
+# ---- rotulo editorial / genero ----
+dark romance | genero
+romance sombrio | genero
+new adult | genero
+romance erótico | genero
+romantasia | genero
+romantasy | genero
+comédia romântica | genero
+romance universitário | genero
+romance de máfia | genero
+romance esportivo | genero
+romance de hóquei | genero
+romance de escritório | genero
+
+# ---- tropos ----
+inimigos para amantes | tropo
+de inimigos a amantes | tropo
+amigos para amantes | tropo
+enemies to lovers | tropo
+friends to lovers | tropo
+namoro de mentira | tropo
+fake dating | tropo
+casamento arranjado | tropo
+diferença de idade | tropo
+slow burn | tropo
+grumpy sunshine | tropo
+romance proibido | tropo
+segunda chance | tropo
+romance cão e gato | tropo
+
+# ---- mecanismo BookTok / marketing ----
+sucesso no TikTok | booktok
+fenômeno do BookTok | booktok
+viralizou no TikTok | booktok
+BookTok | booktok
+
+# ---- sinais de conteudo (sensibilidade; ver aviso acima) ----
+cenas explícitas | conteudo
+conteúdo adulto | conteudo
+maiores de 18 anos | conteudo
+gatilhos | conteudo
+temas sensíveis | conteudo

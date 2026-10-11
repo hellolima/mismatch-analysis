@@ -1,0 +1,7 @@
+# Opcional: embeddings multilingues no fallback da ponte (melhora o recall: "Quarta Asa" -> "Fourth Wing").
+# Instale o PyTorch so para CPU ANTES, para nao baixar o pacote CUDA de varios GB:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+#   pip install -r requirements-embeddings.txt
+# Sem isto o pipeline funciona normalmente (a ponte cai para fuzzy).
+
+sentence-transformers>=3.0
