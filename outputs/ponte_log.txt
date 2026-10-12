@@ -1,0 +1,92 @@
+2026-10-04 14:53:24,532 [INFO] ===== etapa: seed =====
+2026-10-04 14:53:24,730 [INFO] Canais: autores=30, termos=10, editoras=31, titulos=12
+2026-10-04 14:53:24,735 [INFO] [seed] 67 registros carregados de seed_gbooks_ptbr_v3.csv
+2026-10-04 14:53:24,736 [INFO] [seed] 124 consultas planejadas; orcamento 300 req; max 3 pag/consulta
+2026-10-04 14:53:24,770 [INFO] [seed] passo ate_pagina=1 concluido: 67 edicoes, 0 req
+2026-10-04 14:53:24,800 [INFO] [seed] passo ate_pagina=3 concluido: 67 edicoes, 0 req
+2026-10-04 14:53:24,802 [INFO] [seed] salvo em /home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/data/seeds/seed_gbooks_ptbr_v3.csv: 67 edicoes; consultas incompletas: 0
+2026-10-04 14:53:24,802 [INFO] ===== etapa: ponte =====
+2026-10-04 14:53:24,811 [INFO] [ponte] 67 edicoes PT-BR no seed
+2026-10-04 14:53:24,811 [INFO] [ponte] ISBNs novos consultados: 0 | em cache: 67
+2026-10-04 14:53:28,012 [INFO] No device provided, using cpu
+2026-10-04 14:54:48,534 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-10-04 14:54:48,595 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/modules.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fmain%2Fmodules.json=&etag=%22f7640f94e81bb7f4f04daf1668850b38763a13d9%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:48,802 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-04 14:54:48,804 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-10-04 14:54:48,820 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/config_sentence_transformers.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fmain%2Fconfig_sentence_transformers.json=&etag=%22b974b349cb2d419ada11181750a733ff82f291ad%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:48,820 [INFO] Loading SentenceTransformer model from sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2.
+2026-10-04 14:54:49,006 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-10-04 14:54:49,106 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/config_sentence_transformers.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fmain%2Fconfig_sentence_transformers.json=&etag=%22b974b349cb2d419ada11181750a733ff82f291ad%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:49,244 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-10-04 14:54:49,311 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/README.md?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fmain%2FREADME.md=&etag=%226bedb7f3622d56b7020f33ab93f6996d33242043%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:49,619 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-10-04 14:54:49,638 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/modules.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fmain%2Fmodules.json=&etag=%22f7640f94e81bb7f4f04daf1668850b38763a13d9%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:49,825 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-10-04 14:54:49,847 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/sentence_bert_config.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fmain%2Fsentence_bert_config.json=&etag=%225fd10429389515d3e5cccdeda08cae5fea1ae82e%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:49,996 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-10-04 14:54:50,137 [INFO] HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 "HTTP/1.1 200 OK"
+2026-10-04 14:54:50,289 [INFO] HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10423.17it/s]
+2026-10-04 14:54:50,567 [INFO] HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 "HTTP/1.1 200 OK"
+2026-10-04 14:54:50,748 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/processor_config.json "HTTP/1.1 404 Not Found"
+2026-10-04 14:54:50,917 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-10-04 14:54:51,058 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+2026-10-04 14:54:51,200 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-10-04 14:54:51,220 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/tokenizer_config.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fe8f8c211226b894fcb81acc59f3b34ba3efd5f42%2Ftokenizer_config.json=&etag=%223c1b565ae10a15a1d0c31096f834af2fd9359e91%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:51,239 [INFO] HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/tokenizer_config.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fe8f8c211226b894fcb81acc59f3b34ba3efd5f42%2Ftokenizer_config.json=&etag=%223c1b565ae10a15a1d0c31096f834af2fd9359e91%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:51,388 [INFO] HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-10-04 14:54:51,533 [INFO] HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-10-04 14:54:51,681 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/tokenizer.json "HTTP/1.1 302 Found"
+2026-10-04 14:54:51,830 [INFO] HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/xet-read-token/e8f8c211226b894fcb81acc59f3b34ba3efd5f42 "HTTP/1.1 200 OK"
+2026-10-04 14:54:55,446 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/tokenizer.model "HTTP/1.1 404 Not Found"
+2026-10-04 14:54:55,646 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/added_tokens.json "HTTP/1.1 404 Not Found"
+2026-10-04 14:54:55,788 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/special_tokens_map.json "HTTP/1.1 307 Temporary Redirect"
+2026-10-04 14:54:55,806 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/special_tokens_map.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fe8f8c211226b894fcb81acc59f3b34ba3efd5f42%2Fspecial_tokens_map.json=&etag=%222ea7ad0e45a9d1d1591782ba7e29a703d0758831%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:55,823 [INFO] HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/special_tokens_map.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fe8f8c211226b894fcb81acc59f3b34ba3efd5f42%2Fspecial_tokens_map.json=&etag=%222ea7ad0e45a9d1d1591782ba7e29a703d0758831%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:55,976 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/chat_template.jinja "HTTP/1.1 404 Not Found"
+2026-10-04 14:54:57,390 [INFO] HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 "HTTP/1.1 200 OK"
+2026-10-04 14:54:57,694 [INFO] HTTP Request: HEAD https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-10-04 14:54:57,718 [INFO] HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/1_Pooling%2Fconfig.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fmain%2F1_Pooling%2Fconfig.json=&etag=%22d1514c3162bbe87b343f565fadc62e6c06f04f03%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:57,742 [INFO] HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/e8f8c211226b894fcb81acc59f3b34ba3efd5f42/1_Pooling%2Fconfig.json?%2Fsentence-transformers%2Fparaphrase-multilingual-MiniLM-L12-v2%2Fresolve%2Fmain%2F1_Pooling%2Fconfig.json=&etag=%22d1514c3162bbe87b343f565fadc62e6c06f04f03%22 "HTTP/1.1 200 OK"
+2026-10-04 14:54:58,023 [INFO] HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 "HTTP/1.1 200 OK"
+2026-10-04 14:54:58,028 [INFO] [ponte] embeddings ativos (paraphrase-multilingual-MiniLM-L12-v2)
+2026-10-04 14:54:58,028 [INFO] [ponte] fallback para 53 edicoes
+2026-10-04 14:56:13,176 [INFO] [ponte] fallback... 20/53
+2026-10-04 14:57:54,444 [INFO] [ponte] fallback... 40/53
+
+============================================================================
+RELATORIO v3
+============================================================================
+Edicoes PT-BR no seed:        67
+Resolvidas (edicao->obra):    31 (46.3%)
+Nao resolvidas:               36  -> /home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/data/processed/nao_resolvidos.csv
+Por metodo da ponte:           {'catalogo_autora': 16, 'isbn13_edicao': 14, 'busca_titulo_autor': 1}
+Ponte por e-book x impresso:  
+Metodo_Ponte  busca_titulo_autor  catalogo_autora  isbn13_edicao
+E_Ebook                                                         
+False                          0                1              0
+True                           1               15             14
+Revisar_Ponte (-> auditoria): 18  -> /home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/data/processed/auditoria_ponte.csv
+
+Obras unicas:                 30  (edicoes/obra media: 1.03)
+Autor_Confere: {True: 30, False: 1}  (False = autor PT nao aparece na obra)
+  Flag_Romance             14 (46.7%)
+  Flag_New_Adult           0 (0.0%)
+  Flag_Formato_Excluir     0 (0.0%)
+  Flag_Spice_Tag           1 (3.3%)
+  Flag_CW_Sexual_Content   5 (16.7%)
+  Flag_Closed_Door_Tag     0 (0.0%)
+Cobertura dos sinais de rotulacao (viabilidade da triangulacao):
+  Generos_Hardcover        >=1 item: 23 (76.7%)
+  Moods_Hardcover          >=1 item: 17 (56.7%)
+  Tags_Gerais_Hardcover    >=1 item: 17 (56.7%)
+  Content_Warnings         >=1 item: 8 (26.7%)
+  Spice_Tags               >=1 item: 3 (10.0%)
+Edicoes com capa: 31/31 | sinopse: 31/31 | paginas: 31/31
+Edicoes por tipo editorial:    {'trad': 23, 'trad_nicho': 6, 'desconhecido': 2}
+Edicoes por estrato de origem: {'(sem)': 31}
+Saidas: /home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/data/processed/edicoes_ptbr_v3.csv
+        /home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/data/processed/obras_ptbr_v3.csv
+        /home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/data/processed/livros_ptbr_v3.csv
+============================================================================

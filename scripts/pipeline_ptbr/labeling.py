@@ -3,7 +3,7 @@ import re
 import json
 from typing import Dict, List, Optional, Tuple
 
-from ptbr_common import norm
+from ptbr_common import norm, sem_acento
 
 
 def tags_por_categoria(cached) -> Dict[str, List[Tuple[str, Optional[int]]]]:
@@ -73,6 +73,61 @@ def sinais_regex(cats: dict, regex: "re.Pattern", min_count: int, so_cw: bool = 
     return achados, total, passa
 
 
+# ---------------------------------------------------------------------------
+# Spice ORDINAL e TRI-ESTADO (v3.1). Substitui o booleano Flag_Spice_Tag como rotulo central; o flag antigo
+# continua nas colunas para comparar antes/depois.
+#   Spice_Nivel : 0 fechado | 1 sensual/implicito | 2 cena aberta (steamy/spicy/open door) | 3 explicito
+#   Spice_Status: positivo (>=2) | intermediario (1) | negativo (0) | sem_sinal
+# 'sem_sinal' e DESCONHECIDO, nao ausencia de spice: tags sao esparsas e acompanham popularidade (MNAR).
+# Diferencas em relacao ao RE_SPICE: varre TODAS as categorias (inclusive Content Warning, onde aparecem
+# 'graphic sex' e 'spice 4/5'), le notas numericas ('spice-4', 'spice 4/5') e nao usa limiar duro de votos
+# (o peso fica em Spice_Fontes; min_count e parametro para a analise de sensibilidade).
+# 'heated' fica DE FORA de proposito: "fanfic/trashy.heated rivalry" e estante de usuario, nao nivel de calor.
+# A escala de 5 pimentas -> 4 niveis e um julgamento: calibrar contra o Gold Standard.
+# ---------------------------------------------------------------------------
+_NUM_SPICE = re.compile(r"\bspice[\s-]*(?:level[\s-]*)?([0-5])(?:\s*/\s*5)?\b")
+_MAPA_NUM_SPICE = {0: 0, 1: 1, 2: 1, 3: 2, 4: 3, 5: 3}
+_REGRAS_SPICE = [
+    (0, re.compile(r"\b(closed[\s-]door|fade[\s-]to[\s-]black|clean romance|sweet romance|no spice|low heat|no sex)\b")),
+    (1, re.compile(r"\b(sensual|sexy|sweet but naughty|medium heat|mild spice)\b")),
+    (2, re.compile(r"\b(steamy|spicy|open[\s-]door|high heat)\b")),
+    (3, re.compile(r"\b(smut\w*|erotic\w*|graphic sex|explicit\w*)\b")),
+]
+
+
+def nivel_tag(nome) -> Optional[int]:
+    """Nivel de spice (0-3) sugerido por UMA tag, ou None se a tag nao fala de spice."""
+    n = sem_acento(str(nome)).lower()
+    achados = []
+    m = _NUM_SPICE.search(n)
+    if m:
+        achados.append(_MAPA_NUM_SPICE[int(m.group(1))])
+    achados += [nv for nv, rx in _REGRAS_SPICE if rx.search(n)]
+    return max(achados) if achados else None
+
+
+def spice_da_obra(cats: dict, min_count: int = 1) -> dict:
+    """cats = tags_por_categoria(...). Nivel = o de maior peso (soma de votos); empate -> o mais alto.
+    min_count>1 ignora tags com menos votos (so para sensibilidade); contagem ausente conta como 1 voto."""
+    votos, fontes = {}, []
+    for cat, itens in cats.items():
+        for nome, cnt in itens:
+            nv = nivel_tag(nome)
+            if nv is None:
+                continue
+            tem_cnt = isinstance(cnt, (int, float)) and cnt == cnt
+            if tem_cnt and cnt < min_count:
+                continue
+            w = int(cnt) if tem_cnt and cnt >= 1 else 1
+            votos[nv] = votos.get(nv, 0) + w
+            fontes.append(f"{nome}[{cat}]:{w}")
+    if not votos:
+        return {"Spice_Nivel": None, "Spice_Status": "sem_sinal", "Spice_Fontes": ""}
+    nivel = max(votos, key=lambda k: (votos[k], k))
+    status = "positivo" if nivel >= 2 else ("intermediario" if nivel == 1 else "negativo")
+    return {"Spice_Nivel": nivel, "Spice_Status": status, "Spice_Fontes": " | ".join(fontes)}
+
+
 def montar_obra(book_id: int, obra: dict, min_count_spice: int) -> dict:
     cats = tags_por_categoria(obra.get("cached_tags"))
     nomes = lambda c: [t for t, _ in cats.get(c, [])]
@@ -110,4 +165,5 @@ def montar_obra(book_id: int, obra: dict, min_count_spice: int) -> dict:
         "Flag_Romance": "romance" in todos,
         "Flag_New_Adult": ("new adult" in todos) or ("new-adult" in todos),
         "Flag_Formato_Excluir": bool(RE_FORMATO_EXCLUIR.search(todos)),
+        **spice_da_obra(cats),
     }

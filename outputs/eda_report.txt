@@ -1,0 +1,151 @@
+==========================================================================================
+ANÁLISE EXPLORATÓRIA DE DADOS (EDA)
+Dataset: BookTok PT-BR Consolidado (livros_ptbr_v3.csv)
+Gerado em: 2026-10-12 11:17:34
+==========================================================================================
+
+VISÃO GERAL DO DATASET
+------------------------------------------------------------------------------------------
+Total de registros: 150
+Total de colunas: 68
+Período temporal (ano da edição PT-BR): 2001-2026
+Cobertura de Editora: 94.0%
+Cobertura de ISBN: 100.0%
+
+RATINGS
+------------------------------------------------------------------------------------------
+  Média:               3.768
+  Mediana:             3.900
+  Desvio Padrão:      0.595
+  Mín - Máx:          1.000 - 5.000
+  N registros:        111
+
+ANÁLISE DE TAGS E METADADOS
+------------------------------------------------------------------------------------------
+
+  GENEROS
+    Tags únicas:        147
+    Total de tags:      459
+    Registros com tag:  106/146 obras (72.6%)
+    Top 10 mais comuns:
+       1. romance                                   58 ( 12.6%)
+       2. fantasy                                   36 (  7.8%)
+       3. fiction                                   31 (  6.8%)
+       4. young adult                               27 (  5.9%)
+       5. lgbtq                                     19 (  4.1%)
+       6. contemporary                              15 (  3.3%)
+       7. adventure                                 12 (  2.6%)
+       8. young adult fiction                       11 (  2.4%)
+       9. science fiction                            8 (  1.7%)
+      10. romantic comedy                            7 (  1.5%)
+
+  MOODS
+    Tags únicas:        30
+    Total de tags:      541
+    Registros com tag:  77/146 obras (52.7%)
+    Top 10 mais comuns:
+       1. emotional                                 63 ( 11.6%)
+       2. funny                                     53 (  9.8%)
+       3. lighthearted                              50 (  9.2%)
+       4. adventurous                               46 (  8.5%)
+       5. reflective                                44 (  8.1%)
+       6. hopeful                                   42 (  7.8%)
+       7. tense                                     41 (  7.6%)
+       8. inspiring                                 34 (  6.3%)
+       9. sad                                       32 (  5.9%)
+      10. relaxing                                  29 (  5.4%)
+
+  TAGS_GERAIS
+    Tags únicas:        102
+    Total de tags:      615
+    Registros com tag:  80/146 obras (54.8%)
+    Top 10 mais comuns:
+       1. strong character development              65 ( 10.6%)
+       2. diverse characters                        63 ( 10.2%)
+       3. loveable characters                       62 ( 10.1%)
+       4. a mix driven                              61 (  9.9%)
+       5. character driven                          57 (  9.3%)
+       6. not diverse characters                    51 (  8.3%)
+       7. weak character development                48 (  7.8%)
+       8. unloveable characters                     46 (  7.5%)
+       9. plot driven                               28 (  4.6%)
+      10. enemies to lovers                         10 (  1.6%)
+
+  CONTENT_WARNINGS
+    Tags únicas:        76
+    Total de tags:      235
+    Registros com tag:  38/146 obras (26.0%)
+    Top 10 mais comuns:
+       1. sexual content                            22 (  9.4%)
+       2. violence                                  15 (  6.4%)
+       3. death                                     11 (  4.7%)
+       4. death of parent                           11 (  4.7%)
+       5. grief                                      9 (  3.8%)
+       6. self harm                                  7 (  3.0%)
+       7. injury/injury detail                       7 (  3.0%)
+       8. medical content                            6 (  2.6%)
+       9. stalking                                   5 (  2.1%)
+      10. murder                                     5 (  2.1%)
+
+==========================================================================================
+
+SEÇÃO v3: UNIDADES, PONTE E SINAIS DE SPICE
+------------------------------------------------------------------------------------------
+Edições (ISBN): 150 | Obras únicas: 146
+Metodo_Ponte: {'catalogo_autora': 89, 'isbn13_edicao': 55, 'busca_titulo_autor': 6}
+E_Ebook: {True: 136, False: 14}
+Tipo_Editorial_Editora: {'trad': 115, 'desconhecido': 18, nan: 9, 'trad_nicho': 7, 'selfpub': 1}
+Revisar_Ponte (entra na auditoria Gold Standard): 96
+Estratos de origem (quadro amostral proposital): {'(fora_das_autoras)': 113, 'romcom': 14, 'esportivo': 14, 'new_adult': 3, 'dark': 2, 'contemporaneo': 2, 'indie_cauda': 1, 'controle_ya': 1}
+Origens (país da autora no seed): {'(fora_das_autoras)': 113, 'EN': 37}
+Tipos de origem (canal do seed; base da análise de sensibilidade sem 'termo:conteudo'): {'termo:tropo': 60, 'termo:conteudo': 42, 'termo:genero': 36, 'termo:booktok': 20}
+
+Editoras: 39 grafias brutas -> 34 chaves canônicas (auditoria: editoras_normalizacao_auditoria.csv; pares_suspeitos: editoras_pares_suspeitos.csv)
+Editoras 'desconhecido' mais frequentes (candidatas a entrar em editoras.txt): {'hr': 2, 'thomas nelson': 1, 'antofagica': 1, 'leya': 1, 'saida de emergencia': 1, 'perspectiva': 1, 'livros da alice': 1, 'morro branco': 1, 'ediouro publicacoes': 1, 'viseu': 1, 'senac sao paulo': 1, 'jangada': 1, 'darkside entretenimento': 1, 'hoo': 1, 'pensamento': 1}
+
+Flags por obra:
+  Flag_Romance             58 (39.7%)
+  Flag_New_Adult           1 (0.7%)
+  Flag_Spice_Tag           1 (0.7%)
+  Flag_CW_Sexual_Content   21 (14.4%)
+  Flag_Closed_Door_Tag     0 (0.0%)
+  Flag_Formato_Excluir     4 (2.7%)
+
+SPICE TRI-ESTADO (por obra). 'sem_sinal' = DESCONHECIDO, não é ausência de spice:
+  Spice_Status: {'sem_sinal': 133, 'positivo': 13}
+  Spice_Nivel (0 fechado, 1 sensual, 2 cena aberta, 3 explícito): {2: 5, 3: 8, 'sem_sinal': 133}
+  Flag_Spice_Tag (antigo, limiar de votos) x Spice_Status (novo):
+    Spice_Status    positivo  sem_sinal
+    Flag_Spice_Tag                     
+    False                 12        133
+    True                   1          0
+  Sensibilidade ao limiar mínimo de votos por tag:
+    min_count>=1: {'sem_sinal': 133, 'positivo': 13}
+    min_count>=2: {'sem_sinal': 145, 'positivo': 1}
+    min_count>=3: {'sem_sinal': 146}
+  Cobertura de tags por quartil de popularidade (se cai nos quartis baixos, a ausência de tag é dado faltante NÃO aleatório):
+                      Generos_Hardcover  Moods_Hardcover  Tags_Gerais_Hardcover  Content_Warnings
+    Pop_Quartil                                                                                  
+    Q1 (menos lidas)              0.189            0.000                  0.000             0.000
+    Q2                            0.750            0.250                  0.250             0.056
+    Q3                            0.972            0.861                  0.944             0.306
+    Q4 (mais lidas)               1.000            1.000                  1.000             0.676
+
+Associação DESCRITIVA (não causal; amostra proposital, não representa o mercado):
+Contagem de EDIÇÕES por Flag_Spice_Tag e tipo editorial (atributo da obra replicado por edição)
+Flag_Spice_Tag          False  True    n
+Tipo_Editorial_Editora                  
+NA                          9     0    9
+desconhecido               18     0   18
+selfpub                     1     0    1
+trad                      114     1  115
+trad_nicho                  7     0    7
+
+Contagem de OBRAS por Spice_Status e tipo editorial (tipo da 1ª edição da obra; 0 obra(s) têm edições de tipos editoriais mistos):
+Spice_Status            positivo  sem_sinal    n
+Tipo_Editorial_Editora                          
+NA                             1          7    8
+desconhecido                   1         17   18
+selfpub                        0          1    1
+trad                          10        102  112
+trad_nicho                     1          6    7

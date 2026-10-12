@@ -5,12 +5,17 @@ from typing import Dict, List, Optional, Tuple
 import pandas as pd
 
 from ptbr_common import norm, so_digitos, eh_kit_ou_box, limpar_titulo, autor_confere
+from editoras_norm import chave_editora
 from . import config as C
 from .util import v, carregar_tabela, ler_json, gravar_json
 from .hardcover import ponte_por_isbn, buscar_obras, casar_catalogo, ponte_por_busca, Embedder
 from .labeling import montar_obra
 
 log = logging.getLogger("pipeline.bridge")
+
+# Ordem das colunas de data/seeds/autores_v2.txt. CONFIRA com a chamada equivalente no run.py:
+# se estiver diferente, o backfill de estrato/origem sai trocado (ha um aviso automatico para o caso EN/BR).
+COLUNAS_AUTORES = ["nome", "estrato", "origem", "tipo_editorial"]
 
 
 def carregar_tipos_editora() -> List[Tuple[str, str]]:
@@ -26,6 +31,52 @@ def tipo_editorial(editora: Optional[str], tipos: List[Tuple[str, str]]) -> Opti
         if nome and f" {nome} " in n:
             return tipo
     return "desconhecido"
+
+
+def carregar_autoras() -> List[dict]:
+    """Linhas de autores_v2.txt como [{'nome','estrato','origem'}]."""
+    autoras = carregar_tabela(C.AUTORES_TXT, COLUNAS_AUTORES, False)
+    estratos = {a["estrato"] for a in autoras if a.get("estrato")}
+    if estratos and estratos <= {"EN", "BR"}:
+        log.warning("[ponte] a coluna 'estrato' de autores_v2.txt so tem EN/BR: colunas provavelmente trocadas; "
+                    "invertendo estrato<->origem. Confira COLUNAS_AUTORES.")
+        for a in autoras:
+            a["estrato"], a["origem"] = a["origem"], a["estrato"]
+    return autoras
+
+
+def backfill_proveniencia(df_ed: pd.DataFrame, autoras: List[dict]) -> pd.DataFrame:
+    """Preenche Estratos_Origem/Origens_Pais vazios casando Autor_PT com a lista de autoras (autor_confere).
+    Necessario porque o seed v2 migrado nao carrega o estrato e as consultas ja 'completas' no checkpoint nunca
+    sao refeitas. Deterministico e sem gastar cota de API. Quem nao casa recebe '(fora_das_autoras)', que e
+    diferente de dado faltante. So preenche celulas vazias: o que o seed ja trouxe e preservado."""
+    if not autoras:
+        log.warning("[ponte] sem lista de autoras (autores_v2.txt): backfill de estrato/origem ignorado")
+        return df_ed
+    d = df_ed.copy()
+    for c in ("Estratos_Origem", "Origens_Pais"):
+        if c not in d.columns:
+            d[c] = None
+
+    def derivar(autor_pt) -> Tuple[str, str]:
+        nomes = [x.strip() for x in str(autor_pt or "").split(",") if x.strip()]
+        est, ori = set(), set()
+        for a in autoras:
+            if nomes and autor_confere(a["nome"], nomes):
+                est.add(a.get("estrato") or "")
+                ori.add(a.get("origem") or "")
+        est.discard("")
+        ori.discard("")
+        return " | ".join(sorted(est)) or "(fora_das_autoras)", " | ".join(sorted(ori)) or "(fora_das_autoras)"
+
+    derivados = d["Autor_PT"].map(derivar)
+    for k, col in enumerate(("Estratos_Origem", "Origens_Pais")):
+        vazio = d[col].isna() | (d[col].astype(str).str.strip() == "")
+        d[col] = d[col].astype(object)
+        d.loc[vazio, col] = derivados[vazio].map(lambda t, k=k: t[k])
+    ok = int((d["Estratos_Origem"] != "(fora_das_autoras)").sum())
+    log.info(f"[ponte] backfill de proveniencia: {ok}/{len(d)} edicoes casaram com alguma autora de autores_v2.txt")
+    return d
 
 
 def executar_ponte(df_seed: pd.DataFrame, limite: Optional[int] = None, usar_emb: bool = True,
@@ -131,6 +182,7 @@ def executar_ponte(df_seed: pd.DataFrame, limite: Optional[int] = None, usar_emb
             "Titulo_PT_Limpo": limpar_titulo(s.get("Titulo"), obras[bid].get("Titulo_Original_EN")),
             "Autor_PT": s.get("Autor"),
             "Editora_PT": s.get("Editora"),
+            "Editora_Chave": chave_editora(s.get("Editora")),     # chave canonica; Editora_PT segue bruta
             "Tipo_Editorial_Editora": tipo_editorial(s.get("Editora"), tipos_ed),
             "Ano_Publicacao_PT": s.get("Ano"),
             "Num_Paginas_PT": s.get("Paginas_GB") or ed.get("pages"),
@@ -154,6 +206,8 @@ def executar_ponte(df_seed: pd.DataFrame, limite: Optional[int] = None, usar_emb
         })
 
     df_ed = pd.DataFrame(edicoes)
+    if not df_ed.empty:
+        df_ed = backfill_proveniencia(df_ed, carregar_autoras())
     df_ob = pd.DataFrame(list(obras.values()))
     if not df_ed.empty:
         df_ob["N_Edicoes_PT_no_Seed"] = df_ob["Hardcover_Book_ID"].map(
@@ -194,6 +248,9 @@ def relatorio(df_ed: pd.DataFrame, df_ob: pd.DataFrame, n_seed: int, n_nao: int)
     for c in ["Flag_Romance", "Flag_New_Adult", "Flag_Formato_Excluir", "Flag_Spice_Tag", "Flag_CW_Sexual_Content",
               "Flag_Closed_Door_Tag"]:
         print(f"  {c:<24} {int(df_ob[c].sum())} ({p(df_ob[c].sum(), n)})")
+    if "Spice_Status" in df_ob.columns:
+        print("Spice_Status (obras):         ", df_ob["Spice_Status"].value_counts().to_dict(),
+              " (sem_sinal = desconhecido, nao e ausencia de spice)")
     print("Cobertura dos sinais de rotulacao (viabilidade da triangulacao):")
     for c in ["Generos_Hardcover", "Moods_Hardcover", "Tags_Gerais_Hardcover", "Content_Warnings", "Spice_Tags"]:
         k = int((df_ob[c].fillna("") != "").sum())

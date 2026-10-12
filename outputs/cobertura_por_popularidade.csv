@@ -1,0 +1,5 @@
+Pop_Quartil,Generos_Hardcover,Moods_Hardcover,Tags_Gerais_Hardcover,Content_Warnings
+Q1 (menos lidas),0.189,0.0,0.0,0.0
+Q2,0.75,0.25,0.25,0.056
+Q3,0.972,0.861,0.944,0.306
+Q4 (mais lidas),1.0,1.0,1.0,0.676
