@@ -236,3 +236,257 @@ Arquivos:
 [2026-10-12 11:17:34,982] INFO: 
 ==========================================================================================
 
+[2026-10-20 18:48:37,556] INFO: EDA: BookTok PT-BR Consolidado | POC I - Engenharia de Dados
+[2026-10-20 18:48:37,564] INFO: Carregando dados de /home/gabriella/Documents/faculdade/ufmg/projeto_completo/mismatch-analysis/data/processed/livros_ptbr_v3.csv...
+[2026-10-20 18:48:37,582] INFO: Carregados 166 registros com 55 colunas
+[2026-10-20 18:48:37,597] INFO: Editoras: 41 grafias brutas -> 36 canônicas (4 grupos fundiram 2+ grafias; editoras_normalizacao_auditoria.csv)
+[2026-10-20 18:48:37,600] INFO: Ano PT disponível em 165/166 registros
+[2026-10-20 18:48:37,619] INFO: 
+[ANÁLISE 1] Processando Tags...
+[2026-10-20 18:48:37,620] INFO:   Generos: 166 tags únicas, 119/162 registros (73.5%)
+[2026-10-20 18:48:37,620] INFO:   Moods: 30 tags únicas, 87/162 registros (53.7%)
+[2026-10-20 18:48:37,620] INFO:   Tags_Gerais: 106 tags únicas, 90/162 registros (55.6%)
+[2026-10-20 18:48:37,621] INFO:   Content_Warnings: 77 tags únicas, 42/162 registros (25.9%)
+[2026-10-20 18:48:37,621] INFO: 
+[ANÁLISE 2] Distribuições Contínuas...
+[2026-10-20 18:48:37,624] INFO:   Rating: média=3.74, dp=0.61, n=127
+[2026-10-20 18:48:37,628] INFO:   Qtd Avaliações: média=130, dp=340
+[2026-10-20 18:48:37,646] INFO:   Páginas: média=379, dp=134
+[2026-10-20 18:48:37,647] INFO:   Ano: média=2022, range=[2001, 2026]
+[2026-10-20 18:48:37,647] INFO: 
+[ANÁLISE 3] Distribuições Categóricas...
+[2026-10-20 18:48:37,648] INFO:   Editoras (Editora_Canonica): 36 únicas, cobertura 94.6%
+[2026-10-20 18:48:37,649] INFO:       - Harlequin: 36
+[2026-10-20 18:48:37,649] INFO:       - Rocco: 16
+[2026-10-20 18:48:37,649] INFO:       - Paralela: 15
+[2026-10-20 18:48:37,649] INFO:       - Arqueiro: 10
+[2026-10-20 18:48:37,649] INFO:       - Intrinseca: 9
+[2026-10-20 18:48:37,649] INFO:   Fonte de Match: 3 tipos
+[2026-10-20 18:48:37,649] INFO:       - catalogo_autora: 102
+[2026-10-20 18:48:37,649] INFO:       - isbn13_edicao: 58
+[2026-10-20 18:48:37,649] INFO:       - busca_titulo_autor: 6
+[2026-10-20 18:48:37,649] INFO: 
+[ANÁLISE 4] Gerando Word Clouds...
+[2026-10-20 18:48:37,649] INFO:   Gerando wordcloud de TÍTULOS...
+[2026-10-20 18:48:40,075] INFO:     Salvo em fig_wordcloud_titulos.png
+[2026-10-20 18:48:40,076] INFO:   Gerando wordcloud de SINOPSES...
+[2026-10-20 18:48:41,779] INFO:     Salvo em fig_wordcloud_sinopses.png
+[2026-10-20 18:48:41,779] INFO: 
+[ANÁLISE 5] Gerando Visualizações...
+[2026-10-20 18:48:42,146] INFO:   Salvo: fig_01_ratings_dist.png
+[2026-10-20 18:48:42,439] INFO:   Salvo: fig_02_anos_dist.png
+[2026-10-20 18:48:42,699] INFO:   Salvo: fig_03_editoras_top10.png
+[2026-10-20 18:48:43,352] INFO:   Salvo: fig_04_tags_top.png
+[2026-10-20 18:48:43,668] INFO:   Salvo: fig_05_rating_vs_qtd_scatter.png
+[2026-10-20 18:48:43,984] INFO:   Salvo: fig_06_content_warnings.png
+[2026-10-20 18:48:44,178] INFO:   Salvo: fig_07_fonte_match_pie.png
+[2026-10-20 18:48:44,178] INFO: 
+[EXPORT] Exportando frequências de tags...
+[2026-10-20 18:48:44,180] INFO:   Salvo: tags_frequency.csv (379 tags)
+[2026-10-20 18:48:44,181] INFO: Títulos alterados pela limpeza: 50/166 (titulos_limpeza_auditoria.csv)
+[2026-10-20 18:48:44,182] INFO: Títulos ainda com separador ou parêntese (5); confira se algum é marketing:
+[2026-10-20 18:48:44,182] INFO:     A era dos celestiais – O desfecho épico da duologia "A lenda de Meneka"
+[2026-10-20 18:48:44,182] INFO:     História da música popular brasileira: Sem preconceitos
+[2026-10-20 18:48:44,182] INFO:     Assassin's Creed - Livro oficial do filme
+[2026-10-20 18:48:44,182] INFO:     O amor (depois) da minha vida
+[2026-10-20 18:48:44,182] INFO:     Nunca jamais - 2
+[2026-10-20 18:48:44,182] INFO: 
+[REPORT] Gerando relatório consolidado...
+[2026-10-20 18:48:44,183] INFO:   Relatório salvo: eda_report.txt
+[2026-10-20 18:48:44,264] INFO:   Seção v3 anexada ao eda_report.txt
+[2026-10-20 18:48:44,264] INFO: 
+==========================================================================================
+[2026-10-20 18:48:44,264] INFO: PIPELINE DE EDA CONCLUÍDO COM SUCESSO
+[2026-10-20 18:48:44,264] INFO: ==========================================================================================
+[2026-10-20 18:48:44,264] INFO: 
+Outputs gerados em: /home/gabriella/Documents/faculdade/ufmg/projeto_completo/mismatch-analysis/outputs
+[2026-10-20 18:48:44,264] INFO: 
+Arquivos:
+[2026-10-20 18:48:44,264] INFO:   eda_report.txt                      relatório consolidado
+[2026-10-20 18:48:44,265] INFO:   fig_01_ratings_dist.png             distribuição de ratings
+[2026-10-20 18:48:44,265] INFO:   fig_02_anos_dist.png                distribuição temporal (ano da edição PT-BR)
+[2026-10-20 18:48:44,265] INFO:   fig_03_editoras_top10.png           top 10 editoras (grafias agrupadas)
+[2026-10-20 18:48:44,265] INFO:   fig_04_tags_top.png                 top tags por categoria
+[2026-10-20 18:48:44,265] INFO:   fig_05_rating_vs_qtd_scatter.png    rating vs quantidade de avaliações
+[2026-10-20 18:48:44,265] INFO:   fig_06_content_warnings.png         content warnings
+[2026-10-20 18:48:44,265] INFO:   fig_07_fonte_match_pie.png          fontes de match (se existir a coluna)
+[2026-10-20 18:48:44,265] INFO:   fig_wordcloud_titulos.png           nuvem de palavras: títulos limpos
+[2026-10-20 18:48:44,265] INFO:   fig_wordcloud_sinopses.png          nuvem de palavras: sinopses
+[2026-10-20 18:48:44,265] INFO:   tags_frequency.csv                  frequência consolidada de tags
+[2026-10-20 18:48:44,265] INFO:   titulos_limpeza_auditoria.csv       títulos alterados pela limpeza
+[2026-10-20 18:48:44,265] INFO:   editoras_normalizacao_auditoria.csv grafias de editora fundidas (conferir)
+[2026-10-20 18:48:44,265] INFO:   editoras_pares_suspeitos.csv        chaves prefixo uma da outra (decidir)
+[2026-10-20 18:48:44,265] INFO:   cobertura_por_popularidade.csv      cobertura de tags por quartil de popularidade
+[2026-10-20 18:48:44,265] INFO: 
+==========================================================================================
+
+[2026-10-20 19:58:28,476] INFO: EDA: BookTok PT-BR Consolidado | POC I - Engenharia de Dados
+[2026-10-20 19:58:28,476] INFO: Carregando dados de /home/gabriella/Documents/faculdade/ufmg/projeto_completo/mismatch-analysis/data/processed/livros_ptbr_v3.csv...
+[2026-10-20 19:58:28,492] INFO: Carregados 219 registros com 55 colunas
+[2026-10-20 19:58:28,516] INFO: Editoras: 50 grafias brutas -> 42 canônicas (7 grupos fundiram 2+ grafias; editoras_normalizacao_auditoria.csv)
+[2026-10-20 19:58:28,518] INFO: Ano PT disponível em 214/219 registros
+[2026-10-20 19:58:28,543] INFO: 
+[ANÁLISE 1] Processando Tags...
+[2026-10-20 19:58:28,544] INFO:   Generos: 203 tags únicas, 157/213 registros (73.7%)
+[2026-10-20 19:58:28,544] INFO:   Moods: 32 tags únicas, 113/213 registros (53.1%)
+[2026-10-20 19:58:28,547] INFO:   Tags_Gerais: 120 tags únicas, 115/213 registros (54.0%)
+[2026-10-20 19:58:28,547] INFO:   Content_Warnings: 83 tags únicas, 50/213 registros (23.5%)
+[2026-10-20 19:58:28,548] INFO: 
+[ANÁLISE 2] Distribuições Contínuas...
+[2026-10-20 19:58:28,548] INFO:   Rating: média=3.76, dp=0.60, n=169
+[2026-10-20 19:58:28,549] INFO:   Qtd Avaliações: média=125, dp=306
+[2026-10-20 19:58:28,550] INFO:   Páginas: média=384, dp=132
+[2026-10-20 19:58:28,550] INFO:   Ano: média=2022, range=[2001, 2026]
+[2026-10-20 19:58:28,550] INFO: 
+[ANÁLISE 3] Distribuições Categóricas...
+[2026-10-20 19:58:28,551] INFO:   Editoras (Editora_Canonica): 42 únicas, cobertura 95.0%
+[2026-10-20 19:58:28,551] INFO:       - Harlequin: 37
+[2026-10-20 19:58:28,551] INFO:       - Rocco: 17
+[2026-10-20 19:58:28,551] INFO:       - Verus: 17
+[2026-10-20 19:58:28,551] INFO:       - Paralela: 15
+[2026-10-20 19:58:28,551] INFO:       - Galera: 14
+[2026-10-20 19:58:28,551] INFO:   Fonte de Match: 3 tipos
+[2026-10-20 19:58:28,551] INFO:       - catalogo_autora: 124
+[2026-10-20 19:58:28,551] INFO:       - isbn13_edicao: 86
+[2026-10-20 19:58:28,551] INFO:       - busca_titulo_autor: 9
+[2026-10-20 19:58:28,551] INFO: 
+[ANÁLISE 4] Gerando Word Clouds...
+[2026-10-20 19:58:28,551] INFO:   Gerando wordcloud de TÍTULOS...
+[2026-10-20 19:58:30,974] INFO:     Salvo em fig_wordcloud_titulos.png
+[2026-10-20 19:58:30,976] INFO:   Gerando wordcloud de SINOPSES...
+[2026-10-20 19:58:32,927] INFO:     Salvo em fig_wordcloud_sinopses.png
+[2026-10-20 19:58:32,927] INFO: 
+[ANÁLISE 5] Gerando Visualizações...
+[2026-10-20 19:58:33,449] INFO:   Salvo: fig_01_ratings_dist.png
+[2026-10-20 19:58:33,948] INFO:   Salvo: fig_02_anos_dist.png
+[2026-10-20 19:58:34,239] INFO:   Salvo: fig_03_editoras_top10.png
+[2026-10-20 19:58:35,248] INFO:   Salvo: fig_04_tags_top.png
+[2026-10-20 19:58:35,767] INFO:   Salvo: fig_05_rating_vs_qtd_scatter.png
+[2026-10-20 19:58:36,233] INFO:   Salvo: fig_06_content_warnings.png
+[2026-10-20 19:58:36,412] INFO:   Salvo: fig_07_fonte_match_pie.png
+[2026-10-20 19:58:36,412] INFO: 
+[EXPORT] Exportando frequências de tags...
+[2026-10-20 19:58:36,414] INFO:   Salvo: tags_frequency.csv (438 tags)
+[2026-10-20 19:58:36,415] INFO: Títulos alterados pela limpeza: 56/219 (titulos_limpeza_auditoria.csv)
+[2026-10-20 19:58:36,416] INFO: Títulos ainda com separador ou parêntese (6); confira se algum é marketing:
+[2026-10-20 19:58:36,416] INFO:     A era dos celestiais – O desfecho épico da duologia "A lenda de Meneka"
+[2026-10-20 19:58:36,416] INFO:     História da música popular brasileira: Sem preconceitos
+[2026-10-20 19:58:36,416] INFO:     Assassin's Creed - Livro oficial do filme
+[2026-10-20 19:58:36,416] INFO:     O amor (depois) da minha vida
+[2026-10-20 19:58:36,416] INFO:     Nunca jamais - 2
+[2026-10-20 19:58:36,416] INFO:     O melhor de você: uma história de amor
+[2026-10-20 19:58:36,416] INFO: 
+[REPORT] Gerando relatório consolidado...
+[2026-10-20 19:58:36,417] INFO:   Relatório salvo: eda_report.txt
+[2026-10-20 19:58:36,473] INFO:   Seção v3 anexada ao eda_report.txt
+[2026-10-20 19:58:36,473] INFO: 
+==========================================================================================
+[2026-10-20 19:58:36,473] INFO: PIPELINE DE EDA CONCLUÍDO COM SUCESSO
+[2026-10-20 19:58:36,473] INFO: ==========================================================================================
+[2026-10-20 19:58:36,473] INFO: 
+Outputs gerados em: /home/gabriella/Documents/faculdade/ufmg/projeto_completo/mismatch-analysis/outputs
+[2026-10-20 19:58:36,473] INFO: 
+Arquivos:
+[2026-10-20 19:58:36,473] INFO:   eda_report.txt                      relatório consolidado
+[2026-10-20 19:58:36,473] INFO:   fig_01_ratings_dist.png             distribuição de ratings
+[2026-10-20 19:58:36,473] INFO:   fig_02_anos_dist.png                distribuição temporal (ano da edição PT-BR)
+[2026-10-20 19:58:36,473] INFO:   fig_03_editoras_top10.png           top 10 editoras (grafias agrupadas)
+[2026-10-20 19:58:36,473] INFO:   fig_04_tags_top.png                 top tags por categoria
+[2026-10-20 19:58:36,473] INFO:   fig_05_rating_vs_qtd_scatter.png    rating vs quantidade de avaliações
+[2026-10-20 19:58:36,473] INFO:   fig_06_content_warnings.png         content warnings
+[2026-10-20 19:58:36,473] INFO:   fig_07_fonte_match_pie.png          fontes de match (se existir a coluna)
+[2026-10-20 19:58:36,473] INFO:   fig_wordcloud_titulos.png           nuvem de palavras: títulos limpos
+[2026-10-20 19:58:36,473] INFO:   fig_wordcloud_sinopses.png          nuvem de palavras: sinopses
+[2026-10-20 19:58:36,473] INFO:   tags_frequency.csv                  frequência consolidada de tags
+[2026-10-20 19:58:36,473] INFO:   titulos_limpeza_auditoria.csv       títulos alterados pela limpeza
+[2026-10-20 19:58:36,473] INFO:   editoras_normalizacao_auditoria.csv grafias de editora fundidas (conferir)
+[2026-10-20 19:58:36,473] INFO:   editoras_pares_suspeitos.csv        chaves prefixo uma da outra (decidir)
+[2026-10-20 19:58:36,473] INFO:   cobertura_por_popularidade.csv      cobertura de tags por quartil de popularidade
+[2026-10-20 19:58:36,473] INFO: 
+==========================================================================================
+
+[2026-10-20 21:10:58,307] INFO: EDA: BookTok PT-BR Consolidado | POC I - Engenharia de Dados
+[2026-10-20 21:10:58,307] INFO: Carregando dados de /home/gabriella/Documents/faculdade/ufmg/projeto_completo/mismatch-analysis/data/processed/livros_ptbr_v3.csv...
+[2026-10-20 21:10:58,321] INFO: Carregados 245 registros com 55 colunas
+[2026-10-20 21:10:58,335] INFO: Editoras: 53 grafias brutas -> 45 canônicas (7 grupos fundiram 2+ grafias; editoras_normalizacao_auditoria.csv)
+[2026-10-20 21:10:58,341] INFO: Ano PT disponível em 240/245 registros
+[2026-10-20 21:10:58,362] INFO: 
+[ANÁLISE 1] Processando Tags...
+[2026-10-20 21:10:58,362] INFO:   Generos: 220 tags únicas, 180/239 registros (75.3%)
+[2026-10-20 21:10:58,362] INFO:   Moods: 32 tags únicas, 127/239 registros (53.1%)
+[2026-10-20 21:10:58,363] INFO:   Tags_Gerais: 136 tags únicas, 129/239 registros (54.0%)
+[2026-10-20 21:10:58,363] INFO:   Content_Warnings: 87 tags únicas, 52/239 registros (21.8%)
+[2026-10-20 21:10:58,363] INFO: 
+[ANÁLISE 2] Distribuições Contínuas...
+[2026-10-20 21:10:58,364] INFO:   Rating: média=3.75, dp=0.61, n=192
+[2026-10-20 21:10:58,365] INFO:   Qtd Avaliações: média=121, dp=293
+[2026-10-20 21:10:58,365] INFO:   Páginas: média=391, dp=140
+[2026-10-20 21:10:58,366] INFO:   Ano: média=2021, range=[2001, 2026]
+[2026-10-20 21:10:58,366] INFO: 
+[ANÁLISE 3] Distribuições Categóricas...
+[2026-10-20 21:10:58,366] INFO:   Editoras (Editora_Canonica): 45 únicas, cobertura 95.1%
+[2026-10-20 21:10:58,366] INFO:       - Harlequin: 38
+[2026-10-20 21:10:58,366] INFO:       - Arqueiro: 22
+[2026-10-20 21:10:58,366] INFO:       - Verus: 20
+[2026-10-20 21:10:58,366] INFO:       - Rocco: 17
+[2026-10-20 21:10:58,366] INFO:       - Paralela: 15
+[2026-10-20 21:10:58,366] INFO:   Fonte de Match: 3 tipos
+[2026-10-20 21:10:58,366] INFO:       - catalogo_autora: 140
+[2026-10-20 21:10:58,366] INFO:       - isbn13_edicao: 96
+[2026-10-20 21:10:58,366] INFO:       - busca_titulo_autor: 9
+[2026-10-20 21:10:58,367] INFO: 
+[ANÁLISE 4] Gerando Word Clouds...
+[2026-10-20 21:10:58,367] INFO:   Gerando wordcloud de TÍTULOS...
+[2026-10-20 21:11:00,547] INFO:     Salvo em fig_wordcloud_titulos.png
+[2026-10-20 21:11:00,547] INFO:   Gerando wordcloud de SINOPSES...
+[2026-10-20 21:11:02,304] INFO:     Salvo em fig_wordcloud_sinopses.png
+[2026-10-20 21:11:02,304] INFO: 
+[ANÁLISE 5] Gerando Visualizações...
+[2026-10-20 21:11:02,660] INFO:   Salvo: fig_01_ratings_dist.png
+[2026-10-20 21:11:02,949] INFO:   Salvo: fig_02_anos_dist.png
+[2026-10-20 21:11:03,207] INFO:   Salvo: fig_03_editoras_top10.png
+[2026-10-20 21:11:03,857] INFO:   Salvo: fig_04_tags_top.png
+[2026-10-20 21:11:04,185] INFO:   Salvo: fig_05_rating_vs_qtd_scatter.png
+[2026-10-20 21:11:04,508] INFO:   Salvo: fig_06_content_warnings.png
+[2026-10-20 21:11:04,674] INFO:   Salvo: fig_07_fonte_match_pie.png
+[2026-10-20 21:11:04,675] INFO: 
+[EXPORT] Exportando frequências de tags...
+[2026-10-20 21:11:04,677] INFO:   Salvo: tags_frequency.csv (475 tags)
+[2026-10-20 21:11:04,678] INFO: Títulos alterados pela limpeza: 61/245 (titulos_limpeza_auditoria.csv)
+[2026-10-20 21:11:04,679] INFO: Títulos ainda com separador ou parêntese (6); confira se algum é marketing:
+[2026-10-20 21:11:04,679] INFO:     A era dos celestiais – O desfecho épico da duologia "A lenda de Meneka"
+[2026-10-20 21:11:04,679] INFO:     História da música popular brasileira: Sem preconceitos
+[2026-10-20 21:11:04,679] INFO:     Assassin's Creed - Livro oficial do filme
+[2026-10-20 21:11:04,679] INFO:     O amor (depois) da minha vida
+[2026-10-20 21:11:04,679] INFO:     Nunca jamais - 2
+[2026-10-20 21:11:04,679] INFO:     O melhor de você: uma história de amor
+[2026-10-20 21:11:04,679] INFO: 
+[REPORT] Gerando relatório consolidado...
+[2026-10-20 21:11:04,679] INFO:   Relatório salvo: eda_report.txt
+[2026-10-20 21:11:04,740] INFO:   Seção v3 anexada ao eda_report.txt
+[2026-10-20 21:11:04,740] INFO: 
+==========================================================================================
+[2026-10-20 21:11:04,740] INFO: PIPELINE DE EDA CONCLUÍDO COM SUCESSO
+[2026-10-20 21:11:04,740] INFO: ==========================================================================================
+[2026-10-20 21:11:04,740] INFO: 
+Outputs gerados em: /home/gabriella/Documents/faculdade/ufmg/projeto_completo/mismatch-analysis/outputs
+[2026-10-20 21:11:04,740] INFO: 
+Arquivos:
+[2026-10-20 21:11:04,740] INFO:   eda_report.txt                      relatório consolidado
+[2026-10-20 21:11:04,740] INFO:   fig_01_ratings_dist.png             distribuição de ratings
+[2026-10-20 21:11:04,740] INFO:   fig_02_anos_dist.png                distribuição temporal (ano da edição PT-BR)
+[2026-10-20 21:11:04,740] INFO:   fig_03_editoras_top10.png           top 10 editoras (grafias agrupadas)
+[2026-10-20 21:11:04,740] INFO:   fig_04_tags_top.png                 top tags por categoria
+[2026-10-20 21:11:04,740] INFO:   fig_05_rating_vs_qtd_scatter.png    rating vs quantidade de avaliações
+[2026-10-20 21:11:04,740] INFO:   fig_06_content_warnings.png         content warnings
+[2026-10-20 21:11:04,740] INFO:   fig_07_fonte_match_pie.png          fontes de match (se existir a coluna)
+[2026-10-20 21:11:04,740] INFO:   fig_wordcloud_titulos.png           nuvem de palavras: títulos limpos
+[2026-10-20 21:11:04,740] INFO:   fig_wordcloud_sinopses.png          nuvem de palavras: sinopses
+[2026-10-20 21:11:04,740] INFO:   tags_frequency.csv                  frequência consolidada de tags
+[2026-10-20 21:11:04,740] INFO:   titulos_limpeza_auditoria.csv       títulos alterados pela limpeza
+[2026-10-20 21:11:04,740] INFO:   editoras_normalizacao_auditoria.csv grafias de editora fundidas (conferir)
+[2026-10-20 21:11:04,740] INFO:   editoras_pares_suspeitos.csv        chaves prefixo uma da outra (decidir)
+[2026-10-20 21:11:04,740] INFO:   cobertura_por_popularidade.csv      cobertura de tags por quartil de popularidade
+[2026-10-20 21:11:04,740] INFO: 
+==========================================================================================
+

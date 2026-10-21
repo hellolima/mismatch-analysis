@@ -47,10 +47,12 @@ class GB:
                 time.sleep(30)
                 continue
             if r.status_code == 200:
-                time.sleep(0.3)
+                time.sleep(1.0)
                 return r.json()
             if r.status_code >= 500:
-                time.sleep(3)
+                espera = 5 * (t + 1)
+                log.warning(f"Google Books HTTP {r.status_code}; aguardando {espera}s antes da tentativa {t + 2}/3...")
+                time.sleep(espera)
                 continue
             return None
         return None
@@ -250,7 +252,7 @@ def seed_google_books(canais: Dict[str, List[dict]], ordens: List[str], max_pagi
 
     tarefas = []     # (canal, query, ordem, ctx, filtro_autor)
     for a in canais.get("autores", []):
-        tarefas.append(("autora", f'inauthor:"{a["nome"]}"', "relevance",
+        tarefas.append(("autora", f'inauthor:{a["nome"]}', "relevance",
                         {"canal": "autora", "consulta": a["nome"], "estrato": a.get("estrato"),
                          "origem": a.get("origem")}, a["nome"]))
     for t in canais.get("termos", []):

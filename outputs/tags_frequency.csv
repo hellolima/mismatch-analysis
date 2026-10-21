@@ -1,356 +1,476 @@
 Tipo_Tag,Tag,Frequencia,Percentual_%
-Tags Gerais,strong character development,65,10.569105691056912
-Tags Gerais,diverse characters,63,10.24390243902439
-Moods,emotional,63,11.645101663585953
-Tags Gerais,loveable characters,62,10.08130081300813
-Tags Gerais,a mix driven,61,9.91869918699187
-Generos,romance,58,12.636165577342048
-Tags Gerais,character driven,57,9.268292682926829
-Moods,funny,53,9.796672828096119
-Tags Gerais,not diverse characters,51,8.292682926829269
-Moods,lighthearted,50,9.242144177449168
-Tags Gerais,weak character development,48,7.804878048780488
-Moods,adventurous,46,8.502772643253234
-Tags Gerais,unloveable characters,46,7.479674796747967
-Moods,reflective,44,8.133086876155268
-Moods,hopeful,42,7.763401109057301
-Moods,tense,41,7.578558225508318
-Generos,fantasy,36,7.8431372549019605
-Moods,inspiring,34,6.284658040665435
-Moods,sad,32,5.914972273567468
-Generos,fiction,31,6.753812636165578
-Moods,relaxing,29,5.360443622920517
-Moods,mysterious,28,5.175600739371535
-Tags Gerais,plot driven,28,4.5528455284552845
-Generos,young adult,27,5.88235294117647
-Moods,challenging,26,4.805914972273567
-Moods,dark,25,4.621072088724584
-Content Warnings,sexual content,22,9.361702127659575
-Generos,lgbtq,19,4.139433551198257
-Content Warnings,violence,15,6.382978723404255
-Generos,contemporary,15,3.2679738562091507
-Generos,adventure,12,2.6143790849673203
-Generos,young adult fiction,11,2.3965141612200433
-Content Warnings,death of parent,11,4.680851063829787
-Content Warnings,death,11,4.680851063829787
-Tags Gerais,enemies to lovers,10,1.6260162601626018
-Content Warnings,grief,9,3.829787234042553
-Generos,science fiction,8,1.7429193899782136
-Content Warnings,self harm,7,2.9787234042553195
-Generos,romantic comedy,7,1.5250544662309369
-Generos,mystery,7,1.5250544662309369
-Content Warnings,injury/injury detail,7,2.9787234042553195
-Content Warnings,medical content,6,2.553191489361702
-Generos,sports romance,6,1.3071895424836601
-Generos,suspense,6,1.3071895424836601
-Tags Gerais,forced proximity,6,0.975609756097561
-Generos,thriller,6,1.3071895424836601
-Generos,general,6,1.3071895424836601
-Content Warnings,murder,5,2.127659574468085
-Content Warnings,child abuse,5,2.127659574468085
-Content Warnings,stalking,5,2.127659574468085
-Generos,romantasy,5,1.0893246187363834
-Content Warnings,abandonment,4,1.702127659574468
-Tags Gerais,4 peppers,4,0.6504065040650406
-Generos,magical realism,4,0.8714596949891068
-Content Warnings,animal death,4,1.702127659574468
-Moods,informative,4,0.7393715341959335
-Moods,fast-paced,4,0.7393715341959335
-Generos,friendship,4,0.8714596949891068
-Generos,crime,4,0.8714596949891068
-Generos,classics,4,0.8714596949891068
-Generos,juvenile fiction,4,0.8714596949891068
-Generos,science fiction & fantasy,4,0.8714596949891068
-Generos,hockey,4,0.8714596949891068
-Content Warnings,alcohol,4,1.702127659574468
-Content Warnings,blood,4,1.702127659574468
-Content Warnings,toxic relationship,4,1.702127659574468
-Content Warnings,classism,4,1.702127659574468
-Content Warnings,infidelity,4,1.702127659574468
-Content Warnings,body shaming,4,1.702127659574468
-Generos,dark romance,3,0.6535947712418301
-Content Warnings,gun violence,3,1.276595744680851
-Content Warnings,animal cruelty,3,1.276595744680851
-Content Warnings,addiction,3,1.276595744680851
-Content Warnings,kidnapping,3,1.276595744680851
-Content Warnings,domestic abuse,3,1.276595744680851
-Content Warnings,panic attacks/disorders,3,1.276595744680851
-Content Warnings,rape,3,1.276595744680851
-Generos,war,3,0.6535947712418301
-Generos,erotic stories,3,0.6535947712418301
-Tags Gerais,grumpy sunshine,3,0.4878048780487805
-Tags Gerais,fast-paced,3,0.4878048780487805
-Tags Gerais,mysterious,3,0.4878048780487805
-Moods,romantic,3,0.5545286506469501
-Content Warnings,emotional abuse,3,1.276595744680851
-Content Warnings,pregnancy,3,1.276595744680851
-Content Warnings,cancer,3,1.276595744680851
-Content Warnings,gaslighting,3,1.276595744680851
-Content Warnings,misogyny,3,1.276595744680851
-Generos,dystopian,3,0.6535947712418301
-Generos,paranormal,3,0.6535947712418301
-Generos,comédie romantique,3,0.6535947712418301
-Generos,smut,3,0.6535947712418301
-Generos,audiobook,3,0.6535947712418301
-Generos,hockey romance,3,0.6535947712418301
-Generos,sports,3,0.6535947712418301
-Generos,history,3,0.6535947712418301
-Tags Gerais,childfree,3,0.4878048780487805
-Tags Gerais,dual pov,3,0.4878048780487805
-Tags Gerais,fake relationship,3,0.4878048780487805
-Content Warnings,dementia,3,1.276595744680851
-Content Warnings,alcoholism,3,1.276595744680851
-Content Warnings,car accident,2,0.851063829787234
-Content Warnings,chronic illness,2,0.851063829787234
-Content Warnings,bullying,2,0.851063829787234
-Content Warnings,vomit,2,0.851063829787234
-Content Warnings,homophobia,2,0.851063829787234
-Content Warnings,suicidal thoughts,2,0.851063829787234
-Tags Gerais,secret relationship,2,0.3252032520325203
-Moods,spicy,2,0.36968576709796674
-Moods,medium-paced,2,0.36968576709796674
-Moods,slow-paced,2,0.36968576709796674
-Tags Gerais,mediabox-old-format,2,0.3252032520325203
-Tags Gerais,audiobook,2,0.3252032520325203
-Tags Gerais,m/m romance,2,0.3252032520325203
-Tags Gerais,contemporary romance,2,0.3252032520325203
-Tags Gerais,friends to lovers,2,0.3252032520325203
-Tags Gerais,dark,2,0.3252032520325203
-Tags Gerais,tense,2,0.3252032520325203
-Tags Gerais,female author,2,0.3252032520325203
-Tags Gerais,written by women,2,0.3252032520325203
-Tags Gerais,angst,2,0.3252032520325203
-Tags Gerais,g5,2,0.3252032520325203
-Generos,mm romance,2,0.4357298474945534
-Content Warnings,adult/minor relationship,2,0.851063829787234
-Content Warnings,drug use,2,0.851063829787234
-Content Warnings,terminal illness,2,0.851063829787234
-Content Warnings,toxic friendship,2,0.851063829787234
-Content Warnings,child death,2,0.851063829787234
-Generos,murder,2,0.4357298474945534
-Generos,romanzo d'amore,2,0.4357298474945534
-Generos,romantic suspense,2,0.4357298474945534
-Generos,darkromance,2,0.4357298474945534
-Generos,enemiestolovers,2,0.4357298474945534
-Generos,spicy,2,0.4357298474945534
-Content Warnings,sexual harassment,2,0.851063829787234
-Content Warnings,cursing,2,0.851063829787234
-Generos,physical-tbr,2,0.4357298474945534
-Generos,enemies to lovers,2,0.4357298474945534
-Generos,fanfic/trashy.heated rivalry,2,0.4357298474945534
-Generos,m m romance,2,0.4357298474945534
-Generos,literary collections,2,0.4357298474945534
-Generos,comics,2,0.4357298474945534
-Generos,large type books,2,0.4357298474945534
-Generos,comics & graphic novels,2,0.4357298474945534
-Generos,lgbt,2,0.4357298474945534
-Generos,literary,2,0.4357298474945534
-Generos,legends & mythology,2,0.4357298474945534
-Generos,folk tales,2,0.4357298474945534
-Generos,fairy tales,2,0.4357298474945534
-Generos,liebesromane,2,0.4357298474945534
-Generos,historical,2,0.4357298474945534
-Generos,did-not-finish,2,0.4357298474945534
-Generos,detective and mystery stories,2,0.4357298474945534
-Generos,literature & fiction,2,0.4357298474945534
-Content Warnings,emic/epidemic,2,0.851063829787234
-Content Warnings,p,2,0.851063829787234
-Content Warnings,sexual violence,1,0.425531914893617
-Content Warnings,forced proximity,1,0.425531914893617
-Content Warnings,graphic sex,1,0.425531914893617
-Content Warnings,manipulation,1,0.425531914893617
-Content Warnings,morally gray characters,1,0.425531914893617
-Content Warnings,enemies to lovers,1,0.425531914893617
-Content Warnings,cannibalism,1,0.425531914893617
-Generos,youngadult,1,0.2178649237472767
-Generos,fantasyromance,1,0.2178649237472767
-Generos,college,1,0.2178649237472767
-Generos,new adult,1,0.2178649237472767
-Generos,college students,1,0.2178649237472767
-Generos,college stories,1,0.2178649237472767
-Generos,horror,1,0.2178649237472767
-Generos,satire,1,0.2178649237472767
-Content Warnings,fire/fire injury,1,0.425531914893617
-Content Warnings,racism,1,0.425531914893617
-Content Warnings,torture,1,0.425531914893617
-Content Warnings,forced institutionalization,1,0.425531914893617
-Content Warnings,sexism,1,0.425531914893617
-Content Warnings,suicide attempt,1,0.425531914893617
-Content Warnings,confinement,1,0.425531914893617
-Content Warnings,physical abuse,1,0.425531914893617
-Content Warnings,eating disorder,1,0.425531914893617
-Content Warnings,deadnaming,1,0.425531914893617
-Generos,family,1,0.2178649237472767
-Generos,closeted gays,1,0.2178649237472767
-Generos,monster romance,1,0.2178649237472767
-Generos,figure skaters,1,0.2178649237472767
-Generos,contemporary romance,1,0.2178649237472767
-Generos,sports-romance,1,0.2178649237472767
-Generos,queer,1,0.2178649237472767
-Generos,romance; fantasy,1,0.2178649237472767
-Generos,adult,1,0.2178649237472767
-Generos,california,1,0.2178649237472767
-Generos,billionaires,1,0.2178649237472767
-Generos,romantic suspense fiction,1,0.2178649237472767
-Generos,cowboy romance,1,0.2178649237472767
-Generos,viking world,1,0.2178649237472767
-Generos,fate magic,1,0.2178649237472767
-Generos,prophecy,1,0.2178649237472767
-Generos,fantasy romance,1,0.2178649237472767
-Generos,single women,1,0.2178649237472767
-Generos,occult fiction,1,0.2178649237472767
-Moods,wholesome,1,0.18484288354898337
-Moods,sexy,1,0.18484288354898337
-Moods,graphic,1,0.18484288354898337
-Moods,rom com,1,0.18484288354898337
-Moods,feel good,1,0.18484288354898337
-Moods,sweet but naughty,1,0.18484288354898337
-Moods,eye-opening,1,0.18484288354898337
-Moods,empowering,1,0.18484288354898337
-Moods,unsettling,1,0.18484288354898337
-Moods,cute,1,0.18484288354898337
-Moods,steamy,1,0.18484288354898337
-Tags Gerais,abduction,1,0.16260162601626016
-Tags Gerais,fae,1,0.16260162601626016
-Tags Gerais,dragons,1,0.16260162601626016
-Tags Gerais,paranormal,1,0.16260162601626016
-Tags Gerais,magic,1,0.16260162601626016
-Tags Gerais,witches,1,0.16260162601626016
-Tags Gerais,shapeshifters,1,0.16260162601626016
-Tags Gerais,dragon shifters,1,0.16260162601626016
-Tags Gerais,physical book,1,0.16260162601626016
-Tags Gerais,morally grey mmc,1,0.16260162601626016
-Tags Gerais,fl mortal edition,1,0.16260162601626016
-Tags Gerais,series,1,0.16260162601626016
-Tags Gerais,dark romance,1,0.16260162601626016
-Tags Gerais,stalker,1,0.16260162601626016
-Tags Gerais,library,1,0.16260162601626016
-Tags Gerais,romance: mm,1,0.16260162601626016
-Tags Gerais,canada,1,0.16260162601626016
-Tags Gerais,debut author,1,0.16260162601626016
-Tags Gerais,*signed,1,0.16260162601626016
-Tags Gerais,as special box,1,0.16260162601626016
-Tags Gerais,fake dating,1,0.16260162601626016
-Tags Gerais,classics,1,0.16260162601626016
-Tags Gerais,bisexual,1,0.16260162601626016
-Tags Gerais,bisexual mc,1,0.16260162601626016
-Tags Gerais,freak4freak,1,0.16260162601626016
-Tags Gerais,friendship,1,0.16260162601626016
-Tags Gerais,bb epi,1,0.16260162601626016
-Tags Gerais,autistic character,1,0.16260162601626016
-Tags Gerais,steamy,1,0.16260162601626016
-Tags Gerais,marriage of convenience,1,0.16260162601626016
-Tags Gerais,small town,1,0.16260162601626016
-Tags Gerais,found family,1,0.16260162601626016
-Tags Gerais,suspense,1,0.16260162601626016
-Tags Gerais,cowboy,1,0.16260162601626016
-Tags Gerais,due: 7/31,1,0.16260162601626016
-Tags Gerais,united states,1,0.16260162601626016
-Tags Gerais,2014,1,0.16260162601626016
-Tags Gerais,mates,1,0.16260162601626016
-Tags Gerais,from-audible,1,0.16260162601626016
-Tags Gerais,borrowed,1,0.16260162601626016
-Tags Gerais,rec by eleanor,1,0.16260162601626016
-Tags Gerais,slow-paced,1,0.16260162601626016
-Tags Gerais,reflective,1,0.16260162601626016
-Tags Gerais,fiction,1,0.16260162601626016
-Tags Gerais,#digitally-own,1,0.16260162601626016
-Tags Gerais,crime mystery & thriller,1,0.16260162601626016
-Tags Gerais,grumpy x sunshine,1,0.16260162601626016
-Tags Gerais,orcs,1,0.16260162601626016
-Tags Gerais,throuple,1,0.16260162601626016
-Generos,literary fiction,1,0.2178649237472767
-Generos,dark academia,1,0.2178649237472767
-Generos,magicians,1,0.2178649237472767
-Generos,paranormal & urban,1,0.2178649237472767
-Generos,couples,1,0.2178649237472767
-Generos,brazil,1,0.2178649237472767
-Generos,families,1,0.2178649237472767
-Generos,suspense romántico,1,0.2178649237472767
-Generos,ロマンチックサスペンス,1,0.2178649237472767
-Generos,suspense romantique,1,0.2178649237472767
-Generos,action & adventure,1,0.2178649237472767
-Generos,brothers,1,0.2178649237472767
-Generos,paranormal romance,1,0.2178649237472767
-Generos,species conflict,1,0.2178649237472767
-Generos,found belonging,1,0.2178649237472767
-Generos,identity,1,0.2178649237472767
-Generos,islands,1,0.2178649237472767
-Generos,dwellings,1,0.2178649237472767
-Generos,interpersonal relations,1,0.2178649237472767
-Generos,love stories,1,0.2178649237472767
-Generos,tbr,1,0.2178649237472767
-Generos,man-woman relationships,1,0.2178649237472767
-Generos,mystery & detective,1,0.2178649237472767
-Generos,thrillers,1,0.2178649237472767
-Generos,missing children,1,0.2178649237472767
-Generos,mysterythriller,1,0.2178649237472767
-Generos,abduction,1,0.2178649237472767
-Generos,philosophy,1,0.2178649237472767
-Generos,bolitar,1,0.2178649237472767
-Generos,myron (fictitious character),1,0.2178649237472767
-Generos,suspense fiction,1,0.2178649237472767
-Generos,birthfathers,1,0.2178649237472767
-Tags Gerais,smut,1,0.16260162601626016
-Tags Gerais,kindle unlimited,1,0.16260162601626016
-Tags Gerais,hockey,1,0.16260162601626016
-Tags Gerais,abuse-non-mc,1,0.16260162601626016
-Tags Gerais,sunny hero,1,0.16260162601626016
-Tags Gerais,super rich hero,1,0.16260162601626016
-Tags Gerais,dual-pov,1,0.16260162601626016
-Tags Gerais,asexual-hero,1,0.16260162601626016
-Tags Gerais,spicy,1,0.16260162601626016
-Tags Gerais,chicklit,1,0.16260162601626016
-Tags Gerais,adventure,1,0.16260162601626016
-Tags Gerais,rivals to lovers,1,0.16260162601626016
-Tags Gerais,workplace romance,1,0.16260162601626016
-Tags Gerais,bb storyline,1,0.16260162601626016
-Tags Gerais,music,1,0.16260162601626016
-Tags Gerais,single pov,1,0.16260162601626016
-Tags Gerais,teen shit,1,0.16260162601626016
-Tags Gerais,open-door spice,1,0.16260162601626016
-Tags Gerais,high heat,1,0.16260162601626016
-Tags Gerais,bonded attraction,1,0.16260162601626016
-Tags Gerais,one main love interest,1,0.16260162601626016
-Tags Gerais,spice-4,1,0.16260162601626016
-Tags Gerais,completed-series,1,0.16260162601626016
-Generos,paranormale,1,0.2178649237472767
-Generos,commedia romantica,1,0.2178649237472767
-Generos,超常現象,1,0.2178649237472767
-Generos,romanze,1,0.2178649237472767
-Generos,コンテンポラリー,1,0.2178649237472767
-Generos,comedia romántica,1,0.2178649237472767
-Generos,mafiaromance,1,0.2178649237472767
-Generos,secondchance,1,0.2178649237472767
-Generos,dark,1,0.2178649237472767
-Generos,lgbtq+,1,0.2178649237472767
-Generos,romance mm,1,0.2178649237472767
-Generos,realistic fiction,1,0.2178649237472767
-Generos,lesbian teenagers,1,0.2178649237472767
-Generos,time travel,1,0.2178649237472767
-Generos,romcom,1,0.2178649237472767
-Generos,multiverse,1,0.2178649237472767
-Generos,historical fiction,1,0.2178649237472767
-Generos,english fiction,1,0.2178649237472767
-Generos,family & relationships,1,0.2178649237472767
-Generos,literary criticism,1,0.2178649237472767
-Generos,russian language,1,0.2178649237472767
-Generos,religion,1,0.2178649237472767
-Generos,sapphic,1,0.2178649237472767
-Generos,brazilian americans,1,0.2178649237472767
-Generos,ghosts,1,0.2178649237472767
-Generos,fêtes,1,0.2178649237472767
-Generos,holidays,1,0.2178649237472767
-Generos,祝日,1,0.2178649237472767
-Generos,liebeskomödie,1,0.2178649237472767
-Content Warnings,spice 4/5,1,0.425531914893617
-Content Warnings,sexual assault,1,0.425531914893617
-Content Warnings,suicide (mentioned),1,0.425531914893617
-Content Warnings,mental trauma,1,0.425531914893617
-Content Warnings,body horror,1,0.425531914893617
-Content Warnings,swearing,1,0.425531914893617
-Content Warnings,underage drinking,1,0.425531914893617
-Content Warnings,suicidal ideation,1,0.425531914893617
-Content Warnings,nudity,1,0.425531914893617
-Content Warnings,ableism,1,0.425531914893617
-Content Warnings,gore,1,0.425531914893617
+Tags Gerais,strong character development,110,10.85883514313919
+Moods,emotional,107,12.076749435665914
+Tags Gerais,loveable characters,105,10.365251727541954
+Generos,romance,102,12.702366127023662
+Tags Gerais,a mix driven,100,9.871668311944719
+Tags Gerais,diverse characters,96,9.47680157946693
+Tags Gerais,character driven,94,9.279368213228036
+Moods,funny,93,10.496613995485328
+Tags Gerais,not diverse characters,90,8.884501480750247
+Tags Gerais,weak character development,84,8.292201382033564
+Moods,adventurous,77,8.690744920993227
+Moods,lighthearted,77,8.690744920993227
+Tags Gerais,unloveable characters,76,7.502467917077986
+Moods,hopeful,74,8.35214446952596
+Moods,reflective,72,8.126410835214447
+Generos,young adult,68,8.468244084682441
+Moods,tense,65,7.336343115124154
+Generos,fantasy,62,7.721046077210461
+Moods,inspiring,54,6.094808126410835
+Moods,sad,49,5.530474040632054
+Moods,mysterious,48,5.417607223476298
+Tags Gerais,plot driven,46,4.54096742349457
+Moods,relaxing,46,5.191873589164786
+Moods,challenging,45,5.07900677200903
+Moods,dark,42,4.740406320541761
+Content Warnings,sexual content,32,9.411764705882353
+Generos,fiction,31,3.8605230386052307
+Generos,lgbtq,25,3.1133250311332503
+Generos,contemporary,25,3.1133250311332503
+Generos,adventure,22,2.73972602739726
+Content Warnings,violence,21,6.176470588235294
+Content Warnings,death,17,5.0
+Generos,young adult fiction,16,1.9925280199252802
+Content Warnings,death of parent,15,4.411764705882353
+Tags Gerais,enemies to lovers,14,1.3820335636722607
+Content Warnings,grief,13,3.823529411764706
+Generos,science fiction,13,1.61892901618929
+Generos,romantic comedy,11,1.36986301369863
+Generos,general,9,1.1207970112079702
+Generos,juvenile fiction,9,1.1207970112079702
+Content Warnings,injury/injury detail,9,2.6470588235294117
+Content Warnings,murder,9,2.6470588235294117
+Content Warnings,child abuse,8,2.3529411764705883
+Generos,suspense,8,0.9962640099626401
+Generos,thriller,8,0.9962640099626401
+Generos,science fiction & fantasy,8,0.9962640099626401
+Generos,romantasy,8,0.9962640099626401
+Generos,mystery,8,0.9962640099626401
+Content Warnings,blood,7,2.0588235294117645
+Content Warnings,self harm,7,2.0588235294117645
+Generos,historical,7,0.8717310087173101
+Tags Gerais,childfree,7,0.6910167818361304
+Content Warnings,abandonment,7,2.0588235294117645
+Content Warnings,body shaming,6,1.7647058823529411
+Generos,war,6,0.7471980074719801
+Generos,historical fiction,6,0.7471980074719801
+Generos,did-not-finish,6,0.7471980074719801
+Content Warnings,pregnancy,6,1.7647058823529411
+Moods,informative,6,0.6772009029345373
+Content Warnings,medical content,6,1.7647058823529411
+Content Warnings,alcohol,6,1.7647058823529411
+Content Warnings,rape,6,1.7647058823529411
+Tags Gerais,forced proximity,6,0.5923000987166831
+Generos,paranormal,6,0.7471980074719801
+Generos,sports romance,6,0.7471980074719801
+Generos,audiobook,6,0.7471980074719801
+Content Warnings,sexual assault,5,1.4705882352941175
+Moods,fast-paced,5,0.5643340857787811
+Moods,medium-paced,5,0.5643340857787811
+Generos,history,5,0.62266500622665
+Tags Gerais,4 peppers,5,0.4935834155972359
+Generos,comédie romantique,5,0.62266500622665
+Generos,dystopian,5,0.62266500622665
+Tags Gerais,angst,5,0.4935834155972359
+Tags Gerais,fake relationship,5,0.4935834155972359
+Content Warnings,car accident,5,1.4705882352941175
+Content Warnings,child death,5,1.4705882352941175
+Content Warnings,toxic relationship,5,1.4705882352941175
+Content Warnings,stalking,5,1.4705882352941175
+Generos,physical-tbr,5,0.62266500622665
+Generos,コンテンポラリー,5,0.62266500622665
+Generos,friendship,5,0.62266500622665
+Content Warnings,classism,4,1.1764705882352942
+Content Warnings,cursing,4,1.1764705882352942
+Content Warnings,suicidal thoughts,4,1.1764705882352942
+Content Warnings,gaslighting,4,1.1764705882352942
+Content Warnings,homophobia,4,1.1764705882352942
+Content Warnings,cancer,4,1.1764705882352942
+Tags Gerais,grumpy sunshine,4,0.3948667324777887
+Tags Gerais,audiobook,4,0.3948667324777887
+Tags Gerais,small town,4,0.3948667324777887
+Generos,aliens,4,0.49813200498132004
+Generos,"[""romance""",4,0.49813200498132004
+Generos,adult,4,0.49813200498132004
+Generos,crime,4,0.49813200498132004
+Tags Gerais,friends to lovers,4,0.3948667324777887
+Generos,smut,4,0.49813200498132004
+Generos,hockey,4,0.49813200498132004
+Generos,dark romance,4,0.49813200498132004
+Content Warnings,alcoholism,4,1.1764705882352942
+Generos,classics,4,0.49813200498132004
+Content Warnings,gun violence,4,1.1764705882352942
+Generos,magical realism,4,0.49813200498132004
+Content Warnings,animal death,4,1.1764705882352942
+Content Warnings,infidelity,4,1.1764705882352942
+Content Warnings,kidnapping,4,1.1764705882352942
+Content Warnings,domestic abuse,4,1.1764705882352942
+Generos,"""contemporary""]",3,0.37359900373599003
+Generos,zeitgenössische liebesromane,3,0.37359900373599003
+Generos,literatur & fiktion,3,0.37359900373599003
+Generos,vampires,3,0.37359900373599003
+Generos,highfantasy,3,0.37359900373599003
+Generos,commedia romantica,3,0.37359900373599003
+Content Warnings,sexual violence,3,0.8823529411764706
+Generos,sports,3,0.37359900373599003
+Tags Gerais,vampires,3,0.29615004935834155
+Tags Gerais,historical romance,3,0.29615004935834155
+Moods,romantic,3,0.33860045146726864
+Tags Gerais,dual pov,3,0.29615004935834155
+Tags Gerais,dark,3,0.29615004935834155
+Tags Gerais,fast-paced,3,0.29615004935834155
+Tags Gerais,mysterious,3,0.29615004935834155
+Tags Gerais,female author,3,0.29615004935834155
+Tags Gerais,mediabox-old-format,3,0.29615004935834155
+Tags Gerais,medium-paced,3,0.29615004935834155
+Tags Gerais,slow burn,3,0.29615004935834155
+Content Warnings,addiction,3,0.8823529411764706
+Content Warnings,panic attacks/disorders,3,0.8823529411764706
+Content Warnings,sexual harassment,3,0.8823529411764706
+Tags Gerais,contemporary romance,3,0.29615004935834155
+Generos,ロマンチックコメディ,3,0.37359900373599003
+Generos,darkromance,3,0.37359900373599003
+Generos,enemiestolovers,3,0.37359900373599003
+Generos,dark,3,0.37359900373599003
+Generos,hockey romance,3,0.37359900373599003
+Generos,m m romance,3,0.37359900373599003
+Generos,erotic stories,3,0.37359900373599003
+Generos,youngadult,3,0.37359900373599003
+Content Warnings,emotional abuse,3,0.8823529411764706
+Content Warnings,bullying,3,0.8823529411764706
+Content Warnings,misogyny,3,0.8823529411764706
+Content Warnings,dementia,3,0.8823529411764706
+Content Warnings,toxic friendship,3,0.8823529411764706
+Content Warnings,gore,3,0.8823529411764706
+Content Warnings,animal cruelty,3,0.8823529411764706
+Generos,england,3,0.37359900373599003
+Generos,horror,3,0.37359900373599003
+Generos,lgbt,3,0.37359900373599003
+Generos,monster romance,3,0.37359900373599003
+Generos,contemporary romance,3,0.37359900373599003
+Generos,fantasy romance,3,0.37359900373599003
+Generos,"""physical-tbr""",3,0.37359900373599003
+Generos,romantic suspense,2,0.24906600249066002
+Moods,spicy,2,0.2257336343115124
+Moods,slow-paced,2,0.2257336343115124
+Moods,steamy,2,0.2257336343115124
+Tags Gerais,paranormal,2,0.19743336623889435
+Tags Gerais,shapeshifters,2,0.19743336623889435
+Generos,abused women,2,0.24906600249066002
+Generos,large type books,2,0.24906600249066002
+Generos,comics & graphic novels,2,0.24906600249066002
+Generos,chick lit,2,0.24906600249066002
+Generos,small town & rural,2,0.24906600249066002
+Generos,piccoli centri e rurale,2,0.24906600249066002
+Generos,kleinstadt- & landleben,2,0.24906600249066002
+Generos,high fantasy,2,0.24906600249066002
+Content Warnings,explicit sexual content,2,0.5882352941176471
+Content Warnings,slavery,2,0.5882352941176471
+Content Warnings,xenophobia,2,0.5882352941176471
+Content Warnings,p,2,0.5882352941176471
+Content Warnings,emic/epidemic,2,0.5882352941176471
+Content Warnings,chronic illness,2,0.5882352941176471
+Content Warnings,vomit,2,0.5882352941176471
+Content Warnings,adult/minor relationship,2,0.5882352941176471
+Content Warnings,drug use,2,0.5882352941176471
+Content Warnings,terminal illness,2,0.5882352941176471
+Content Warnings,fire/fire injury,2,0.5882352941176471
+Tags Gerais,tense,2,0.19743336623889435
+Tags Gerais,written by women,2,0.19743336623889435
+Tags Gerais,cowboy,2,0.19743336623889435
+Tags Gerais,fiction,2,0.19743336623889435
+Tags Gerais,grumpy x sunshine,2,0.19743336623889435
+Tags Gerais,g5,2,0.19743336623889435
+Tags Gerais,kindle unlimited,2,0.19743336623889435
+Tags Gerais,single pov,2,0.19743336623889435
+Generos,lgbtq+,2,0.24906600249066002
+Generos,enemies to lovers,2,0.24906600249066002
+Generos,fanfic/trashy.heated rivalry,2,0.24906600249066002
+Generos,english fiction,2,0.24906600249066002
+Generos,literary collections,2,0.24906600249066002
+Generos,comics,2,0.24906600249066002
+Generos,great britain,2,0.24906600249066002
+Tags Gerais,second chance,2,0.19743336623889435
+Generos,murder,2,0.24906600249066002
+Generos,college,2,0.24906600249066002
+Generos,college stories,2,0.24906600249066002
+Generos,literary,2,0.24906600249066002
+Generos,legends & mythology,2,0.24906600249066002
+Generos,folk tales,2,0.24906600249066002
+Generos,spicy,2,0.24906600249066002
+Generos,mm romance,2,0.24906600249066002
+Generos,paranormal romance,2,0.24906600249066002
+Generos,tbr,2,0.24906600249066002
+Generos,man-woman relationships,2,0.24906600249066002
+Generos,detective and mystery stories,2,0.24906600249066002
+Generos,literature & fiction,2,0.24906600249066002
+Generos,darkfantasy,2,0.24906600249066002
+Generos,fairy tales,2,0.24906600249066002
+Generos,liebesromane,2,0.24906600249066002
+Generos,"""fiction""",2,0.24906600249066002
+Generos,"""did-not-finish""",2,0.24906600249066002
+Generos,liebeskomödie,2,0.24906600249066002
+Generos,romanzo d'amore,2,0.24906600249066002
+Tags Gerais,m/m romance,2,0.19743336623889435
+Tags Gerais,dark romance,2,0.19743336623889435
+Tags Gerais,library,2,0.19743336623889435
+Tags Gerais,secret relationship,2,0.19743336623889435
+Content Warnings,torture,2,0.5882352941176471
+Content Warnings,suicide attempt,2,0.5882352941176471
+Content Warnings,confinement,2,0.5882352941176471
+Content Warnings,physical abuse,2,0.5882352941176471
+Content Warnings,war,2,0.5882352941176471
+Content Warnings,genocide,1,0.29411764705882354
+Generos,deadly tournament,1,0.12453300124533001
+Generos,freedom,1,0.12453300124533001
+Generos,magic training,1,0.12453300124533001
+Generos,rebellion,1,0.12453300124533001
+Content Warnings,suicidal ideation,1,0.29411764705882354
+Content Warnings,nudity,1,0.29411764705882354
+Content Warnings,ableism,1,0.29411764705882354
+Content Warnings,racism,1,0.29411764705882354
+Content Warnings,forced institutionalization,1,0.29411764705882354
+Content Warnings,sexism,1,0.29411764705882354
+Content Warnings,eating disorder,1,0.29411764705882354
+Content Warnings,deadnaming,1,0.29411764705882354
+Generos,erotica,1,0.12453300124533001
+Generos,bull riders,1,0.12453300124533001
+Generos,teen & young adult,1,0.12453300124533001
+Generos,architecture,1,0.12453300124533001
+Generos,arts & entertainment,1,0.12453300124533001
+Generos,aristocracy (social class),1,0.12453300124533001
+Generos,diaries,1,0.12453300124533001
+Generos,anonymous persons,1,0.12453300124533001
+Generos,london (england),1,0.12453300124533001
+Generos,inheritance and succession,1,0.12453300124533001
+Generos,shapeshifters,1,0.12453300124533001
+Generos,heartfelt,1,0.12453300124533001
+Generos,humorous,1,0.12453300124533001
+Generos,island,1,0.12453300124533001
+Generos,claire's books,1,0.12453300124533001
+Moods,wholesome,1,0.1128668171557562
+Moods,sexy,1,0.1128668171557562
+Moods,graphic,1,0.1128668171557562
+Moods,rom com,1,0.1128668171557562
+Moods,feel good,1,0.1128668171557562
+Moods,sweet but naughty,1,0.1128668171557562
+Moods,eye-opening,1,0.1128668171557562
+Moods,empowering,1,0.1128668171557562
+Moods,unsettling,1,0.1128668171557562
+Moods,cute,1,0.1128668171557562
+Moods,"[""lighthearted""]",1,0.1128668171557562
+Moods,suspenseful,1,0.1128668171557562
+Generos,romantic suspense fiction,1,0.12453300124533001
+Generos,cowboy romance,1,0.12453300124533001
+Generos,viking world,1,0.12453300124533001
+Generos,fate magic,1,0.12453300124533001
+Generos,prophecy,1,0.12453300124533001
+Generos,single women,1,0.12453300124533001
+Generos,occult fiction,1,0.12453300124533001
+Generos,polnische bücher,1,0.12453300124533001
+Generos,mystery/thriller,1,0.12453300124533001
+Generos,thriller & suspense,1,0.12453300124533001
+Generos,"""romance""",1,0.12453300124533001
+Generos,"[""thriller""",1,0.12453300124533001
+Generos,"""mystery""]",1,0.12453300124533001
+Generos,boston (mass.),1,0.12453300124533001
+Generos,mythen & legenden,1,0.12453300124533001
+Generos,to-read,1,0.12453300124533001
+Generos,juvenile nonfiction,1,0.12453300124533001
+Generos,psychological,1,0.12453300124533001
+Generos,domestic thrillers,1,0.12453300124533001
+Generos,mafia,1,0.12453300124533001
+Generos,christmas,1,0.12453300124533001
+Generos,contemporaneo,1,0.12453300124533001
+Generos,田舎町・農村,1,0.12453300124533001
+Generos,genre fiction,1,0.12453300124533001
+Generos,petites villes et ruralité,1,0.12453300124533001
+Generos,pueblos y campo,1,0.12453300124533001
+Generos,contemporánea,1,0.12453300124533001
+Generos,celebrities,1,0.12453300124533001
+Generos,bereavement,1,0.12453300124533001
+Generos,black,1,0.12453300124533001
+Generos,daemon (fictitious character),1,0.12453300124533001
+Generos,gods,1,0.12453300124533001
+Generos,brazil,1,0.12453300124533001
+Generos,families,1,0.12453300124533001
+Generos,suspense romántico,1,0.12453300124533001
+Generos,ロマンチックサスペンス,1,0.12453300124533001
+Generos,suspense romantique,1,0.12453300124533001
+Generos,action & adventure,1,0.12453300124533001
+Generos,brothers,1,0.12453300124533001
+Generos,species conflict,1,0.12453300124533001
+Generos,found belonging,1,0.12453300124533001
+Generos,identity,1,0.12453300124533001
+Generos,islands,1,0.12453300124533001
+Generos,dwellings,1,0.12453300124533001
+Generos,interpersonal relations,1,0.12453300124533001
+Generos,love stories,1,0.12453300124533001
+Generos,mystery & detective,1,0.12453300124533001
+Generos,thrillers,1,0.12453300124533001
+Generos,missing children,1,0.12453300124533001
+Generos,mysterythriller,1,0.12453300124533001
+Generos,abduction,1,0.12453300124533001
+Generos,philosophy,1,0.12453300124533001
+Generos,bolitar,1,0.12453300124533001
+Generos,myron (fictitious character),1,0.12453300124533001
+Generos,suspense fiction,1,0.12453300124533001
+Generos,birthfathers,1,0.12453300124533001
+Generos,family,1,0.12453300124533001
+Generos,closeted gays,1,0.12453300124533001
+Generos,figure skaters,1,0.12453300124533001
+Generos,sports-romance,1,0.12453300124533001
+Generos,queer,1,0.12453300124533001
+Generos,romance; fantasy,1,0.12453300124533001
+Generos,california,1,0.12453300124533001
+Generos,billionaires,1,0.12453300124533001
+Tags Gerais,abduction,1,0.09871668311944717
+Tags Gerais,fae,1,0.09871668311944717
+Tags Gerais,dragons,1,0.09871668311944717
+Tags Gerais,magic,1,0.09871668311944717
+Tags Gerais,witches,1,0.09871668311944717
+Tags Gerais,dragon shifters,1,0.09871668311944717
+Tags Gerais,physical book,1,0.09871668311944717
+Tags Gerais,morally grey mmc,1,0.09871668311944717
+Tags Gerais,fl mortal edition,1,0.09871668311944717
+Tags Gerais,series,1,0.09871668311944717
+Tags Gerais,stalker,1,0.09871668311944717
+Tags Gerais,romance: mm,1,0.09871668311944717
+Tags Gerais,canada,1,0.09871668311944717
+Tags Gerais,debut author,1,0.09871668311944717
+Tags Gerais,*signed,1,0.09871668311944717
+Tags Gerais,as special box,1,0.09871668311944717
+Tags Gerais,fake dating,1,0.09871668311944717
+Tags Gerais,classics,1,0.09871668311944717
+Tags Gerais,bisexual,1,0.09871668311944717
+Tags Gerais,bisexual mc,1,0.09871668311944717
+Tags Gerais,freak4freak,1,0.09871668311944717
+Tags Gerais,friendship,1,0.09871668311944717
+Tags Gerais,bb epi,1,0.09871668311944717
+Tags Gerais,autistic character,1,0.09871668311944717
+Tags Gerais,steamy,1,0.09871668311944717
+Tags Gerais,marriage of convenience,1,0.09871668311944717
+Tags Gerais,found family,1,0.09871668311944717
+Tags Gerais,suspense,1,0.09871668311944717
+Tags Gerais,due: 7/31,1,0.09871668311944717
+Tags Gerais,united states,1,0.09871668311944717
+Tags Gerais,2014,1,0.09871668311944717
+Tags Gerais,mates,1,0.09871668311944717
+Tags Gerais,from-audible,1,0.09871668311944717
+Tags Gerais,borrowed,1,0.09871668311944717
+Tags Gerais,rec by eleanor,1,0.09871668311944717
+Tags Gerais,slow-paced,1,0.09871668311944717
+Tags Gerais,reflective,1,0.09871668311944717
+Tags Gerais,#digitally-own,1,0.09871668311944717
+Tags Gerais,crime mystery & thriller,1,0.09871668311944717
+Tags Gerais,orcs,1,0.09871668311944717
+Tags Gerais,throuple,1,0.09871668311944717
+Tags Gerais,smut,1,0.09871668311944717
+Tags Gerais,hockey,1,0.09871668311944717
+Tags Gerais,abuse-non-mc,1,0.09871668311944717
+Tags Gerais,sunny hero,1,0.09871668311944717
+Tags Gerais,super rich hero,1,0.09871668311944717
+Tags Gerais,dual-pov,1,0.09871668311944717
+Tags Gerais,asexual-hero,1,0.09871668311944717
+Tags Gerais,spicy,1,0.09871668311944717
+Tags Gerais,chicklit,1,0.09871668311944717
+Tags Gerais,adventure,1,0.09871668311944717
+Tags Gerais,rivals to lovers,1,0.09871668311944717
+Tags Gerais,workplace romance,1,0.09871668311944717
+Tags Gerais,bb storyline,1,0.09871668311944717
+Tags Gerais,music,1,0.09871668311944717
+Tags Gerais,teen shit,1,0.09871668311944717
+Tags Gerais,open-door spice,1,0.09871668311944717
+Tags Gerais,high heat,1,0.09871668311944717
+Tags Gerais,bonded attraction,1,0.09871668311944717
+Tags Gerais,one main love interest,1,0.09871668311944717
+Tags Gerais,spice-4,1,0.09871668311944717
+Tags Gerais,completed-series,1,0.09871668311944717
+Tags Gerais,audible,1,0.09871668311944717
+Tags Gerais,mf,1,0.09871668311944717
+Tags Gerais,opposites attract,1,0.09871668311944717
+Tags Gerais,secret identity,1,0.09871668311944717
+Tags Gerais,emotional,1,0.09871668311944717
+Tags Gerais,funny,1,0.09871668311944717
+Tags Gerais,lighthearted,1,0.09871668311944717
+Tags Gerais,time loop,1,0.09871668311944717
+Tags Gerais,3 peppers,1,0.09871668311944717
+Tags Gerais,spice level 4,1,0.09871668311944717
+Tags Gerais,novel,1,0.09871668311944717
+Tags Gerais,physical,1,0.09871668311944717
+Tags Gerais,calibre import,1,0.09871668311944717
+Tags Gerais,trope:vampires,1,0.09871668311944717
+Tags Gerais,appeal:worldbuilding,1,0.09871668311944717
+Tags Gerais,bull rider,1,0.09871668311944717
+Tags Gerais,love triangle,1,0.09871668311944717
+Tags Gerais,julia quinn,1,0.09871668311944717
+Tags Gerais,not owned,1,0.09871668311944717
+Tags Gerais,regency,1,0.09871668311944717
+Tags Gerais,unrequited love,1,0.09871668311944717
+Tags Gerais,sappy,1,0.09871668311944717
+Tags Gerais,british,1,0.09871668311944717
+Tags Gerais,shifters,1,0.09871668311944717
+Tags Gerais,historicalfiction,1,0.09871668311944717
+Generos,ghosts,1,0.12453300124533001
+Generos,fêtes,1,0.12453300124533001
+Generos,holidays,1,0.12453300124533001
+Generos,祝日,1,0.12453300124533001
+Generos,paranormale,1,0.12453300124533001
+Generos,超常現象,1,0.12453300124533001
+Generos,romanze,1,0.12453300124533001
+Generos,comedia romántica,1,0.12453300124533001
+Generos,mafiaromance,1,0.12453300124533001
+Generos,secondchance,1,0.12453300124533001
+Generos,romance mm,1,0.12453300124533001
+Generos,realistic fiction,1,0.12453300124533001
+Generos,lesbian teenagers,1,0.12453300124533001
+Generos,time travel,1,0.12453300124533001
+Generos,romcom,1,0.12453300124533001
+Generos,multiverse,1,0.12453300124533001
+Generos,family & relationships,1,0.12453300124533001
+Generos,literary criticism,1,0.12453300124533001
+Generos,russian language,1,0.12453300124533001
+Generos,religion,1,0.12453300124533001
+Generos,sapphic,1,0.12453300124533001
+Generos,brazilian americans,1,0.12453300124533001
+Generos,fantasyromance,1,0.12453300124533001
+Generos,new adult,1,0.12453300124533001
+Generos,college students,1,0.12453300124533001
+Generos,satire,1,0.12453300124533001
+Generos,literary fiction,1,0.12453300124533001
+Generos,dark academia,1,0.12453300124533001
+Generos,magicians,1,0.12453300124533001
+Generos,paranormal & urban,1,0.12453300124533001
+Generos,couples,1,0.12453300124533001
+Tags Gerais,lgbt,1,0.09871668311944717
+Tags Gerais,bi awakening,1,0.09871668311944717
+Tags Gerais,audiobooks,1,0.09871668311944717
+Tags Gerais,genre: litrpg-comedy,1,0.09871668311944717
+Content Warnings,forced proximity,1,0.29411764705882354
+Content Warnings,graphic sex,1,0.29411764705882354
+Content Warnings,manipulation,1,0.29411764705882354
+Content Warnings,morally gray characters,1,0.29411764705882354
+Content Warnings,enemies to lovers,1,0.29411764705882354
+Content Warnings,cannibalism,1,0.29411764705882354
+Content Warnings,suicide (mentioned),1,0.29411764705882354
+Content Warnings,mental trauma,1,0.29411764705882354
+Content Warnings,body horror,1,0.29411764705882354
+Content Warnings,swearing,1,0.29411764705882354
+Content Warnings,underage drinking,1,0.29411764705882354
+Content Warnings,spice 4/5,1,0.29411764705882354
+Content Warnings,abortion,1,0.29411764705882354
+Content Warnings,parental abandonment,1,0.29411764705882354
+Content Warnings,antisemitism,1,0.29411764705882354
+Content Warnings,fatphobia2,1,0.29411764705882354
+Content Warnings,transphobia,1,0.29411764705882354
+Content Warnings,childhood trauma,1,0.29411764705882354
+Generos,fremdsprachige bücher,1,0.12453300124533001
+Generos,fairy tale retelling,1,0.12453300124533001
+Generos,assassins,1,0.12453300124533001
+Generos,youngadultfantasy,1,0.12453300124533001
+Generos,newadult,1,0.12453300124533001
+Generos,magic,1,0.12453300124533001
+Generos,epic; humorous; action & adventure; dark fantasy; paranormal,1,0.12453300124533001
+Generos,dark-fantasy,1,0.12453300124533001
+Generos,design,1,0.12453300124533001

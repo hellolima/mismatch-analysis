@@ -1,0 +1,17 @@
+# titulos.txt  --  formato:  titulo | observacao
+# Canal 'titulo': intitle:"<titulo>". Serve para obras-ancora do BookTok que nao sao tropos
+# (movidas de termos.txt: 'haunting adeline'; 'touch her and die' era meme, nao titulo).
+# Tambem funciona como teste de sanidade do pipeline: se algum destes nao resolver na ponte,
+# o problema e de pipeline, nao de cobertura.
+Haunting Adeline | H.D. Carlton
+Hunting Adeline | grafia alternativa
+Verity | Colleen Hoover
+É assim que acaba | Colleen Hoover
+Quarta Asa | Rebecca Yarros
+Corte de espinhos e rosas | Sarah J. Maas
+A hipótese do amor | Ali Hazelwood
+Belo desastre | Jamie McGuire
+Amor corrompido | Ana Huang
+Vermelho, branco e sangue azul | Casey McQuiston
+Acorda pra vida, Chloe Brown | Talia Hibbert
+Ugly Love | Colleen Hoover

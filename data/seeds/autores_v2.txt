@@ -207,3 +207,406 @@ Rachel Reid | esportivo | EN | ?
 Sierra Simone | dark | EN | ?
 Emily McIntire | dark | EN | ?
 Brynne Weaver | dark | EN | ?
+
+# ============================================================
+# EXPANSAO VIA Books_Romance.csv (Amazon.in Best Sellers Romance)
+# Autoras extraidas dos titulos expandidos; a sondagem gbooks (Passo 1)
+# descarta automaticamente via sondagem_zero quem nao tem edicao BR.
+# ============================================================
+
+# --- controles negativos (clean / women's fiction) (3 autoras) ---
+Graeme Simsion | controle_wf | EN | ?
+Julia Quinn | controle_wf | EN | ?
+TJ Klune | controle_wf | EN | ?
+
+# --- romantasia (fantasia / paranormal / sci-fi) (48 autoras) ---
+Rebecca Ross | romantasia | EN | ?
+J Bree | romantasia | EN | ?
+Ruby Dixon | romantasia | EN | ?
+Victoria Aveline | romantasia | EN | ?
+Cate C. Wells | romantasia | EN | ?
+Zoey Draven | romantasia | EN | ?
+Suzanne Wright | romantasia | EN | ?
+Ashley Poston | romantasia | EN | ?
+Lee Savino | romantasia | EN | ?
+Rebecca Quinn | romantasia | EN | ?
+Kia Carrington-Russell | romantasia | EN | ?
+K. M. Shea | romantasia | EN | ?
+Presley Hall | romantasia | EN | ?
+Olivia Thorn | romantasia | EN | ?
+Anna Carven | romantasia | EN | ?
+Layla Fae | romantasia | EN | ?
+Tessa Lilly | romantasia | EN | ?
+Honey Phillips | romantasia | EN | ?
+Carian Cole | romantasia | EN | ?
+Olympia Black | romantasia | EN | ?
+Jennifer Chipman | romantasia | EN | ?
+L.V. Lane | romantasia | EN | ?
+Regine Abel | romantasia | EN | ?
+Anna Hackett | romantasia | EN | ?
+A. Zavarelli | romantasia | EN | ?
+Ivy Barrett | romantasia | EN | ?
+Luna Kingsley | romantasia | EN | ?
+Drethi A. | romantasia | EN | ?
+Aya Morningstar | romantasia | EN | ?
+Evangeline Anderson | romantasia | EN | ?
+Arianna Fraser | romantasia | EN | ?
+MV Kasi | romantasia | EN | ?
+Chloe Archer | romantasia | EN | ?
+Talia Rhea | romantasia | EN | ?
+Monica Kayne | romantasia | EN | ?
+Lisa Lovell | romantasia | EN | ?
+Veronica Lancet | romantasia | EN | ?
+Ruchi Singh | romantasia | EN | ?
+Pepper North | romantasia | EN | ?
+Mallika Manivannan | romantasia | EN | ?
+Sonja Grey | romantasia | EN | ?
+Charlie N. Holmberg | romantasia | EN | ?
+Evie Burks | romantasia | EN | ?
+Preet Kawal | romantasia | EN | ?
+Caroline Peckham | romantasia | EN | ?
+Ursa Dax | romantasia | EN | ?
+Krista Street | romantasia | EN | ?
+Loki Renard | romantasia | EN | ?
+
+# --- dark romance / mafia / suspense / alpha male (69 autoras) ---
+Danielle Lori | dark | EN | ?
+Kat Singleton | dark | EN | ?
+Sadie Kincaid | dark | EN | ?
+Sara Cate | dark | EN | ?
+S.J. Tilly | dark | EN | ?
+Neva Altaj | dark | EN | ?
+Lyla Sage | dark | EN | ?
+Jill Ramsower | dark | EN | ?
+RuNyx | dark | EN | ?
+Michelle Heard | dark | EN | ?
+Chetan Bhagat | dark | EN | ?
+Nadia Lee | dark | EN | ?
+Gabrielle Sands | dark | EN | ?
+Morgan Bridges | dark | EN | ?
+Susan Stoker | dark | EN | ?
+Louise Bay | dark | EN | ?
+Cassandra Robbins | dark | EN | ?
+Katy Evans | dark | EN | ?
+Avina St. Graves | dark | EN | ?
+Natasha Anders | dark | EN | ?
+Jessa Kane | dark | EN | ?
+Melanie Moreland | dark | EN | ?
+Maya Alden | dark | EN | ?
+Natasha Madison | dark | EN | ?
+Krista Ritchie | dark | EN | ?
+Ashley N. Rostek | dark | EN | ?
+Jessica Hawkins | dark | EN | ?
+Penny Dee | dark | EN | ?
+Ivy Layne | dark | EN | ?
+Ashlie Silas | dark | EN | ?
+Cee Bowerman | dark | EN | ?
+Bree Porter | dark | EN | ?
+Layla Frost | dark | EN | ?
+Jagger Cole | dark | EN | ?
+Kira Cole | dark | EN | ?
+Piper Stone | dark | EN | ?
+Sarah Brianne | dark | EN | ?
+Eva Winners | dark | EN | ?
+Measha Stone | dark | EN | ?
+Sara Fields | dark | EN | ?
+Charlotte McGinlay | dark | EN | ?
+Sapna Bhog | dark | EN | ?
+Victoria Paige | dark | EN | ?
+T.L. Hodel | dark | EN | ?
+Emily Tilton | dark | EN | ?
+C.M. Steele | dark | EN | ?
+A.L. Luca | dark | EN | ?
+Adriana Brinne | dark | EN | ?
+KC Kean | dark | EN | ?
+Madhuri Tamse | dark | EN | ?
+Bhavna Goyal | dark | EN | ?
+Payal Dedhia | dark | EN | ?
+Meenu Pillai | dark | EN | ?
+Anamika GK | dark | EN | ?
+Kushi Sada | dark | EN | ?
+Jaclin Marie | dark | EN | ?
+Bhavana Singh | dark | EN | ?
+Angelique Jones | dark | EN | ?
+sonam kandalgaonkar | dark | EN | ?
+Hayley Faiman | dark | EN | ?
+Sirin Fathima | dark | EN | ?
+Dahlia Reign | dark | EN | ?
+Tara Crescent | dark | EN | ?
+Shanjida Nusrath Ali | dark | EN | ?
+Giselle Cox | dark | EN | ?
+Sect Elder Breeze | dark | EN | ?
+Sai Vignana Sindhu | dark | EN | ?
+Nivedita Vedurla | dark | EN | ?
+Christina B. Rose | dark | EN | ?
+
+# --- romance esportivo / sports (30 autoras) ---
+Becka Mack | esportivo | EN | ?
+C.R. Jane | esportivo | EN | ?
+Angel Lawson | esportivo | EN | ?
+S. Massery | esportivo | EN | ?
+J. Wilder | esportivo | EN | ?
+Amy Award | esportivo | EN | ?
+Laura Pavlov | esportivo | EN | ?
+Tijan | esportivo | EN | ?
+Emma St. Clair | esportivo | EN | ?
+Bella Matthews | esportivo | EN | ?
+Rebecca Jenshak | esportivo | EN | ?
+Katie Bailey | esportivo | EN | ?
+J. Saman | esportivo | EN | ?
+Jennifer Sucevic | esportivo | EN | ?
+Brittanee Nicole | esportivo | EN | ?
+Andi Jaxon | esportivo | EN | ?
+Chelsea Curto | esportivo | EN | ?
+Julia Connors | esportivo | EN | ?
+Ki Stephens | esportivo | EN | ?
+Stephanie Alves | esportivo | EN | ?
+Annah Conwell | esportivo | EN | ?
+Faith Summers | esportivo | EN | ?
+Ellie K. Wilde | esportivo | EN | ?
+M.V. Kasi | esportivo | EN | ?
+Lulu Moore | esportivo | EN | ?
+Erin MacKenzie | esportivo | EN | ?
+Jenna Hartley | esportivo | EN | ?
+C.L. Rose | esportivo | EN | ?
+Ritika Aastha | esportivo | EN | ?
+R.A. Smyth | esportivo | EN | ?
+
+# --- new adult / college (6 autoras) ---
+Rosa Lucas | new_adult | EN | ?
+Nelia Alarcon | new_adult | EN | ?
+Stylo Fantome | new_adult | EN | ?
+Alexia Mantzouranis | new_adult | EN | ?
+Lexi Pabst | new_adult | EN | ?
+Thendral தென்றல் | new_adult | EN | ?
+
+# --- comédia romântica / romcom (68 autoras) ---
+Elena Armas | romcom | EN | ?
+Catherine Walsh | romcom | EN | ?
+Julia Wolf | romcom | EN | ?
+L. M. Dalgleish | romcom | EN | ?
+Maxine Morrey | romcom | EN | ?
+Cecelia Ahern | romcom | EN | ?
+Carrie Elks | romcom | EN | ?
+Elena Ferrante | romcom | EN | ?
+Jessica Redland | romcom | EN | ?
+Phoebe MacLeod | romcom | EN | ?
+Sariah Wilson | romcom | EN | ?
+Stuti Changle | romcom | EN | ?
+Jade West | romcom | EN | ?
+Q.B. Tyler | romcom | EN | ?
+Noah Hardy | romcom | EN | ?
+Karissa Kinword | romcom | EN | ?
+Amy Lea | romcom | EN | ?
+Penelope Bloom | romcom | EN | ?
+Carmen Reid | romcom | EN | ?
+Kate Watson | romcom | EN | ?
+Portia MacIntosh | romcom | EN | ?
+Kate Frost | romcom | EN | ?
+Melanie D. Snitker | romcom | EN | ?
+Helen Rolfe | romcom | EN | ?
+Elizabeth Johns | romcom | EN | ?
+Alexis Winter | romcom | EN | ?
+Fay Keenan | romcom | EN | ?
+L. Steele | romcom | EN | ?
+Olivia Hayle | romcom | EN | ?
+Freya Kennedy | romcom | EN | ?
+Jo Lovett | romcom | EN | ?
+Layla Valentine | romcom | EN | ?
+Mandy Baggot | romcom | EN | ?
+M.A. Nichols | romcom | EN | ?
+Samantha Christy | romcom | EN | ?
+Lisa Cullen | romcom | EN | ?
+Mary Calmes | romcom | EN | ?
+Mary Kingswood | romcom | EN | ?
+Sara L. Hudson | romcom | EN | ?
+Amelie Rhys | romcom | EN | ?
+Zoë Folbigg | romcom | EN | ?
+Sandy Barker | romcom | EN | ?
+Laura Carter | romcom | EN | ?
+Eli Easton | romcom | EN | ?
+Lil Evans | romcom | EN | ?
+Camilla Isley | romcom | EN | ?
+Sofia T Summers | romcom | EN | ?
+Chasity Bowlin | romcom | EN | ?
+Aimee Brown | romcom | EN | ?
+Joelina Falk | romcom | EN | ?
+A.J. Marchant | romcom | EN | ?
+Ruchi Chandra Verma | romcom | EN | ?
+Angela Britnell | romcom | EN | ?
+Shobana Mahadevan | romcom | EN | ?
+Isa Aroop | romcom | EN | ?
+Aahaana M | romcom | EN | ?
+Rachel Dove | romcom | EN | ?
+AashiIrf | romcom | EN | ?
+Evie Sterling | romcom | EN | ?
+Dream Writer | romcom | EN | ?
+Shazia Akhter | romcom | EN | ?
+Divine Earth | romcom | EN | ?
+Alisha Kay | romcom | EN | ?
+Farhaana Tahseen | romcom | EN | ?
+Rima Khubani | romcom | EN | ?
+Jaya Sri Naga Jyothi P | romcom | EN | ?
+Vanisha Thandawan | romcom | EN | ?
+Manisha Dasappa | romcom | EN | ?
+
+# --- romance contemporâneo (57 autoras) ---
+Laura Pearson | contemporaneo | EN | ?
+Carley Fortune | contemporaneo | EN | ?
+Ajay Pandey | contemporaneo | EN | ?
+Danielle Steel | contemporaneo | EN | ?
+Adriana Locke | contemporaneo | EN | ?
+Cathy Yardley | contemporaneo | EN | ?
+Gillian Harvey | contemporaneo | EN | ?
+Susan Elizabeth Phillips | contemporaneo | EN | ?
+K.L. Kreig | contemporaneo | EN | ?
+Lauren Landish | contemporaneo | EN | ?
+Kelly Elliott | contemporaneo | EN | ?
+Lucy Lennox | contemporaneo | EN | ?
+Jessica Prince | contemporaneo | EN | ?
+Saranya Umakanthan | contemporaneo | EN | ?
+Nathan Hill | contemporaneo | EN | ?
+Kristen Proby | contemporaneo | EN | ?
+Willow Aster | contemporaneo | EN | ?
+Brit Benson | contemporaneo | EN | ?
+I. A. Dice | contemporaneo | EN | ?
+Aly Martinez | contemporaneo | EN | ?
+Ainsley St Claire | contemporaneo | EN | ?
+Serenity Woods | contemporaneo | EN | ?
+Meg Cabot | contemporaneo | EN | ?
+Evelyn Adams | contemporaneo | EN | ?
+Maddie Please | contemporaneo | EN | ?
+Lilian Monroe | contemporaneo | EN | ?
+Micalea Smeltzer | contemporaneo | EN | ?
+Judy Leigh | contemporaneo | EN | ?
+Jennifer Bardsley | contemporaneo | EN | ?
+Dianna Roman | contemporaneo | EN | ?
+Freya Barker | contemporaneo | EN | ?
+Genevieve Novak | contemporaneo | EN | ?
+L. L. Ash | contemporaneo | EN | ?
+M.L. Broome | contemporaneo | EN | ?
+Leigh Lennon | contemporaneo | EN | ?
+Tara Ahmed | contemporaneo | EN | ?
+Alina Parker | contemporaneo | EN | ?
+Kelsie Rae | contemporaneo | EN | ?
+Nicola Jane | contemporaneo | EN | ?
+Yara Gharios | contemporaneo | EN | ?
+Ellie Hall | contemporaneo | EN | ?
+Roxanne Tully | contemporaneo | EN | ?
+Maria Reed | contemporaneo | EN | ?
+Roma N Singh | contemporaneo | EN | ?
+Edyn Michaels | contemporaneo | EN | ?
+Jaimie Roberts | contemporaneo | EN | ?
+Emily Tudor | contemporaneo | EN | ?
+Nina Sestina | contemporaneo | EN | ?
+Mimi Wilde | contemporaneo | EN | ?
+Renee Lindemann | contemporaneo | EN | ?
+N. Nieto | contemporaneo | EN | ?
+Nona Uppal | contemporaneo | EN | ?
+Georgia Mantis | contemporaneo | EN | ?
+Vikki McRaven | contemporaneo | EN | ?
+Krishna Bhatia | contemporaneo | EN | ?
+Sophia Addams | contemporaneo | EN | ?
+Ketan Ketkar | contemporaneo | EN | ?
+
+# --- cauda longa indie / adaptações / outros (100 autoras) ---
+Claire Contreras | indie_cauda | EN | ?
+Kat T.Masen | indie_cauda | EN | ?
+Curtis Sittenfeld | indie_cauda | EN | ?
+Wilbur Smith | indie_cauda | EN | ?
+John Deacon | indie_cauda | EN | ?
+Shandi Boyes | indie_cauda | EN | ?
+Greer Rivers | indie_cauda | EN | ?
+Murty Sudha | indie_cauda | EN | ?
+Laylah Roberts | indie_cauda | EN | ?
+Rosalie Rose | indie_cauda | EN | ?
+Nicci Harris | indie_cauda | EN | ?
+R. O. Lane | indie_cauda | EN | ?
+Lena Hendrix | indie_cauda | EN | ?
+Kris Michaels | indie_cauda | EN | ?
+Luna Mason | indie_cauda | EN | ?
+Sienna Cross | indie_cauda | EN | ?
+Ivy Wild | indie_cauda | EN | ?
+Ava Hunter | indie_cauda | EN | ?
+Mila Finelli | indie_cauda | EN | ?
+Frank Wheeler | indie_cauda | EN | ?
+Ashley Munoz | indie_cauda | EN | ?
+Jenni Bara | indie_cauda | EN | ?
+Hope Ford | indie_cauda | EN | ?
+Ava Gray | indie_cauda | EN | ?
+Bianca Cole | indie_cauda | EN | ?
+Julie Cooper | indie_cauda | EN | ?
+Harper West | indie_cauda | EN | ?
+Swati MH | indie_cauda | EN | ?
+J Dawn King | indie_cauda | EN | ?
+Jennifer Joy | indie_cauda | EN | ?
+Ashley Emma | indie_cauda | EN | ?
+Samantha Price | indie_cauda | EN | ?
+Lucy Marin | indie_cauda | EN | ?
+Amy D'Orazio | indie_cauda | EN | ?
+Allie Brahms | indie_cauda | EN | ?
+Fia Farina | indie_cauda | EN | ?
+Manav Kaul | indie_cauda | EN | ?
+Lory Lilian | indie_cauda | EN | ?
+Daphne Elliot | indie_cauda | EN | ?
+Marian Tee | indie_cauda | EN | ?
+D.M. Haggard | indie_cauda | EN | ?
+Christie Capps | indie_cauda | EN | ?
+Amelia Westerly | indie_cauda | EN | ?
+Mary Lantz | indie_cauda | EN | ?
+P.G. Van | indie_cauda | EN | ?
+Jane Henry | indie_cauda | EN | ?
+Jessie Burton | indie_cauda | EN | ?
+Kathleen Fuller | indie_cauda | EN | ?
+Nisha Sharma | indie_cauda | EN | ?
+Holly Rayner | indie_cauda | EN | ?
+Daisy Jane | indie_cauda | EN | ?
+Kelly Miller | indie_cauda | EN | ?
+Jan Ashton | indie_cauda | EN | ?
+Katy Regnery | indie_cauda | EN | ?
+Melanie Rachel | indie_cauda | EN | ?
+Lilian Harris | indie_cauda | EN | ?
+Marie Johnston | indie_cauda | EN | ?
+Stephanie Brother | indie_cauda | EN | ?
+Jaime Marie Lang | indie_cauda | EN | ?
+Lydia Hall | indie_cauda | EN | ?
+N. M. Patel | indie_cauda | EN | ?
+Allison Pittman | indie_cauda | EN | ?
+Brenda Maxfield | indie_cauda | EN | ?
+Rachel J. Good | indie_cauda | EN | ?
+Macy T. Riosa | indie_cauda | EN | ?
+Lilia Cora | indie_cauda | EN | ?
+Alix James | indie_cauda | EN | ?
+Grace Given | indie_cauda | EN | ?
+Cat Andrews | indie_cauda | EN | ?
+Tasmina Perry | indie_cauda | EN | ?
+Tory Baker | indie_cauda | EN | ?
+Riya Iyer | indie_cauda | EN | ?
+Neha Chenani Khanagwal | indie_cauda | EN | ?
+Lilah Rivers | indie_cauda | EN | ?
+Hitesh Gupta Aadil | indie_cauda | EN | ?
+SeRaya | indie_cauda | EN | ?
+Joan Farraneau | indie_cauda | EN | ?
+Kyra Seth | indie_cauda | EN | ?
+Jeff Bigler | indie_cauda | EN | ?
+Debby Giusti | indie_cauda | EN | ?
+Eden Appiah-Kubi | indie_cauda | EN | ?
+Adhiti Aravind | indie_cauda | EN | ?
+Roop De | indie_cauda | EN | ?
+Ravi Shikha | indie_cauda | EN | ?
+Maren Smith | indie_cauda | EN | ?
+Kristen Mckanagh | indie_cauda | EN | ?
+Mrs Claire | indie_cauda | EN | ?
+Juliet Rohmer | indie_cauda | EN | ?
+Oksana Rothenberg | indie_cauda | EN | ?
+Jann Rowland | indie_cauda | EN | ?
+Ramkishore M | indie_cauda | EN | ?
+Akash Pathak | indie_cauda | EN | ?
+Ankit Roy | indie_cauda | EN | ?
+Anamika Mishra | indie_cauda | EN | ?
+Sookh Kaur | indie_cauda | EN | ?
+M. Pamela | indie_cauda | EN | ?
+Tabitha Lipman | indie_cauda | EN | ?
+Chloe Eilon | indie_cauda | EN | ?
+Viveki Rai | indie_cauda | EN | ?
+Manali Desai | indie_cauda | EN | ?
