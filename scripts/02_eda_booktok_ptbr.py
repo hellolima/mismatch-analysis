@@ -1,48 +1,46 @@
 """
 02_eda_booktok_ptbr.py
 
-Pipeline de Análise Exploratória de Dados (EDA) para Dataset BookTok PT-BR Consolidado
-Foco: Engenharia de Features, Padronização, Exploração Multidimensional
+Pipeline de Análise Exploratória de Dados (EDA) para o dataset PT-BR consolidado (livros_ptbr_v3.csv).
+Foco: engenharia de features, padronização, exploração multidimensional, figuras prontas para artigo.
 
-Análises Realizadas:
-  1. Limpeza e padronização de tags (Gêneros, Moods, Tags Gerais, Content Warnings)
-  2. Exploração de distribuições (Rating, Ano, Editora, Fonte de Match)
-  3. Análise textual (Nuvem de Palavras para Títulos e Sinopses)
-  4. Correlações e associações
-  5. Relatório descritivo com estatísticas
-  6. (v3.1) Editoras canônicas, spice tri-estado, cobertura de tags por popularidade e
-     sensibilidade ao limiar de votos
+Novidades desta versão (v3.2):
+  - Filtro temporal: somente edições PT-BR com ano de publicação >= ANO_MIN (padrão 2015; --ano-min).
+    Edições SEM ano parseável são excluídas (não dá para garantir que satisfazem o critério) e contadas no relatório.
+  - Wordclouds de unigramas E bigramas (títulos e sinopses), por obra, com frequência de documento
+    (cada obra conta no máximo 1x por termo), e exportação das frequências em CSV.
+  - Estilo único de figuras para publicação: paleta Okabe-Ito (segura para daltônicos), fonte serif,
+    larguras de 1 e 2 colunas, 300 dpi, exportação em PNG + PDF (vetorial). Títulos internos desligados por
+    padrão (a legenda fica no LaTeX): ligue com --titulos.
+  - Novas análises: IC de Wilson para prevalências, IC bootstrap da média do rating, distribuição de
+    Score_Ponte por método, spice x popularidade (viés de cobertura), spice x tipo editorial,
+    cobertura de tags por quartil (heatmap), páginas.
+  - Correção: _por_obra() não colapsa mais edições sem Hardcover_Book_ID (NaN) em uma única linha.
 
 Uso:
-  python scripts/02_eda_booktok_ptbr.py
+  python scripts/02_eda_booktok_ptbr.py [--ano-min 2015] [--titulos] [--formatos png pdf]
 
-Outputs:
-  - outputs/eda_report.txt (Relatório consolidado)
-  - outputs/fig_*.png (Visualizações: distribuições, wordclouds, heatmaps)
-  - outputs/tags_frequency.csv (Frequência de todas as tags)
-  - outputs/titulos_limpeza_auditoria.csv (Títulos alterados pela limpeza, antes/depois)
-  - outputs/editoras_normalizacao_auditoria.csv (grafias de editora fundidas, para conferência humana)
-  - outputs/editoras_pares_suspeitos.csv (chaves em que uma é prefixo da outra: mesma editora ou selos distintos?)
-  - outputs/cobertura_por_popularidade.csv (tags por quartil de popularidade: checagem de dado faltante não aleatório)
+Outputs (outputs/): eda_report.txt, fig_*.png/.pdf, tags_frequency.csv, ngrams_*.csv,
+  titulos_limpeza_auditoria.csv, editoras_normalizacao_auditoria.csv, editoras_pares_suspeitos.csv,
+  cobertura_por_popularidade.csv
 """
 
-import os
 import sys
+import argparse
 import warnings
 import logging
 import ast
+import re
 from pathlib import Path
 from collections import Counter
 from typing import Dict, List, Tuple, Optional
-import re
-import difflib
-import unicodedata
 from datetime import datetime
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import seaborn as sns
 from wordcloud import WordCloud
 from scipy.stats import spearmanr
@@ -51,23 +49,103 @@ from scipy.stats import spearmanr
 from ptbr_common import limpar_titulo, sem_acento as _sem_acento
 from editoras_norm import chave_editora, pares_suspeitos
 
-# Suprimir warnings e configurar matplotlib
 warnings.filterwarnings('ignore')
-matplotlib.rcParams['figure.figsize'] = (12, 6)
-matplotlib.rcParams['font.family'] = 'sans-serif'
-sns.set_style("whitegrid")
-plt.rcParams['axes.unicode_minus'] = False
 
-# Diretórios
+# =====================================================================
+# CONFIGURAÇÃO GERAL
+# =====================================================================
 BASE_DIR = Path(__file__).parent.resolve()
 OUTPUT_DIR = BASE_DIR.parent / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
+CAMINHO_V3 = BASE_DIR.parent / "data" / "processed" / "livros_ptbr_v3.csv"
+CAMINHO_ROTULADO = BASE_DIR.parent / "data" / "processed" / "livros_ptbr_v3_rotulado.csv"  # gerado por rotulagem.py
+CAMINHO_ENTRADA = CAMINHO_ROTULADO if CAMINHO_ROTULADO.exists() else CAMINHO_V3
 
-# Arquivo de entrada
-CAMINHO_ENTRADA = BASE_DIR.parent / "data" / "processed" / "livros_ptbr_v3.csv"
+ANO_MIN_PADRAO = 2015
+SEED = 42
+
+# Preenchido em main(); usado no relatório
+META_FILTRO: Dict[str, object] = {}
+
+# Tags do Hardcover que parecem respostas a perguntas estruturadas de review (pares polares), não
+# folksonomia livre. Separadas de Tags_Gerais para não esconder os tropos reais. Estenda se aparecerem outras.
+TAGS_ESTRUTURADAS = {
+    'strong character development', 'weak character development',
+    'loveable characters', 'unloveable characters',
+    'diverse characters', 'not diverse characters',
+    'a mix driven', 'character driven', 'plot driven',
+}
+FIG_TITULOS = False            # títulos dentro das figuras (em artigo, use a legenda do LaTeX)
+FORMATOS = ("png", "pdf")      # PNG (raster 300 dpi) + PDF (vetorial)
 
 # =====================================================================
-# CONFIGURAÇÃO DE LOGGING
+# ESTILO DE FIGURAS (publicação)
+# =====================================================================
+# Paleta Okabe-Ito: distinguível em daltonismo e em impressão P&B razoável
+OKABE_ITO = ['#0072B2', '#D55E00', '#009E73', '#E69F00', '#56B4E9', '#CC79A7', '#F0E442', '#000000']
+COR_PRIM = OKABE_ITO[0]     # cor principal (barras, histogramas)
+COR_SEC = OKABE_ITO[1]      # destaque (média, avisos)
+COR_TERC = OKABE_ITO[2]     # terciária (mediana)
+COR_CINZA = '#6E6E6E'
+CMAP_SEQ = 'Blues'          # heatmaps sequenciais
+CMAP_WC_UNI = ['#003F66', '#0072B2', '#2E86C1', '#56B4E9']   # azuis (unigramas)
+CMAP_WC_BI = ['#7A2E00', '#D55E00', '#E27D2E', '#E69F00']    # laranjas (bigramas)
+
+W1, W2 = 3.4, 7.2           # larguras (pol.) de 1 coluna e 2 colunas (padrão A4/ABNT/SBC-like)
+
+RC_PUB = {
+    'figure.dpi': 120, 'savefig.dpi': 300,
+    'font.family': 'serif',
+    'font.serif': ['Times New Roman', 'Liberation Serif', 'Nimbus Roman', 'DejaVu Serif'],
+    'mathtext.fontset': 'stix',
+    'font.size': 9, 'axes.titlesize': 10, 'axes.labelsize': 9,
+    'xtick.labelsize': 8, 'ytick.labelsize': 8, 'legend.fontsize': 8,
+    'axes.spines.top': False, 'axes.spines.right': False,
+    'axes.linewidth': 0.8, 'axes.unicode_minus': False,
+    'axes.grid': True, 'grid.alpha': 0.25, 'grid.linewidth': 0.5,
+    'axes.axisbelow': True,
+    'axes.prop_cycle': matplotlib.cycler(color=OKABE_ITO),
+    'legend.frameon': False,
+    'pdf.fonttype': 42, 'ps.fonttype': 42,     # fontes embutidas editáveis (exigência de várias revistas)
+    'figure.constrained_layout.use': True,
+}
+
+
+def aplicar_estilo() -> None:
+    sns.set_theme(style='ticks', context='paper', rc=RC_PUB)
+    plt.rcParams.update(RC_PUB)
+
+
+def salvar_fig(fig: plt.Figure, nome: str) -> None:
+    """Salva a figura em todos os FORMATOS com parâmetros idênticos."""
+    for fmt in FORMATOS:
+        fig.savefig(OUTPUT_DIR / f"{nome}.{fmt}", dpi=300, bbox_inches='tight', facecolor='white')
+    plt.close(fig)
+    log.info(f"  Salvo: {nome}.[{'/'.join(FORMATOS)}]")
+
+
+def titulo_ax(ax: plt.Axes, txt: str) -> None:
+    if FIG_TITULOS:
+        ax.set_title(txt, fontweight='bold')
+
+
+def rotulo_painel(ax: plt.Axes, letra: str) -> None:
+    """Rótulo (a), (b)... fora do eixo, canto superior esquerdo."""
+    ax.text(-0.02, 1.04, f"({letra})", transform=ax.transAxes, fontsize=10, fontweight='bold', va='bottom', ha='right')
+
+
+def barh_top(ax: plt.Axes, freq: Dict[str, int], n: int, cor: str, xlabel: str) -> None:
+    itens = sorted(freq.items(), key=lambda kv: kv[1], reverse=True)[:n][::-1]
+    if not itens:
+        return
+    ax.barh([k for k, _ in itens], [v for _, v in itens], color=cor, edgecolor='black', linewidth=0.5)
+    ax.set_xlabel(xlabel)
+    ax.grid(axis='y', visible=False)
+    ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(integer=True))
+
+
+# =====================================================================
+# LOGGING
 # =====================================================================
 logging.basicConfig(
     level=logging.INFO,
@@ -85,23 +163,16 @@ logging.getLogger("matplotlib").setLevel(logging.WARNING)
 # =====================================================================
 
 def normalizar_string(s: Optional[str]) -> str:
-    """Normaliza string: strip, lower, remove espaços múltiplos."""
     if pd.isna(s) or s is None:
         return ""
     return str(s).strip().lower()
 
 
 def explodir_tags(tags_input: Optional[object]) -> List[str]:
-    """
-    Explode tags que podem vir como listas em string (ex: "['tag1', 'tag2']")
-    ou separadas por vírgula.
-    """
+    """Explode tags em lista-string ("['a','b']"), separadas por ' | ' (v3) ou vírgula (v2)."""
     if pd.isna(tags_input) or not tags_input or tags_input == "":
         return []
-
     tags_str = str(tags_input).strip()
-
-    # Se estiver no formato de lista Python "['tag1', 'tag2']"
     if tags_str.startswith("[") and tags_str.endswith("]"):
         try:
             lista_eval = ast.literal_eval(tags_str)
@@ -109,34 +180,22 @@ def explodir_tags(tags_input: Optional[object]) -> List[str]:
                 return [normalizar_string(t) for t in lista_eval if normalizar_string(t)]
         except (ValueError, SyntaxError):
             pass
-
-    # v3: separador " | " (tags podem conter vírgula); v2: vírgula
     tags = tags_str.split("|") if "|" in tags_str else tags_str.split(",")
     return [normalizar_string(t) for t in tags if normalizar_string(t)]
 
 
 def converter_ano_para_int(ano_str: Optional[object]) -> Optional[int]:
-    """Converte string/float de ano para int."""
     if pd.isna(ano_str) or not ano_str:
         return None
-
-    ano_clean = str(ano_str).strip()
-    match = re.search(r'\d{4}', ano_clean)
-    if match:
-        try:
-            return int(match.group())
-        except ValueError:
-            return None
-    return None
+    match = re.search(r'\d{4}', str(ano_str).strip())
+    return int(match.group()) if match else None
 
 
 def normalizar_rating(rating: object) -> Optional[float]:
-    """Arredonda rating para 1 casa decimal."""
     if pd.isna(rating) or rating == "":
         return None
     try:
-        val = float(rating)
-        return round(val, 1)
+        return round(float(rating), 1)
     except ValueError:
         return None
 
@@ -144,19 +203,40 @@ def normalizar_rating(rating: object) -> Optional[float]:
 def _por_obra(df: pd.DataFrame) -> pd.DataFrame:
     """
     Unidade de análise: rating, tags, content warnings e flags são atributos da OBRA
-    (Hardcover_Book_ID); capa, editora, ano e páginas são da EDIÇÃO (ISBN). Estatísticas de
-    obra usam esta visão deduplicada, senão obras com várias edições pesam mais.
+    (Hardcover_Book_ID); capa, editora, ano e páginas são da EDIÇÃO (ISBN).
+    Deduplica por obra; edições sem ID (NaN) são mantidas individualmente (cada uma é tratada
+    como obra própria), em vez de colapsar todas numa única linha.
     """
-    return df.drop_duplicates('Hardcover_Book_ID') if 'Hardcover_Book_ID' in df.columns else df
+    if 'Hardcover_Book_ID' not in df.columns:
+        return df
+    sem_id = df[df['Hardcover_Book_ID'].isna()]
+    com_id = df[df['Hardcover_Book_ID'].notna()].drop_duplicates('Hardcover_Book_ID')
+    return pd.concat([com_id, sem_id]).sort_index()
+
+
+def wilson_ic(k: int, n: int, z: float = 1.96) -> Tuple[float, float, float]:
+    """Proporção e IC de Wilson (95%). Adequado para n pequeno, ao contrário do IC de Wald."""
+    if n <= 0:
+        return (np.nan, np.nan, np.nan)
+    p = k / n
+    den = 1 + z ** 2 / n
+    centro = (p + z ** 2 / (2 * n)) / den
+    marg = z * np.sqrt(p * (1 - p) / n + z ** 2 / (4 * n ** 2)) / den
+    return p, max(0.0, centro - marg), min(1.0, centro + marg)
+
+
+def bootstrap_ic_media(x: pd.Series, B: int = 5000, seed: int = SEED) -> Tuple[float, float]:
+    """IC bootstrap percentil 95% para a média."""
+    arr = x.dropna().to_numpy(dtype=float)
+    if len(arr) < 3:
+        return (np.nan, np.nan)
+    rng = np.random.default_rng(seed)
+    medias = rng.choice(arr, size=(B, len(arr)), replace=True).mean(axis=1)
+    return tuple(np.percentile(medias, [2.5, 97.5]))
 
 
 def canonizar_editoras(df: pd.DataFrame, col: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """
-    Agrupa grafias da mesma editora por uma chave canônica (editoras_norm.chave_editora), sem alterar
-    a coluna bruta. Devolve (df com Editora_Chave e Editora_Canonica, auditoria das chaves que
-    fundiram 2+ grafias). Rótulo de exibição = variante mais frequente (empate: a mais curta), sem o
-    prefixo 'Editora'.
-    """
+    """Agrupa grafias da mesma editora por chave canônica, sem alterar a coluna bruta."""
     d = df.copy()
     d['Editora_Chave'] = d[col].map(chave_editora)
     com = d.dropna(subset=['Editora_Chave'])
@@ -176,11 +256,7 @@ def cobertura_por_popularidade(ob: pd.DataFrame,
                                cols: Tuple[str, ...] = ('Generos_Hardcover', 'Moods_Hardcover',
                                                         'Tags_Gerais_Hardcover', 'Content_Warnings')
                                ) -> Optional[pd.DataFrame]:
-    """
-    Taxa de obras com >=1 tag por quartil de popularidade (nº de leitores no Hardcover). Se a cobertura
-    cai nos quartis baixos, a ausência de tag acompanha popularidade (dado faltante NÃO aleatório):
-    'sem tag' não significa 'sem conteúdo'.
-    """
+    """Taxa de obras com >=1 tag por quartil de popularidade (nº de leitores no Hardcover)."""
     if col_users not in ob.columns:
         return None
     usuarios = pd.to_numeric(ob[col_users], errors='coerce')
@@ -209,20 +285,17 @@ def sensibilidade_min_count(ob: pd.DataFrame, limiares: Tuple[int, ...] = (1, 2,
 
 
 def preparar_texto_wordcloud(texto: object) -> str:
-    """Limpa texto para nuvem de palavras."""
+    """Normaliza texto para tokenização (minúsculas, sem URLs, sem pontuação)."""
     if pd.isna(texto) or not texto:
         return ""
-
     texto = str(texto).lower()
-    texto = re.sub(r'http\S+|www\S+', '', texto)
-    texto = re.sub(r'["""\'\"""]', '"', texto)
+    texto = re.sub(r'http\S+|www\S+', ' ', texto)
     texto = re.sub(r'[^\w\s\-àáâãäèéêëìíîïòóôõöùúûüçñ]', ' ', texto)
-
     return texto
 
 
 # =====================================================================
-# STOPWORDS EM PORTUGUÊS
+# STOPWORDS
 # =====================================================================
 STOPWORDS_PT = {
     'o', 'a', 'os', 'as', 'um', 'uma', 'uns', 'umas',
@@ -235,12 +308,12 @@ STOPWORDS_PT = {
     'estou', 'estás', 'está', 'estamos', 'estais', 'estão',
     'tenho', 'tens', 'tem', 'temos', 'tendes', 'têm',
     'eu', 'tu', 'ele', 'ela', 'nós', 'vós', 'eles', 'elas',
-    'me', 'te', 'se', 'nos', 'vos', 'meu', 'teu', 'seu', 'nosso', 'vosso',
+    'me', 'te', 'nos', 'vos', 'meu', 'teu', 'seu', 'nosso', 'vosso',
     'minha', 'tua', 'sua', 'nossa', 'vossa', 'meus', 'teus', 'seus', 'nossos', 'vossos',
     'minhas', 'tuas', 'suas', 'nossas', 'vossas',
     'este', 'esse', 'aquele', 'esta', 'essa', 'aquela',
     'isto', 'isso', 'aquilo', 'estes', 'esses', 'aqueles',
-    'é', 'da', 'do', 'das', 'dos', 'vai', 'vão', 'será', 'serão',
+    'da', 'do', 'das', 'dos', 'vai', 'vão', 'será', 'serão',
     'foi', 'fomos', 'foram', 'era', 'éramos', 'eram',
     'muito', 'pouco', 'todo', 'nenhum', 'algum', 'outro', 'mesmo', 'próprio',
     'mais', 'menos', 'bem', 'mal', 'cá', 'aí', 'lá',
@@ -248,126 +321,246 @@ STOPWORDS_PT = {
     'aqui', 'agora', 'hoje', 'ontem', 'amanhã', 'quando', 'onde', 'porque', 'quem',
 }
 
-# Palavras funcionais que a lista acima não cobria: contrações (no, na, ao, pelo...),
-# pronomes oblíquos (lhe), advérbios e conjunções frequentes (não, assim, após...),
-# numerais e formas de verbos auxiliares.
 STOPWORDS_PT_EXTRA = {
-    # contrações de preposição + artigo/pronome
-    'no', 'na', 'nos', 'nas', 'ao', 'aos', 'à', 'às', 'pelo', 'pela', 'pelos', 'pelas',
+    'no', 'na', 'nas', 'ao', 'aos', 'à', 'às', 'pelo', 'pela', 'pelos', 'pelas',
     'num', 'numa', 'nuns', 'numas', 'dum', 'duma', 'duns', 'dumas',
     'dele', 'dela', 'deles', 'delas', 'neste', 'nesta', 'nestes', 'nestas',
     'nesse', 'nessa', 'nesses', 'nessas', 'naquele', 'naquela', 'naqueles', 'naquelas',
     'nisto', 'nisso', 'naquilo', 'deste', 'desta', 'destes', 'destas',
     'desse', 'dessa', 'desses', 'dessas', 'daquele', 'daquela', 'daqueles', 'daquelas',
     'disto', 'disso', 'daquilo', 'àquele', 'àquela', 'àqueles', 'àquelas',
-    # pronomes
     'lhe', 'lhes', 'mim', 'ti', 'si', 'consigo', 'comigo', 'contigo', 'conosco', 'convosco',
     'você', 'vocês', 'outra', 'outros', 'outras', 'tal', 'tais', 'qual', 'quais', 'quê',
     'cujo', 'cuja', 'cujos', 'cujas', 'quanto', 'quanta', 'quantos', 'quantas',
     'alguém', 'ninguém', 'tudo', 'nada', 'algo', 'cada', 'vários', 'várias', 'alguns', 'algumas',
     'nenhuma', 'nenhuns', 'nenhumas', 'toda', 'todos', 'todas', 'certo', 'certa',
-    # advérbios, conjunções e preposições
     'não', 'sim', 'assim', 'apenas', 'só', 'somente', 'depois', 'antes', 'após', 'então',
     'enquanto', 'embora', 'apesar', 'entanto', 'tanto', 'tão', 'quase', 'tampouco',
-    'ali', 'além', 'através', 'sob', 'contra', 'ante', 'após', 'desde', 'durante',
-    'logo', 'inclusive', 'inclusive', 'ainda', 'cada', 'sendo', 'pois', 'caso', 'dado',
+    'ali', 'além', 'através', 'sob', 'contra', 'ante',
+    'inclusive', 'sendo', 'caso', 'dado',
     'pra', 'pro', 'pras', 'pros', 'né', 'tá',
-    # numerais
     'dois', 'duas', 'três',
-    # verbos auxiliares / de alta frequência sem valor temático
-    'sido', 'sendo', 'fui', 'fora', 'seja', 'sejam', 'seria', 'serem', 'sendo',
+    'sido', 'fui', 'fora', 'seja', 'sejam', 'seria', 'serem',
     'estava', 'estavam', 'esteja', 'estive', 'estiver',
     'tinha', 'tinham', 'tenha', 'tenham', 'tido', 'tendo', 'teve', 'tiver',
     'há', 'havia', 'houve', 'haja',
     'pode', 'podem', 'podia', 'podiam', 'possa', 'possam', 'pôde',
-    'deve', 'devem', 'devia', 'vem', 'vêm', 'veio', 'vindo', 'vão', 'vamos', 'ia', 'iam',
+    'deve', 'devem', 'devia', 'vem', 'vêm', 'veio', 'vindo', 'vamos', 'ia', 'iam',
     'quer', 'querem', 'queria', 'queriam', 'quis',
 }
 STOPWORDS_PT = STOPWORDS_PT | STOPWORDS_PT_EXTRA
-# Inclui as versões sem acento, pois alguns títulos/sinopses chegam sem acentuação.
 STOPWORDS_PT = STOPWORDS_PT | {_sem_acento(w) for w in STOPWORDS_PT}
 
-# Várias edições brasileiras mantêm o título em inglês ("The Risk", "Part of Your World"):
-# sem isto, "the" e "of" dominam a nuvem de títulos.
+# Edições brasileiras que mantêm o título em inglês ("The Risk"); sem isto "the"/"of" dominam.
 STOPWORDS_EN = {
     'the', 'of', 'and', 'to', 'in', 'on', 'at', 'for', 'with', 'a', 'an',
     'is', 'it', 'my', 'your', 'you', 'we', 'our', 'his', 'her', 'its',
 }
+
+# Ruído editorial recorrente em sinopses (não temático). Ajuste conforme inspecionar ngrams_*.csv.
+STOPWORDS_EDITORIAL = {
+    'livro', 'livros', 'autora', 'autor', 'romance', 'romances', 'best-seller', 'bestseller',
+    'sucesso', 'leitores', 'leitor', 'leitura', 'edição', 'edicao', 'série', 'serie', 'volume',
+    'história', 'historia', 'ler', 'new', 'york', 'times', 'tiktok', 'booktok',
+    'publishers', 'weekly', 'kirkus', 'reviews', 'goodreads', 'amazon',
+}
+STOPWORDS_EDITORIAL |= {_sem_acento(w) for w in STOPWORDS_EDITORIAL}
+
+STOP_TODAS = STOPWORDS_PT | STOPWORDS_EN
+RE_TOKEN = re.compile(r"[a-zà-ÿ0-9]+(?:-[a-zà-ÿ0-9]+)*")
+
+
+# =====================================================================
+# N-GRAMAS
+# =====================================================================
+
+def tokenizar(texto: str) -> List[str]:
+    return RE_TOKEN.findall(texto)
+
+
+def _token_valido(t: str, extra_stop: set) -> bool:
+    return len(t) >= 3 and not t.isdigit() and t not in STOP_TODAS and t not in extra_stop
+
+
+def contar_ngramas(textos: List[str], extra_stop: set = frozenset()) -> Tuple[Counter, Counter]:
+    """
+    Frequência de DOCUMENTO (cada texto conta no máximo 1x por termo) de unigramas e bigramas.
+    Bigramas: pares de tokens ADJACENTES no texto original, ambos válidos. Stopwords agem como
+    barreira: 'rei da noite' não gera 'rei noite'. Frequência de documento evita que uma única
+    sinopse repetitiva domine a nuvem.
+    """
+    uni, bi = Counter(), Counter()
+    for txt in textos:
+        toks = tokenizar(txt)
+        validos = [_token_valido(t, extra_stop) for t in toks]
+        uni.update({t for t, ok in zip(toks, validos) if ok})
+        bi.update({f"{a} {b}" for (a, b), (va, vb) in zip(zip(toks, toks[1:]), zip(validos, validos[1:])) if va and vb})
+    return uni, bi
+
+
+def _cor_wc(paleta: List[str]):
+    def fn(word=None, font_size=None, position=None, orientation=None, random_state=None, **kw):
+        rng = np.random.default_rng(abs(hash(word)) % (2 ** 32))
+        return paleta[int(rng.integers(0, len(paleta)))]
+    return fn
+
+
+def _wc_img(freq: Dict[str, int], paleta: List[str], max_words: int, w: int = 1200, h: int = 800):
+    if not freq:
+        return None
+    return WordCloud(width=w, height=h, background_color='white', color_func=_cor_wc(paleta),
+                     max_words=max_words, prefer_horizontal=0.9, relative_scaling=0.6,
+                     min_font_size=8, random_state=SEED, collocations=False,
+                     font_path=None).generate_from_frequencies(dict(freq))
+
+
+def tokens_de_autores(df: pd.DataFrame) -> set:
+    """Tokens dos nomes de autoras (PT, Hardcover, original) para não dominarem sinopses/títulos
+    (ex.: 'emily henry' aparece em blurbs). Versões com e sem acento."""
+    toks = set()
+    for col in ('Autor_PT', 'Autores_Hardcover', 'Autor_Original_EN'):
+        if col in df.columns:
+            for nome in df[col].dropna().astype(str):
+                for t in tokenizar(preparar_texto_wordcloud(nome)):
+                    if len(t) >= 3:
+                        toks.add(t)
+                        toks.add(_sem_acento(t))
+    return toks
+
+
+def gerar_wordclouds(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+    """Wordclouds de unigramas e bigramas (títulos e sinopses), nível OBRA; CSV de frequências."""
+    log.info("\n[ANÁLISE 4] Wordclouds (unigramas + bigramas)...")
+    ob = _por_obra(df)
+    autores = tokens_de_autores(ob)
+    log.info(f"  {len(autores)} tokens de nomes de autoras removidos dos n-gramas")
+    # (textos, stopwords extras, min_df unigramas, min_df bigramas, max_words)
+    # Títulos: bigramas com df=1 só listam títulos individuais, por isso min_df=2 nos bigramas.
+    corpora = {
+        'titulos': (ob['Titulo_clean'].dropna().tolist() if 'Titulo_clean' in ob.columns else [],
+                    autores, 1, 2, 60),
+        'sinopses': (ob['Sinopse_clean'].dropna().tolist() if 'Sinopse_clean' in ob.columns else [],
+                     STOPWORDS_EDITORIAL | autores, 2, 2, 80),
+    }
+    tabelas = {}
+    for nome, (textos, extra, min_df_uni, min_df_bi, max_words) in corpora.items():
+        textos = [t for t in textos if t.strip()]
+        if not textos:
+            continue
+        uni, bi = contar_ngramas(textos, extra)
+        uni_f = {k: v for k, v in uni.items() if v >= min_df_uni}
+        bi_f = {k: v for k, v in bi.items() if v >= min_df_bi}
+        log.info(f"  {nome}: {len(textos)} textos | {len(uni_f)} unigramas (df>={min_df_uni}), "
+                 f"{len(bi_f)} bigramas (df>={min_df_bi})")
+
+        rows = [{'Corpus': nome, 'Tipo': 'unigrama', 'Termo': k, 'Freq_Doc': v} for k, v in uni.most_common(100)]
+        rows += [{'Corpus': nome, 'Tipo': 'bigrama', 'Termo': k, 'Freq_Doc': v} for k, v in bi.most_common(100)]
+        tabelas[nome] = pd.DataFrame(rows)
+        tabelas[nome].to_csv(OUTPUT_DIR / f'ngrams_{nome}.csv', index=False, encoding='utf-8')
+
+        fig, axes = plt.subplots(1, 2, figsize=(W2, 3.2))
+        for ax, (freq, paleta, letra, rot) in zip(
+                axes, [(uni_f, CMAP_WC_UNI, 'a', 'Palavras (unigramas)'),
+                       (bi_f, CMAP_WC_BI, 'b', 'Bigramas')]):
+            wc = _wc_img(freq, paleta, max_words)
+            ax.axis('off')
+            if wc is not None:
+                ax.imshow(wc, interpolation='bilinear')
+            else:
+                ax.text(0.5, 0.5, 'sem termos acima do limiar', ha='center', va='center', transform=ax.transAxes)
+            ax.set_title(f"({letra}) {rot}", fontsize=9, loc='left')
+        if FIG_TITULOS:
+            fig.suptitle(f"Nuvens de termos: {nome} (frequência de documento, nível obra)", fontweight='bold')
+        salvar_fig(fig, f'fig_wordcloud_{nome}')
+    return tabelas
 
 
 # =====================================================================
 # CARREGAMENTO E LIMPEZA DE DADOS
 # =====================================================================
 
-def carregar_e_limpar_dados(caminho: Path) -> pd.DataFrame:
-    """Carrega CSV adaptado para o schema de livros_ptbr_v2.csv."""
+def carregar_e_limpar_dados(caminho: Path, ano_min: int) -> pd.DataFrame:
     log.info(f"Carregando dados de {caminho}...")
-
     if not caminho.exists():
         log.error(f"Arquivo não encontrado: {caminho}")
         return pd.DataFrame()
 
     df = pd.read_csv(caminho)
-    log.info(f"Carregados {len(df)} registros com {len(df.columns)} colunas")
+    n_bruto_total = len(df)
+    log.info(f"Carregados {n_bruto_total} registros com {len(df.columns)} colunas")
 
-    # Editoras: chave canônica (a coluna bruta é preservada; auditoria exportada para conferência humana)
+    # ---- Ano da edição PT-BR + FILTRO TEMPORAL (antes de qualquer estatística)
+    col_ano = next((c for c in ('Ano_Publicacao_PT', 'Ano_Publicacao') if c in df.columns), None)
+    if not col_ano:
+        log.error("Coluna de ano PT não encontrada: impossível aplicar o filtro temporal. Abortando.")
+        return pd.DataFrame()
+    df['Ano'] = df[col_ano].apply(converter_ano_para_int)
+    n_sem_ano = int(df['Ano'].isna().sum())
+    n_antes = int((df['Ano'] < ano_min).sum())
+    df = df[df['Ano'] >= ano_min].copy().reset_index(drop=True)
+    META_FILTRO.update({'ano_min': ano_min, 'n_inicial': n_bruto_total, 'n_sem_ano': n_sem_ano,
+                        'n_antes_ano_min': n_antes, 'n_final': len(df)})
+    log.info(f"Filtro Ano >= {ano_min}: {n_bruto_total} -> {len(df)} edições "
+             f"(removidas: {n_antes} anteriores a {ano_min}, {n_sem_ano} sem ano parseável)")
+    if df.empty:
+        return df
+
+    # ---- Exclusão de formatos fora de escopo (mangá, quadrinho, graphic novel, infantil)
+    if 'Flag_Formato_Excluir' in df.columns:
+        excl = df['Flag_Formato_Excluir'].astype(str).str.lower().isin(['true', '1', '1.0'])
+        META_FILTRO['n_formato_excluido'] = int(excl.sum())
+        df = df[~excl].copy().reset_index(drop=True)
+        META_FILTRO['n_final'] = len(df)
+        log.info(f"Formato fora de escopo excluído: {META_FILTRO['n_formato_excluido']} edições -> {len(df)} restantes")
+    if df.empty:
+        return df
+
+    # Editoras: chave canônica
     col_ed_raw = next((c for c in ('Editora_PT', 'Editora') if c in df.columns), None)
     if col_ed_raw:
         n_bruto = df[col_ed_raw].dropna().nunique()
         df, aud_ed = canonizar_editoras(df, col_ed_raw)
         aud_ed.to_csv(OUTPUT_DIR / 'editoras_normalizacao_auditoria.csv', encoding='utf-8')
         n_canon = df['Editora_Chave'].dropna().nunique()
-        log.info(f"Editoras: {n_bruto} grafias brutas -> {n_canon} canônicas "
-                 f"({len(aud_ed)} grupos fundiram 2+ grafias; editoras_normalizacao_auditoria.csv)")
+        log.info(f"Editoras: {n_bruto} grafias brutas -> {n_canon} canônicas ({len(aud_ed)} grupos fundiram 2+ grafias)")
         sus = pares_suspeitos(df['Editora_Chave'].dropna().unique())
         pd.DataFrame(sus, columns=['Chave_Curta', 'Chave_Longa']).to_csv(
             OUTPUT_DIR / 'editoras_pares_suspeitos.csv', index=False, encoding='utf-8')
         if sus:
-            log.info(f"Editoras: {len(sus)} pares suspeitos (mesma editora ou selos distintos?) "
-                     f"em editoras_pares_suspeitos.csv; decida e registre em ALIASES_EDITORA")
+            log.info(f"Editoras: {len(sus)} pares suspeitos em editoras_pares_suspeitos.csv; registre em ALIASES_EDITORA")
 
-    # Normalização de Rating
     if 'Rating' in df.columns:
         df['Rating_Normalizado'] = df['Rating'].apply(normalizar_rating)
     elif 'Avaliacao_Hardcover' in df.columns:
         df['Rating_Normalizado'] = df['Avaliacao_Hardcover'].apply(normalizar_rating)
 
-    # Conversão de Quantidade de Avaliações
     if 'Qtd_Avaliacoes' in df.columns:
         df['Qtd_Avaliacoes_Clean'] = pd.to_numeric(df['Qtd_Avaliacoes'], errors='coerce')
     elif 'Qtd_Avaliacoes_Hardcover' in df.columns:
         df['Qtd_Avaliacoes_Clean'] = pd.to_numeric(df['Qtd_Avaliacoes_Hardcover'], errors='coerce')
 
-    # Conversão de Número de Páginas
     if 'Paginas' in df.columns:
         df['Num_Paginas_Clean'] = pd.to_numeric(df['Paginas'], errors='coerce')
     elif 'Num_Paginas_PT' in df.columns:
         df['Num_Paginas_Clean'] = pd.to_numeric(df['Num_Paginas_PT'], errors='coerce')
 
-    # Ano de publicação da edição PT-BR (não o ano da obra original)
-    col_ano = next((c for c in ('Ano_Publicacao_PT', 'Ano_Publicacao') if c in df.columns), None)
-    if col_ano:
-        df['Ano'] = df[col_ano].apply(converter_ano_para_int)
-        log.info(f"Ano PT disponível em {int(df['Ano'].notna().sum())}/{len(df)} registros")
-    else:
-        log.warning("Coluna de ano PT (Ano_Publicacao_PT) não encontrada; análise temporal ignorada")
-
-    # Padronização de Colunas de Tags
     mapeamento_tags = {
-        'Generos': 'Generos',
-        'Generos_Hardcover': 'Generos',
-        'Moods': 'Moods',
-        'Moods_Hardcover': 'Moods',
-        'Tags_Gerais': 'Tags_Gerais',
-        'Tags_Gerais_Hardcover': 'Tags_Gerais',
-        'Content_Warnings': 'Content_Warnings'
+        'Generos': 'Generos', 'Generos_Hardcover': 'Generos',
+        'Moods': 'Moods', 'Moods_Hardcover': 'Moods',
+        'Tags_Gerais': 'Tags_Gerais', 'Tags_Gerais_Hardcover': 'Tags_Gerais',
+        'Content_Warnings': 'Content_Warnings',
     }
-
     for col_orig, col_destino in mapeamento_tags.items():
         if col_orig in df.columns:
             df[f'{col_destino}_list'] = df[col_orig].apply(explodir_tags)
 
-    # Título limpo (sem marketing/edição/série) e texto para wordcloud
+    # Tags_Gerais = só tropos/folksonomia livre; as respostas estruturadas vão para Tags_Estruturadas
+    if 'Tags_Gerais_list' in df.columns:
+        df['Tags_Estruturadas_list'] = df['Tags_Gerais_list'].apply(
+            lambda L: [t for t in L if t in TAGS_ESTRUTURADAS] if isinstance(L, list) else [])
+        df['Tags_Gerais_list'] = df['Tags_Gerais_list'].apply(
+            lambda L: [t for t in L if t not in TAGS_ESTRUTURADAS] if isinstance(L, list) else [])
+
     col_titulo = 'Titulo' if 'Titulo' in df.columns else 'Titulo_PT'
     if col_titulo in df.columns:
         df['Titulo_Original_Bruto'] = df[col_titulo]
@@ -384,466 +577,411 @@ def carregar_e_limpar_dados(caminho: Path) -> pd.DataFrame:
 
 
 # =====================================================================
-# ANÁLISES ESPECÍFICAS
+# ANÁLISES ESTATÍSTICAS
 # =====================================================================
 
 def analisar_tags(df: pd.DataFrame) -> Dict[str, Dict]:
-    """Análise consolidada de tags: frequência e cobertura."""
     log.info("\n[ANÁLISE 1] Processando Tags...")
-
     resultados = {}
-    categorias_tags = ['Generos', 'Moods', 'Tags_Gerais', 'Content_Warnings']
-
-    for cat in categorias_tags:
+    for cat in ['Generos', 'Moods', 'Tags_Gerais', 'Tags_Estruturadas', 'Content_Warnings']:
         col_list = f'{cat}_list'
-
         if col_list not in df.columns:
             continue
-
-        todas_tags = []
-        for tags_list in df[col_list]:
-            if isinstance(tags_list, list):
-                todas_tags.extend(tags_list)
-
+        todas_tags = [t for lst in df[col_list] if isinstance(lst, list) for t in lst]
         freq = Counter(todas_tags)
-        n_unicas = len(freq)
-        n_total = len(todas_tags)
-        n_registros_com_tag = df[col_list].apply(lambda x: isinstance(x, list) and len(x) > 0).sum()
-
+        n_com = int(df[col_list].apply(lambda x: isinstance(x, list) and len(x) > 0).sum())
         resultados[cat] = {
-            'frequencias': freq,
-            'n_unicas': n_unicas,
-            'n_total': n_total,
-            'n_registros': n_registros_com_tag,
-            'cobertura_%': (n_registros_com_tag / len(df)) * 100 if len(df) > 0 else 0,
-            'n_base': len(df),
+            'frequencias': freq, 'n_unicas': len(freq), 'n_total': len(todas_tags),
+            'n_registros': n_com, 'cobertura_%': (n_com / len(df)) * 100 if len(df) else 0, 'n_base': len(df),
         }
-
-        log.info(f"  {cat}: {n_unicas} tags únicas, "
-                 f"{n_registros_com_tag}/{len(df)} registros ({resultados[cat]['cobertura_%']:.1f}%)")
-
+        log.info(f"  {cat}: {len(freq)} tags únicas, {n_com}/{len(df)} obras ({resultados[cat]['cobertura_%']:.1f}%)")
     return resultados
+
+
+def _resumo(x: pd.Series) -> Dict:
+    return {'mean': x.mean(), 'median': x.median(), 'std': x.std(), 'min': x.min(), 'max': x.max(),
+            'q1': x.quantile(.25), 'q3': x.quantile(.75), 'count': len(x)}
 
 
 def analisar_distribuicoes(df: pd.DataFrame) -> Dict:
-    """Análise de distribuições contínuas: rating, ano, páginas, etc."""
     log.info("\n[ANÁLISE 2] Distribuições Contínuas...")
+    res = {}
+    ob = _por_obra(df)
 
-    resultados = {}
-
-    # Rating
     if 'Rating_Normalizado' in df.columns:
-        rating_data = _por_obra(df)['Rating_Normalizado'].dropna()
-        if len(rating_data) > 0:
-            resultados['rating'] = {
-                'mean': rating_data.mean(),
-                'median': rating_data.median(),
-                'std': rating_data.std(),
-                'min': rating_data.min(),
-                'max': rating_data.max(),
-                'count': len(rating_data),
-            }
-            log.info(f"  Rating: média={resultados['rating']['mean']:.2f}, "
-                     f"dp={resultados['rating']['std']:.2f}, n={resultados['rating']['count']}")
+        r = ob['Rating_Normalizado'].dropna()
+        if len(r):
+            res['rating'] = _resumo(r)
+            res['rating']['ic_boot'] = bootstrap_ic_media(r)
+            log.info(f"  Rating: média={res['rating']['mean']:.2f}, dp={res['rating']['std']:.2f}, n={len(r)}")
 
-    # Qtd Avaliações
     if 'Qtd_Avaliacoes_Clean' in df.columns:
-        qtd_data = _por_obra(df)['Qtd_Avaliacoes_Clean'].dropna()
-        if len(qtd_data) > 0:
-            resultados['qtd_avaliacoes'] = {
-                'mean': qtd_data.mean(),
-                'median': qtd_data.median(),
-                'std': qtd_data.std(),
-                'min': qtd_data.min(),
-                'max': qtd_data.max(),
-                'count': len(qtd_data),
-            }
-            log.info(f"  Qtd Avaliações: média={resultados['qtd_avaliacoes']['mean']:.0f}, "
-                     f"dp={resultados['qtd_avaliacoes']['std']:.0f}")
+        q = ob['Qtd_Avaliacoes_Clean'].dropna()
+        if len(q):
+            res['qtd_avaliacoes'] = _resumo(q)
 
-    # Páginas
     if 'Num_Paginas_Clean' in df.columns:
-        pag_data = df[df['Num_Paginas_Clean'] > 0]['Num_Paginas_Clean'].dropna()
-        if len(pag_data) > 0:
-            resultados['paginas'] = {
-                'mean': pag_data.mean(),
-                'median': pag_data.median(),
-                'std': pag_data.std(),
-                'min': pag_data.min(),
-                'max': pag_data.max(),
-                'count': len(pag_data),
-            }
-            log.info(f"  Páginas: média={resultados['paginas']['mean']:.0f}, "
-                     f"dp={resultados['paginas']['std']:.0f}")
+        p = df.loc[df['Num_Paginas_Clean'] > 0, 'Num_Paginas_Clean'].dropna()
+        if len(p):
+            res['paginas'] = _resumo(p)
 
-    # Ano
     if 'Ano' in df.columns:
-        ano_data = df['Ano'].dropna()
-        if len(ano_data) > 0:
-            resultados['ano'] = {
-                'mean': ano_data.mean(),
-                'median': ano_data.median(),
-                'min': int(ano_data.min()),
-                'max': int(ano_data.max()),
-                'count': len(ano_data),
-            }
-            log.info(f"  Ano: média={resultados['ano']['mean']:.0f}, "
-                     f"range=[{resultados['ano']['min']}, {resultados['ano']['max']}]")
-
-    return resultados
+        a = df['Ano'].dropna()
+        if len(a):
+            res['ano'] = {'mean': a.mean(), 'median': a.median(), 'min': int(a.min()), 'max': int(a.max()), 'count': len(a)}
+    return res
 
 
 def analisar_categoricas(df: pd.DataFrame) -> Dict:
-    """Análise de distribuições categóricas (Editora, Fonte de Match)."""
     log.info("\n[ANÁLISE 3] Distribuições Categóricas...")
-
-    resultados = {}
-
-    # Editora CANÔNICA (grafias agrupadas); cai para a coluna bruta se a canonização não rodou
+    res = {}
     col_editora = next((c for c in ('Editora_Canonica', 'Editora', 'Editora_PT') if c in df.columns), None)
     if col_editora:
-        editoras = df[col_editora].dropna()
-        resultados['editora'] = editoras.value_counts().to_dict()
-        log.info(f"  Editoras ({col_editora}): {len(resultados['editora'])} únicas, "
-                 f"cobertura {(len(editoras)/len(df))*100:.1f}%")
-        for ed, cnt in list(resultados['editora'].items())[:5]:
-            log.info(f"      - {ed}: {cnt}")
-
+        ed = df[col_editora].dropna()
+        res['editora'] = ed.value_counts().to_dict()
+        log.info(f"  Editoras ({col_editora}): {len(res['editora'])} únicas, cobertura {len(ed) / len(df) * 100:.1f}%")
     col_fonte = next((c for c in ('Metodo_Ponte', 'Fonte_Match') if c in df.columns), None)
     if col_fonte:
-        fontes = df[col_fonte].value_counts().to_dict()
-        resultados['fonte_match'] = fontes
-        log.info(f"  Fonte de Match: {len(fontes)} tipos")
-        for fnt, cnt in fontes.items():
-            log.info(f"      - {fnt}: {cnt}")
-
-    return resultados
+        res['fonte_match'] = df[col_fonte].value_counts().to_dict()
+    return res
 
 
-def gerar_wordclouds(df: pd.DataFrame, output_dir: Path) -> None:
-    """Gera nuvens de palavras para títulos e sinopses."""
-    log.info("\n[ANÁLISE 4] Gerando Word Clouds...")
-
-    # Wordcloud de Títulos
-    if 'Titulo_clean' in df.columns:
-        titulo_text = " ".join(df['Titulo_clean'].dropna().tolist())
-        if titulo_text.strip():
-            log.info("  Gerando wordcloud de TÍTULOS...")
-            fig, ax = plt.subplots(figsize=(14, 8))
-            wc_titulo = WordCloud(
-                width=1400,
-                height=800,
-                background_color='white',
-                colormap='RdPu',
-                stopwords=STOPWORDS_PT | STOPWORDS_EN,
-                min_word_length=2,
-                relative_scaling=0.5,
-                min_font_size=10,
-                prefer_horizontal=0.7,
-            ).generate(titulo_text)
-            ax.imshow(wc_titulo, interpolation='bilinear')
-            ax.axis('off')
-            ax.set_title('Nuvem de Palavras: Títulos dos Livros PT-BR', fontsize=16, fontweight='bold', pad=20)
-            plt.tight_layout()
-            plt.savefig(output_dir / 'fig_wordcloud_titulos.png', dpi=300, bbox_inches='tight')
-            plt.close()
-            log.info("    Salvo em fig_wordcloud_titulos.png")
-
-    # Wordcloud de Sinopses
-    if 'Sinopse_clean' in df.columns:
-        sinopse_text = " ".join(df['Sinopse_clean'].dropna().tolist())
-        if sinopse_text.strip():
-            log.info("  Gerando wordcloud de SINOPSES...")
-            fig, ax = plt.subplots(figsize=(14, 8))
-            wc_sinopse = WordCloud(
-                width=1400,
-                height=800,
-                background_color='white',
-                colormap='viridis',
-                stopwords=STOPWORDS_PT | STOPWORDS_EN,
-                min_word_length=2,
-                relative_scaling=0.5,
-                min_font_size=8,
-                max_words=100,
-                prefer_horizontal=0.7,
-            ).generate(sinopse_text)
-            ax.imshow(wc_sinopse, interpolation='bilinear')
-            ax.axis('off')
-            ax.set_title('Nuvem de Palavras: Sinopses dos Livros PT-BR', fontsize=16, fontweight='bold', pad=20)
-            plt.tight_layout()
-            plt.savefig(output_dir / 'fig_wordcloud_sinopses.png', dpi=300, bbox_inches='tight')
-            plt.close()
-            log.info("    Salvo em fig_wordcloud_sinopses.png")
+def analisar_spice_cobertura(df: pd.DataFrame) -> Dict:
+    """
+    Spice x popularidade e cobertura. 'sem_sinal' = DESCONHECIDO. Se a taxa de spice positivo cresce
+    com a popularidade, ela reflete em parte a densidade de tags, não só o conteúdo (viés de medição).
+    """
+    ob = _por_obra(df)
+    out: Dict = {}
+    if 'Qtd_Usuarios_Hardcover' not in ob.columns:
+        return out
+    u = pd.to_numeric(ob['Qtd_Usuarios_Hardcover'], errors='coerce')
+    cols_tag = [c for c in ('Generos_Hardcover', 'Moods_Hardcover', 'Tags_Gerais_Hardcover', 'Content_Warnings') if c in ob.columns]
+    if cols_tag:
+        n_tags = sum(ob[c].fillna('').astype(str).map(lambda s: len([t for t in s.split('|') if t.strip()])) for c in cols_tag)
+        ok = u.notna()
+        if ok.sum() > 5:
+            rho, p = spearmanr(u[ok], n_tags[ok])
+            out['spearman_users_ntags'] = (rho, p, int(ok.sum()))
+    if 'Spice_Status' in ob.columns and u.notna().sum() >= 8:
+        d = ob.assign(_u=u).dropna(subset=['_u'])
+        d['Pop_Quartil'] = pd.qcut(d['_u'].rank(method='first'), 4, labels=['Q1', 'Q2', 'Q3', 'Q4'])
+        linhas = []
+        for q, g in d.groupby('Pop_Quartil', observed=True):
+            k, n = int((g['Spice_Status'] == 'positivo').sum()), len(g)
+            p, lo, hi = wilson_ic(k, n)
+            linhas.append({'Quartil': q, 'n': n, 'k_positivo': k, 'p': p, 'lo': lo, 'hi': hi})
+        out['spice_por_pop'] = pd.DataFrame(linhas)
+    return out
 
 
-def gerar_visualizacoes(df: pd.DataFrame, output_dir: Path, stats_tags: Dict, stats_dist: Dict, stats_cat: Dict) -> None:
-    """Gera visualizações gráficas completas."""
+def prevalencias_flags(df: pd.DataFrame) -> pd.DataFrame:
+    ob = _por_obra(df)
+    linhas = []
+    for c in ('Flag_Romance', 'Flag_New_Adult', 'Flag_Spice_Tag', 'Flag_CW_Sexual_Content',
+              'Flag_Closed_Door_Tag', 'Flag_Formato_Excluir'):
+        if c in ob.columns:
+            k, n = int(ob[c].astype(bool).sum()), len(ob)
+            p, lo, hi = wilson_ic(k, n)
+            linhas.append({'Flag': c, 'k': k, 'n': n, 'prop': p, 'IC95_inf': lo, 'IC95_sup': hi})
+    return pd.DataFrame(linhas)
+
+
+# =====================================================================
+# VISUALIZAÇÕES
+# =====================================================================
+
+def gerar_visualizacoes(df: pd.DataFrame, stats_tags: Dict, stats_dist: Dict, stats_cat: Dict,
+                        extra: Dict) -> None:
     log.info("\n[ANÁLISE 5] Gerando Visualizações...")
+    ob = _por_obra(df)
 
-    # FIG 1: Distribuição de Ratings
+    # FIG 1: Ratings (histograma + boxplot horizontal compartilhando o eixo)
     if 'Rating_Normalizado' in df.columns:
-        rating_data = _por_obra(df)['Rating_Normalizado'].dropna()
-        if len(rating_data) > 0:
-            fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+        r = ob['Rating_Normalizado'].dropna()
+        if len(r):
+            fig, (ax, axb) = plt.subplots(2, 1, figsize=(W1 + 1.0, 3.2), sharex=True,
+                                          gridspec_kw={'height_ratios': [4, 1]})
+            ax.hist(r, bins=np.arange(1.0, 5.25, 0.25), color=COR_PRIM, edgecolor='black', linewidth=0.5, alpha=0.9)
+            ax.axvline(r.mean(), color=COR_SEC, ls='--', lw=1.3, label=f'Média = {r.mean():.2f}')
+            ax.axvline(r.median(), color=COR_TERC, ls=':', lw=1.5, label=f'Mediana = {r.median():.2f}')
+            ax.set_ylabel('Nº de obras')
+            ax.legend(loc='upper left')
+            titulo_ax(ax, 'Distribuição de ratings (nível obra)')
+            axb.boxplot(r, vert=False, widths=0.6, patch_artist=True,
+                        boxprops=dict(facecolor=COR_PRIM, alpha=0.5), medianprops=dict(color='black'))
+            axb.set_yticks([])
+            axb.set_xlabel('Rating (Hardcover, 1–5)')
+            axb.grid(axis='y', visible=False)
+            salvar_fig(fig, 'fig_01_ratings_dist')
 
-            axes[0].hist(rating_data, bins=10, color='steelblue', edgecolor='black', alpha=0.7)
-            axes[0].axvline(rating_data.mean(), color='red', linestyle='--', linewidth=2, label=f'Média: {rating_data.mean():.2f}')
-            axes[0].axvline(rating_data.median(), color='green', linestyle='--', linewidth=2, label=f'Mediana: {rating_data.median():.2f}')
-            axes[0].set_xlabel('Rating', fontsize=11)
-            axes[0].set_ylabel('Frequência', fontsize=11)
-            axes[0].set_title('Distribuição de Ratings', fontsize=12, fontweight='bold')
-            axes[0].legend()
-            axes[0].grid(alpha=0.3)
+    # FIG 2: Distribuição temporal (edições PT-BR por ano; eixo contínuo, anos sem edição = 0)
+    if 'Ano' in df.columns and df['Ano'].notna().any():
+        a = df['Ano'].dropna().astype(int)
+        idx = range(int(a.min()), int(a.max()) + 1)
+        cont = a.value_counts().reindex(idx, fill_value=0)
+        fig, ax = plt.subplots(figsize=(W2, 2.6))
+        ax.bar(cont.index.astype(str), cont.values, color=COR_PRIM, edgecolor='black', linewidth=0.5)
+        ax.set_xlabel('Ano de publicação da edição PT-BR')
+        ax.set_ylabel('Nº de edições')
+        ax.grid(axis='x', visible=False)
+        plt.setp(ax.get_xticklabels(), rotation=45, ha='right')
+        titulo_ax(ax, 'Distribuição temporal das edições PT-BR')
+        salvar_fig(fig, 'fig_02_anos_dist')
 
-            axes[1].boxplot(rating_data, vert=True)
-            axes[1].set_ylabel('Rating', fontsize=11)
-            axes[1].set_title('Boxplot: Ratings', fontsize=12, fontweight='bold')
-            axes[1].grid(alpha=0.3, axis='y')
+    # FIG 3: Top 10 editoras
+    if stats_cat.get('editora'):
+        fig, ax = plt.subplots(figsize=(W1 + 1.0, 3.0))
+        barh_top(ax, stats_cat['editora'], 10, COR_PRIM, 'Nº de edições')
+        titulo_ax(ax, 'Top 10 editoras (grafias agrupadas)')
+        salvar_fig(fig, 'fig_03_editoras_top10')
 
-            plt.tight_layout()
-            plt.savefig(output_dir / 'fig_01_ratings_dist.png', dpi=300, bbox_inches='tight')
-            plt.close()
-            log.info("  Salvo: fig_01_ratings_dist.png")
+    # FIG 4: Top tags (painéis empilhados, 1 coluna larga)
+    cats = [c for c in ('Generos', 'Moods', 'Tags_Gerais') if c in stats_tags]
+    if cats:
+        fig, axes = plt.subplots(len(cats), 1, figsize=(W1 + 1.0, 2.7 * len(cats)))
+        axes = np.atleast_1d(axes)
+        nomes = {'Generos': 'Gêneros', 'Moods': 'Moods', 'Tags_Gerais': 'Tags gerais'}
+        for i, (ax, c) in enumerate(zip(axes, cats)):
+            barh_top(ax, stats_tags[c]['frequencias'], 12, OKABE_ITO[i], 'Nº de obras')
+            ax.set_title(f"({'abc'[i]}) {nomes[c]}", loc='left', fontsize=9)
+        salvar_fig(fig, 'fig_04_tags_top')
 
-    # FIG 2: Distribuição de Anos
-    if 'Ano' in df.columns:
-        ano_data = df['Ano'].value_counts().sort_index()
-        if len(ano_data) > 0:
-            fig, ax = plt.subplots(figsize=(12, 5))
-            ax.bar(ano_data.index.astype(str), ano_data.values, color='coral', edgecolor='black', alpha=0.7)
-            ax.set_xlabel('Ano de publicação da edição PT-BR', fontsize=11)
-            ax.set_ylabel('Quantidade de Livros', fontsize=11)
-            ax.set_title('Distribuição temporal: ano de publicação da edição PT-BR', fontsize=12, fontweight='bold')
-            ax.grid(alpha=0.3, axis='y')
+    # FIG 5: Rating vs nº de avaliações (escala log; Spearman)
+    if {'Rating_Normalizado', 'Qtd_Avaliacoes_Clean'} <= set(df.columns):
+        d = ob.dropna(subset=['Rating_Normalizado', 'Qtd_Avaliacoes_Clean'])
+        d = d[d['Qtd_Avaliacoes_Clean'] > 0]
+        if len(d) > 2:
+            fig, ax = plt.subplots(figsize=(W1 + 1.0, 3.0))
+            ax.scatter(d['Qtd_Avaliacoes_Clean'], d['Rating_Normalizado'], s=18, alpha=0.7,
+                       color=COR_PRIM, edgecolors='black', linewidths=0.4)
+            ax.set_xscale('log')
+            rho, p = spearmanr(d['Qtd_Avaliacoes_Clean'], d['Rating_Normalizado'])
+            ptxt = 'p < 0,001' if p < 0.001 else f'p = {p:.3f}'.replace('.', ',')
+            ax.text(0.04, 0.05, f'Spearman ρ = {rho:.2f}'.replace('.', ',') + f' ({ptxt}; n = {len(d)})',
+                    transform=ax.transAxes, fontsize=8, bbox=dict(boxstyle='round', fc='white', ec=COR_CINZA, lw=0.5))
+            ax.set_xlabel('Nº de avaliações (escala log)')
+            ax.set_ylabel('Rating')
+            titulo_ax(ax, 'Rating × nº de avaliações')
+            salvar_fig(fig, 'fig_05_rating_vs_qtd_scatter')
 
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            plt.savefig(output_dir / 'fig_02_anos_dist.png', dpi=300, bbox_inches='tight')
-            plt.close()
-            log.info("  Salvo: fig_02_anos_dist.png")
+    # FIG 6: Content warnings (cor sequencial única; intensidade = frequência)
+    cw = stats_tags.get('Content_Warnings', {}).get('frequencias')
+    if cw:
+        fig, ax = plt.subplots(figsize=(W1 + 1.0, 3.6))
+        barh_top(ax, cw, 15, COR_SEC, 'Nº de obras')
+        titulo_ax(ax, 'Top 15 content warnings')
+        salvar_fig(fig, 'fig_06_content_warnings')
 
-    # FIG 3: Top 10 Editoras
-    if 'editora' in stats_cat and len(stats_cat['editora']) > 0:
-        fig, ax = plt.subplots(figsize=(12, 6))
-        editoras_top = dict(sorted(stats_cat['editora'].items(), key=lambda x: x[1], reverse=True)[:10])
-        ax.barh(list(editoras_top.keys()), list(editoras_top.values()), color='lightseagreen', edgecolor='black')
-        ax.set_xlabel('Quantidade de Edições', fontsize=11)
-        ax.set_title('Top 10 Editoras no Dataset (grafias agrupadas)', fontsize=12, fontweight='bold')
-        ax.grid(alpha=0.3, axis='x')
-        plt.tight_layout()
-        plt.savefig(output_dir / 'fig_03_editoras_top10.png', dpi=300, bbox_inches='tight')
-        plt.close()
-        log.info("  Salvo: fig_03_editoras_top10.png")
+    # FIG 7: Método de resolução da ponte (barras, não pizza: comparação de comprimento > ângulo)
+    if stats_cat.get('fonte_match'):
+        fm = pd.Series(stats_cat['fonte_match']).sort_values()
+        fig, ax = plt.subplots(figsize=(W1 + 1.0, 2.0))
+        ax.barh(fm.index, fm.values, color=COR_PRIM, edgecolor='black', linewidth=0.5)
+        for y, v in enumerate(fm.values):
+            ax.text(v, y, f' {v} ({100 * v / fm.sum():.1f}%)'.replace('.', ','), va='center', fontsize=8)
+        ax.set_xlim(0, fm.max() * 1.3)
+        ax.set_xlabel('Nº de edições')
+        ax.grid(axis='y', visible=False)
+        titulo_ax(ax, 'Método de resolução da ponte')
+        salvar_fig(fig, 'fig_07_fonte_match')
 
-    # FIG 4: Top Gêneros, Moods, Tags
-    col_tags_to_viz = ['Generos', 'Moods', 'Tags_Gerais']
-    n_subplots = len([c for c in col_tags_to_viz if c in stats_tags])
+    # FIG 8: Score_Ponte por método
+    if {'Score_Ponte', 'Metodo_Ponte'} <= set(df.columns):
+        d = df.dropna(subset=['Score_Ponte', 'Metodo_Ponte'])
+        if len(d):
+            ordem = d.groupby('Metodo_Ponte')['Score_Ponte'].median().sort_values().index.tolist()
+            fig, ax = plt.subplots(figsize=(W1 + 1.0, 2.4))
+            sns.boxplot(data=d, y='Metodo_Ponte', x='Score_Ponte', order=ordem, color=COR_PRIM, width=0.5,
+                        fliersize=0, boxprops=dict(alpha=0.4), ax=ax)
+            sns.stripplot(data=d, y='Metodo_Ponte', x='Score_Ponte', order=ordem, color='black', size=2.5,
+                          alpha=0.6, jitter=0.2, ax=ax)
+            ax.set_xlabel('Score da ponte')
+            ax.set_ylabel('')
+            ax.set_xlim(0, 1.02)
+            titulo_ax(ax, 'Score da ponte por método')
+            salvar_fig(fig, 'fig_08_score_ponte')
 
-    if n_subplots > 0:
-        fig, axes = plt.subplots(n_subplots, 1, figsize=(12, 4 * n_subplots))
-        if n_subplots == 1:
-            axes = [axes]
+    # FIG 9: Páginas
+    if stats_dist.get('paginas'):
+        p = df.loc[df['Num_Paginas_Clean'] > 0, 'Num_Paginas_Clean'].dropna()
+        fig, ax = plt.subplots(figsize=(W1 + 1.0, 2.5))
+        ax.hist(p, bins=20, color=COR_PRIM, edgecolor='black', linewidth=0.5)
+        ax.axvline(p.median(), color=COR_SEC, ls='--', lw=1.3, label=f'Mediana = {p.median():.0f}')
+        ax.set_xlabel('Nº de páginas (edição PT-BR)')
+        ax.set_ylabel('Nº de edições')
+        ax.legend()
+        titulo_ax(ax, 'Distribuição de páginas')
+        salvar_fig(fig, 'fig_09_paginas')
 
-        idx = 0
-        for col in col_tags_to_viz:
-            if col not in stats_tags:
-                continue
+    # FIG 10: Spice_Status / Spice_Nivel (obra); 'sem_sinal' em cinza: é desconhecido, não ausência
+    if 'Spice_Status' in ob.columns:
+        fig, axes = plt.subplots(1, 2, figsize=(W2, 2.6))
+        vc = ob['Spice_Status'].value_counts()
+        cores = [COR_CINZA if k == 'sem_sinal' else COR_SEC for k in vc.index]
+        axes[0].bar(vc.index, vc.values, color=cores, edgecolor='black', linewidth=0.5)
+        for i, v in enumerate(vc.values):
+            axes[0].text(i, v, f'{v}\n({100 * v / vc.sum():.1f}%)'.replace('.', ','), ha='center', va='bottom', fontsize=8)
+        axes[0].set_ylim(0, vc.max() * 1.25)
+        axes[0].set_ylabel('Nº de obras')
+        axes[0].set_title('(a) Spice_Status', loc='left', fontsize=9)
+        axes[0].grid(axis='x', visible=False)
+        if 'Spice_Nivel' in ob.columns:
+            niv = pd.to_numeric(ob['Spice_Nivel'], errors='coerce').dropna().astype(int).value_counts().reindex([0, 1, 2, 3], fill_value=0)
+            axes[1].bar(['0\nfechado', '1\nsensual', '2\ncena aberta', '3\nexplícito'], niv.values,
+                        color=COR_SEC, edgecolor='black', linewidth=0.5)
+            axes[1].set_ylabel('Nº de obras (com sinal)')
+            axes[1].set_title('(b) Spice_Nivel', loc='left', fontsize=9)
+            axes[1].grid(axis='x', visible=False)
+        salvar_fig(fig, 'fig_10_spice')
 
-            freq = stats_tags[col]['frequencias']
-            top_n = 12
-            top_tags = dict(sorted(freq.items(), key=lambda x: x[1], reverse=True)[:top_n])
+    # FIG 11: Cobertura de tags por quartil de popularidade (heatmap)
+    cob = cobertura_por_popularidade(ob)
+    if cob is not None:
+        fig, ax = plt.subplots(figsize=(W1 + 1.4, 2.6))
+        c2 = cob.copy()
+        c2.columns = [c.replace('_Hardcover', '').replace('_', ' ') for c in c2.columns]
+        sns.heatmap(c2, annot=True, fmt='.2f', cmap=CMAP_SEQ, vmin=0, vmax=1, linewidths=0.5, linecolor='white',
+                    cbar_kws={'label': 'Fração de obras com ≥1 tag'}, ax=ax)
+        ax.set_ylabel('Quartil de popularidade')
+        ax.set_xlabel('')
+        plt.setp(ax.get_xticklabels(), rotation=30, ha='right')
+        salvar_fig(fig, 'fig_11_cobertura_popularidade')
 
-            axes[idx].barh(list(top_tags.keys()), list(top_tags.values()),
-                          color=plt.cm.Set3(idx), edgecolor='black', alpha=0.8)
-            axes[idx].set_xlabel('Frequência', fontsize=10)
-            axes[idx].set_title(f'Top {top_n} {col}', fontsize=11, fontweight='bold')
-            axes[idx].grid(alpha=0.3, axis='x')
-            idx += 1
+    # FIG 12: Spice positivo por quartil de popularidade (IC de Wilson)
+    sp = extra.get('spice_por_pop')
+    if sp is not None and len(sp):
+        fig, ax = plt.subplots(figsize=(W1 + 0.6, 2.6))
+        ax.errorbar(sp['Quartil'], sp['p'], yerr=[sp['p'] - sp['lo'], sp['hi'] - sp['p']], fmt='o', color=COR_SEC,
+                    ecolor='black', capsize=3, markersize=5)
+        for x, (p, n) in enumerate(zip(sp['p'], sp['n'])):
+            ax.text(x + 0.08, p, f'n={n}', fontsize=7, va='center')
+        ax.set_ylim(0, 1)
+        ax.set_ylabel('Prop. de obras com spice positivo')
+        ax.set_xlabel('Quartil de popularidade (nº de leitores)')
+        titulo_ax(ax, 'Spice positivo × popularidade (IC de Wilson 95%)')
+        salvar_fig(fig, 'fig_12_spice_vs_popularidade')
 
-        plt.tight_layout()
-        plt.savefig(output_dir / 'fig_04_tags_top.png', dpi=300, bbox_inches='tight')
-        plt.close()
-        log.info("  Salvo: fig_04_tags_top.png")
+    # FIG 13: Tipo editorial × Spice_Status (descritivo; proporção por linha, contagens anotadas)
+    if {'Spice_Status', 'Tipo_Editorial_Editora'} <= set(ob.columns):
+        ct = pd.crosstab(ob['Tipo_Editorial_Editora'].fillna('NA'), ob['Spice_Status'])
+        prop = ct.div(ct.sum(axis=1), axis=0)
+        annot = ct.astype(str) + '\n(' + (prop * 100).round(0).astype(int).astype(str) + '%)'
+        fig, ax = plt.subplots(figsize=(W1 + 1.0, 2.8))
+        sns.heatmap(prop, annot=annot, fmt='', cmap=CMAP_SEQ, vmin=0, vmax=1, linewidths=0.5, linecolor='white',
+                    cbar_kws={'label': 'Proporção por linha'}, ax=ax)
+        ax.set_xlabel('')
+        ax.set_ylabel('Tipo editorial')
+        salvar_fig(fig, 'fig_13_tipo_editorial_spice')
 
-    # FIG 5: Scatter - Rating vs Qtd Avaliações
-    if 'Rating_Normalizado' in df.columns and 'Qtd_Avaliacoes_Clean' in df.columns:
-        df_plot = _por_obra(df).dropna(subset=['Rating_Normalizado', 'Qtd_Avaliacoes_Clean'])
-        if len(df_plot) > 0:
-            fig, ax = plt.subplots(figsize=(12, 6))
-            scatter = ax.scatter(df_plot['Qtd_Avaliacoes_Clean'],
-                                df_plot['Rating_Normalizado'],
-                                s=100, alpha=0.6, c=df_plot['Qtd_Avaliacoes_Clean'],
-                                cmap='viridis', edgecolors='black', linewidth=1)
-
-            if len(df_plot) > 2:
-                corr, p_value = spearmanr(df_plot['Qtd_Avaliacoes_Clean'], df_plot['Rating_Normalizado'])
-                ax.text(0.05, 0.95, f'Correlação Spearman: {corr:.3f} (p={p_value:.3f})',
-                       transform=ax.transAxes, fontsize=10, verticalalignment='top',
-                       bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
-
-            ax.set_xlabel('Quantidade de Avaliações', fontsize=11)
-            ax.set_ylabel('Rating', fontsize=11)
-            ax.set_title('Relação: Rating vs Quantidade de Avaliações', fontsize=12, fontweight='bold')
-            ax.grid(alpha=0.3)
-            plt.colorbar(scatter, ax=ax, label='Qtd Avaliações')
-
-            plt.tight_layout()
-            plt.savefig(output_dir / 'fig_05_rating_vs_qtd_scatter.png', dpi=300, bbox_inches='tight')
-            plt.close()
-            log.info("  Salvo: fig_05_rating_vs_qtd_scatter.png")
-
-    # FIG 6: Content Warnings - Top 15
-    if 'Content_Warnings' in stats_tags:
-        freq_cw = stats_tags['Content_Warnings']['frequencias']
-        if len(freq_cw) > 0:
-            fig, ax = plt.subplots(figsize=(12, 8))
-            top_cw = dict(sorted(freq_cw.items(), key=lambda x: x[1], reverse=True)[:15])
-            colors = plt.cm.Reds(np.linspace(0.4, 0.9, len(top_cw)))
-            ax.barh(list(top_cw.keys()), list(top_cw.values()),
-                   color=colors, edgecolor='darkred', linewidth=1.5)
-            ax.set_xlabel('Frequência', fontsize=11)
-            ax.set_title('Top 15 Content Warnings (Temas Sensíveis)', fontsize=12, fontweight='bold')
-            ax.grid(alpha=0.3, axis='x')
-
-            plt.tight_layout()
-            plt.savefig(output_dir / 'fig_06_content_warnings.png', dpi=300, bbox_inches='tight')
-            plt.close()
-            log.info("  Salvo: fig_06_content_warnings.png")
-
-    # FIG 7: Fonte de Match Distribution
-    if 'fonte_match' in stats_cat and len(stats_cat['fonte_match']) > 0:
-        fig, ax = plt.subplots(figsize=(12, 6))
-        fontes = stats_cat['fonte_match']
-        colors_pie = plt.cm.Spectral(np.linspace(0, 1, len(fontes)))
-
-        ax.pie(fontes.values(), labels=fontes.keys(), autopct='%1.1f%%',
-               colors=colors_pie, startangle=90, textprops={'fontsize': 10})
-        ax.set_title('Distribuição: Fonte de Match (Camadas do Pipeline)', fontsize=12, fontweight='bold')
-
-        plt.tight_layout()
-        plt.savefig(output_dir / 'fig_07_fonte_match_pie.png', dpi=300, bbox_inches='tight')
-        plt.close()
-        log.info("  Salvo: fig_07_fonte_match_pie.png")
+    # FIG 14: Rótulo triangulado de spice (obra), empilhado por confiança
+    if {'Spice_Label', 'Spice_Label_Confianca'} <= set(ob.columns):
+        ct = pd.crosstab(ob['Spice_Label'], ob['Spice_Label_Confianca']).reindex(
+            ['alto', 'baixo', 'provavel_baixo', 'indeterminado']).fillna(0)
+        cores = {'forte': OKABE_ITO[0], 'fraca': OKABE_ITO[4], 'conflito': OKABE_ITO[3],
+                 'nao_validado': OKABE_ITO[5], 'sem_evidencia': COR_CINZA}
+        fig, ax = plt.subplots(figsize=(W1 + 1.0, 2.6))
+        base = np.zeros(len(ct))
+        for col in ct.columns:
+            ax.bar(ct.index, ct[col].values, bottom=base, label=col, color=cores.get(col, COR_CINZA),
+                   edgecolor='black', linewidth=0.5)
+            base += ct[col].values
+        ax.set_ylabel('Nº de obras')
+        ax.legend(title='Confiança')
+        ax.grid(axis='x', visible=False)
+        plt.setp(ax.get_xticklabels(), rotation=20, ha='right')
+        salvar_fig(fig, 'fig_14_spice_label')
 
 
-def exportar_tags_frequency(df: pd.DataFrame, output_dir: Path, stats_tags: Dict) -> None:
-    """Exporta tabela de frequências de tags para CSV."""
+# =====================================================================
+# EXPORTS
+# =====================================================================
+
+def exportar_tags_frequency(stats_tags: Dict) -> None:
     log.info("\n[EXPORT] Exportando frequências de tags...")
-
-    registros_export = []
-    for col_tags, stats in stats_tags.items():
-        freq = stats['frequencias']
-        for tag, count in freq.most_common():
-            registros_export.append({
-                'Tipo_Tag': col_tags.replace('_', ' '),
-                'Tag': tag,
-                'Frequencia': count,
-                'Percentual_%': (count / stats['n_total']) * 100 if stats['n_total'] > 0 else 0,
-            })
-
-    df_export = pd.DataFrame(registros_export).sort_values('Frequencia', ascending=False)
-    output_file = output_dir / 'tags_frequency.csv'
-    df_export.to_csv(output_file, index=False, encoding='utf-8')
-    log.info(f"  Salvo: tags_frequency.csv ({len(registros_export)} tags)")
+    rows = []
+    for cat, s in stats_tags.items():
+        for tag, count in s['frequencias'].most_common():
+            rows.append({'Tipo_Tag': cat.replace('_', ' '), 'Tag': tag, 'Frequencia': count,
+                         'Percentual_%': (count / s['n_total']) * 100 if s['n_total'] else 0})
+    pd.DataFrame(rows).sort_values('Frequencia', ascending=False).to_csv(
+        OUTPUT_DIR / 'tags_frequency.csv', index=False, encoding='utf-8')
+    log.info(f"  Salvo: tags_frequency.csv ({len(rows)} tags)")
 
 
-def exportar_auditoria_titulos(df: pd.DataFrame, output_dir: Path) -> None:
-    """Exporta antes/depois da limpeza de títulos para conferência manual."""
+def exportar_auditoria_titulos(df: pd.DataFrame) -> None:
     if 'Titulo_Limpo' not in df.columns:
         return
-    alterados = df[df['Titulo_Original_Bruto'] != df['Titulo_Limpo']][['Titulo_Original_Bruto', 'Titulo_Limpo']]
-    alterados.to_csv(output_dir / 'titulos_limpeza_auditoria.csv', index=False, encoding='utf-8')
-    log.info(f"Títulos alterados pela limpeza: {len(alterados)}/{len(df)} (titulos_limpeza_auditoria.csv)")
-
+    alt = df[df['Titulo_Original_Bruto'] != df['Titulo_Limpo']][['Titulo_Original_Bruto', 'Titulo_Limpo']]
+    alt.to_csv(OUTPUT_DIR / 'titulos_limpeza_auditoria.csv', index=False, encoding='utf-8')
+    log.info(f"Títulos alterados pela limpeza: {len(alt)}/{len(df)}")
     resto = df[df['Titulo_Limpo'].str.contains(r"\s[–—-]\s|\(|\)|:", regex=True, na=False)]
     if len(resto):
-        log.info(f"Títulos ainda com separador ou parêntese ({len(resto)}); confira se algum é marketing:")
+        log.info(f"Títulos ainda com separador/parêntese ({len(resto)}); confira se algum é marketing:")
         for t in resto['Titulo_Limpo'].head(15):
             log.info(f"    {t}")
 
 
-def gerar_relatorio_consolidado(
-    df: pd.DataFrame,
-    stats_tags: Dict,
-    stats_dist: Dict,
-    stats_cat: Dict,
-    output_dir: Path
-) -> None:
-    """Gera relatório consolidado em TXT."""
+# =====================================================================
+# RELATÓRIO
+# =====================================================================
+
+def gerar_relatorio_consolidado(df: pd.DataFrame, stats_tags: Dict, stats_dist: Dict, stats_cat: Dict) -> None:
     log.info("\n[REPORT] Gerando relatório consolidado...")
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(OUTPUT_DIR / 'eda_report.txt', 'w', encoding='utf-8') as f:
+        f.write("=" * 90 + "\nANÁLISE EXPLORATÓRIA DE DADOS (EDA)\n")
+        f.write("Dataset: PT-BR Consolidado (livros_ptbr_v3.csv)\n")
+        f.write(f"Gerado em: {ts}\n" + "=" * 90 + "\n\n")
 
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        m = META_FILTRO
+        f.write("FILTRO TEMPORAL\n" + "-" * 90 + "\n")
+        f.write(f"Critério: ano da edição PT-BR >= {m.get('ano_min')}\n")
+        f.write(f"Edições no CSV: {m.get('n_inicial')} | removidas por ano < {m.get('ano_min')}: {m.get('n_antes_ano_min')} | "
+                f"removidas por ano ausente/inparseável: {m.get('n_sem_ano')} | "
+                f"removidas por formato fora de escopo (mangá/HQ/infantil): {m.get('n_formato_excluido', 0)} | "
+                f"mantidas: {m.get('n_final')}\n\n")
 
-    with open(output_dir / 'eda_report.txt', 'w', encoding='utf-8') as f:
-        f.write("=" * 90 + "\n")
-        f.write("ANÁLISE EXPLORATÓRIA DE DADOS (EDA)\n")
-        f.write("Dataset: BookTok PT-BR Consolidado (livros_ptbr_v3.csv)\n")
-        f.write(f"Gerado em: {timestamp}\n")
-        f.write("=" * 90 + "\n\n")
-
-        # ======== OVERVIEW ========
-        f.write("VISÃO GERAL DO DATASET\n")
-        f.write("-" * 90 + "\n")
-        f.write(f"Total de registros: {len(df)}\n")
-        f.write(f"Total de colunas: {len(df.columns)}\n")
+        f.write("VISÃO GERAL DO DATASET (após filtro)\n" + "-" * 90 + "\n")
+        f.write(f"Total de registros: {len(df)}\nTotal de colunas: {len(df.columns)}\n")
         if 'ano' in stats_dist:
             f.write(f"Período temporal (ano da edição PT-BR): {stats_dist['ano']['min']}-{stats_dist['ano']['max']}\n")
-
         col_ed = 'Editora' if 'Editora' in df.columns else 'Editora_PT'
         if col_ed in df.columns:
-            f.write(f"Cobertura de Editora: {(df[col_ed].notna().sum() / len(df)) * 100:.1f}%\n")
-
+            f.write(f"Cobertura de Editora: {df[col_ed].notna().mean() * 100:.1f}%\n")
         col_isbn = 'ISBN_PT' if 'ISBN_PT' in df.columns else 'ISBN'
         if col_isbn in df.columns:
-            f.write(f"Cobertura de ISBN: {(df[col_isbn].notna().sum() / len(df)) * 100:.1f}%\n")
+            f.write(f"Cobertura de ISBN: {df[col_isbn].notna().mean() * 100:.1f}%\n")
         f.write("\n")
 
-        # ======== RATINGS ========
-        if 'rating' in stats_dist:
-            f.write("RATINGS\n")
-            f.write("-" * 90 + "\n")
-            r = stats_dist['rating']
-            f.write(f"  Média:               {r['mean']:.3f}\n")
-            f.write(f"  Mediana:             {r['median']:.3f}\n")
-            f.write(f"  Desvio Padrão:      {r['std']:.3f}\n")
-            f.write(f"  Mín - Máx:          {r['min']:.3f} - {r['max']:.3f}\n")
-            f.write(f"  N registros:        {r['count']}\n")
-            f.write("\n")
+        for chave, titulo in (('rating', 'RATINGS (por obra)'), ('qtd_avaliacoes', 'QTD DE AVALIAÇÕES (por obra)'),
+                              ('paginas', 'PÁGINAS (por edição)')):
+            if chave in stats_dist:
+                r = stats_dist[chave]
+                f.write(titulo + "\n" + "-" * 90 + "\n")
+                f.write(f"  Média: {r['mean']:.3f} | Mediana: {r['median']:.3f} | DP: {r['std']:.3f} | "
+                        f"Q1-Q3: {r['q1']:.2f}-{r['q3']:.2f} | Mín-Máx: {r['min']:.2f}-{r['max']:.2f} | N: {r['count']}\n")
+                if 'ic_boot' in r:
+                    f.write(f"  IC bootstrap 95% da média: [{r['ic_boot'][0]:.3f}, {r['ic_boot'][1]:.3f}]\n")
+                f.write("\n")
 
-        # ======== TAGS ========
-        f.write("ANÁLISE DE TAGS E METADADOS\n")
-        f.write("-" * 90 + "\n")
-
-        for cat in ['Generos', 'Moods', 'Tags_Gerais', 'Content_Warnings']:
+        f.write("ANÁLISE DE TAGS E METADADOS\n" + "-" * 90 + "\n")
+        for cat in ['Generos', 'Moods', 'Tags_Gerais', 'Tags_Estruturadas', 'Content_Warnings']:
             if cat not in stats_tags:
                 continue
-
             s = stats_tags[cat]
-            f.write(f"\n  {cat.upper()}\n")
-            f.write(f"    Tags únicas:        {s['n_unicas']}\n")
-            f.write(f"    Total de tags:      {s['n_total']}\n")
-            f.write(f"    Registros com tag:  {s['n_registros']}/{s['n_base']} obras ({s['cobertura_%']:.1f}%)\n")
-            f.write(f"    Top 10 mais comuns:\n")
-
-            top_10 = s['frequencias'].most_common(10)
-            for i, (tag, freq) in enumerate(top_10, 1):
-                pct = (freq / s['n_total']) * 100 if s['n_total'] > 0 else 0
-                f.write(f"      {i:2d}. {tag:<40} {freq:3d} ({pct:5.1f}%)\n")
-
+            f.write(f"\n  {cat.upper()}\n    Tags únicas: {s['n_unicas']}\n    Total de tags: {s['n_total']}\n")
+            f.write(f"    Registros com tag: {s['n_registros']}/{s['n_base']} obras ({s['cobertura_%']:.1f}%)\n    Top 10:\n")
+            for i, (tag, fr) in enumerate(s['frequencias'].most_common(10), 1):
+                pct = fr / s['n_total'] * 100 if s['n_total'] else 0
+                f.write(f"      {i:2d}. {tag:<40} {fr:3d} ({pct:5.1f}%)\n")
         f.write("\n" + "=" * 90 + "\n")
 
-    log.info(f"  Relatório salvo: eda_report.txt")
 
-
-# =====================================================================
-# MAIN
-# =====================================================================
-
-def anexar_secao_v3(df: pd.DataFrame, output_dir: Path) -> None:
-    """Seção do dataset v3: unidades, qualidade da ponte, sinais de spice e associações DESCRITIVAS."""
+def anexar_secao_v3(df: pd.DataFrame, extra: Dict, tab_ngrams: Dict[str, pd.DataFrame]) -> None:
     ob = _por_obra(df)
     pct = lambda a, b: f"{100 * a / b:.1f}%" if b else "n/a"
-    with open(output_dir / 'eda_report.txt', 'a', encoding='utf-8') as f:
+    with open(OUTPUT_DIR / 'eda_report.txt', 'a', encoding='utf-8') as f:
         f.write("\nSEÇÃO v3: UNIDADES, PONTE E SINAIS DE SPICE\n" + "-" * 90 + "\n")
         f.write(f"Edições (ISBN): {len(df)} | Obras únicas: {len(ob)}\n")
         for col in ('Metodo_Ponte', 'E_Ebook', 'Tipo_Editorial_Editora'):
@@ -851,57 +989,68 @@ def anexar_secao_v3(df: pd.DataFrame, output_dir: Path) -> None:
                 f.write(f"{col}: {df[col].value_counts(dropna=False).to_dict()}\n")
         if 'Revisar_Ponte' in df.columns:
             f.write(f"Revisar_Ponte (entra na auditoria Gold Standard): {int(df['Revisar_Ponte'].sum())}\n")
-        if 'Estratos_Origem' in df.columns:
-            est = df['Estratos_Origem'].fillna('(sem)').str.split(r' \| ').explode().value_counts().to_dict()
-            f.write(f"Estratos de origem (quadro amostral proposital): {est}\n")
-            if set(est) <= {'(sem)'}:
-                f.write("  ATENÇÃO: nenhum estrato propagado; rode a ponte (backfill_proveniencia) antes de interpretar.\n")
-        if 'Origens_Pais' in df.columns:
-            ori = df['Origens_Pais'].fillna('(sem)').str.split(r' \| ').explode().value_counts().to_dict()
-            f.write(f"Origens (país da autora no seed): {ori}\n")
-        if 'Tipos_Origem' in df.columns:
-            tip = df['Tipos_Origem'].fillna('(sem)').str.split(r' \| ').explode().value_counts().to_dict()
-            f.write(f"Tipos de origem (canal do seed; base da análise de sensibilidade sem 'termo:conteudo'): {tip}\n")
+        for col, rot in (('Estratos_Origem', 'Estratos de origem (quadro amostral proposital)'),
+                         ('Origens_Pais', 'Origens (país da autora no seed)'),
+                         ('Tipos_Origem', "Tipos de origem (canal do seed; base da sensibilidade sem 'termo:conteudo')")):
+            if col in df.columns:
+                v = df[col].fillna('(sem)').str.split(r' \| ').explode().value_counts().to_dict()
+                f.write(f"{rot}: {v}\n")
 
         if 'Editora_Chave' in df.columns:
             col_ed = next((c for c in ('Editora_PT', 'Editora') if c in df.columns), None)
             if col_ed:
                 f.write(f"\nEditoras: {df[col_ed].dropna().nunique()} grafias brutas -> "
-                        f"{df['Editora_Chave'].dropna().nunique()} chaves canônicas "
-                        f"(auditoria: editoras_normalizacao_auditoria.csv; pares_suspeitos: editoras_pares_suspeitos.csv)\n")
+                        f"{df['Editora_Chave'].dropna().nunique()} chaves canônicas\n")
             if 'Tipo_Editorial_Editora' in df.columns:
                 desc = df[df['Tipo_Editorial_Editora'] == 'desconhecido']['Editora_Chave'].value_counts().head(15)
                 if len(desc):
-                    f.write("Editoras 'desconhecido' mais frequentes (candidatas a entrar em editoras.txt): "
-                            f"{desc.to_dict()}\n")
+                    f.write(f"Editoras 'desconhecido' mais frequentes: {desc.to_dict()}\n")
 
-        f.write("\nFlags por obra:\n")
-        for c in ('Flag_Romance', 'Flag_New_Adult', 'Flag_Spice_Tag', 'Flag_CW_Sexual_Content', 'Flag_Closed_Door_Tag', 'Flag_Formato_Excluir'):
-            if c in ob.columns:
-                f.write(f"  {c:<24} {int(ob[c].sum())} ({pct(ob[c].sum(), len(ob))})\n")
+        f.write("\nFlags por obra (proporção com IC de Wilson 95%):\n")
+        prev = prevalencias_flags(df)
+        for _, r in prev.iterrows():
+            f.write(f"  {r['Flag']:<24} {int(r['k']):>4}/{int(r['n'])} = {100 * r['prop']:5.1f}%  "
+                    f"[{100 * r['IC95_inf']:.1f}, {100 * r['IC95_sup']:.1f}]\n")
+        prev.to_csv(OUTPUT_DIR / 'flags_prevalencia_wilson.csv', index=False, encoding='utf-8')
 
-        # ---- spice tri-estado (v3.1)
         if 'Spice_Status' in ob.columns:
             f.write("\nSPICE TRI-ESTADO (por obra). 'sem_sinal' = DESCONHECIDO, não é ausência de spice:\n")
             f.write(f"  Spice_Status: {ob['Spice_Status'].value_counts(dropna=False).to_dict()}\n")
+            k = int((ob['Spice_Status'] == 'positivo').sum())
+            p, lo, hi = wilson_ic(k, len(ob))
+            f.write(f"  Spice positivo: {k}/{len(ob)} = {100 * p:.1f}% [IC Wilson 95%: {100 * lo:.1f}, {100 * hi:.1f}]\n")
             if 'Spice_Nivel' in ob.columns:
-                niveis = pd.to_numeric(ob['Spice_Nivel'], errors='coerce').value_counts(dropna=False).sort_index()
-                niveis = {('sem_sinal' if pd.isna(k) else int(k)): int(n) for k, n in niveis.items()}
-                f.write(f"  Spice_Nivel (0 fechado, 1 sensual, 2 cena aberta, 3 explícito): {niveis}\n")
+                niv = pd.to_numeric(ob['Spice_Nivel'], errors='coerce').value_counts(dropna=False).sort_index()
+                niv = {('sem_sinal' if pd.isna(a) else int(a)): int(n) for a, n in niv.items()}
+                f.write(f"  Spice_Nivel (0 fechado, 1 sensual, 2 cena aberta, 3 explícito): {niv}\n")
             if 'Flag_Spice_Tag' in ob.columns:
-                f.write("  Flag_Spice_Tag (antigo, limiar de votos) x Spice_Status (novo):\n")
-                f.write("    " + pd.crosstab(ob['Flag_Spice_Tag'], ob['Spice_Status']).to_string().replace("\n", "\n    ") + "\n")
+                f.write("  Flag_Spice_Tag (antigo) x Spice_Status (novo):\n    "
+                        + pd.crosstab(ob['Flag_Spice_Tag'], ob['Spice_Status']).to_string().replace("\n", "\n    ") + "\n")
             sens = sensibilidade_min_count(ob)
             if sens:
                 f.write("  Sensibilidade ao limiar mínimo de votos por tag:\n")
-                for k, vv in sens.items():
-                    f.write(f"    {k}: {vv}\n")
+                for kk, vv in sens.items():
+                    f.write(f"    {kk}: {vv}\n")
             cob = cobertura_por_popularidade(ob)
             if cob is not None:
-                cob.to_csv(output_dir / 'cobertura_por_popularidade.csv', encoding='utf-8')
-                f.write("  Cobertura de tags por quartil de popularidade (se cai nos quartis baixos, a ausência de "
-                        "tag é dado faltante NÃO aleatório):\n")
-                f.write("    " + cob.to_string().replace("\n", "\n    ") + "\n")
+                cob.to_csv(OUTPUT_DIR / 'cobertura_por_popularidade.csv', encoding='utf-8')
+                f.write("  Cobertura de tags por quartil de popularidade (queda nos quartis baixos = faltante NÃO aleatório):\n    "
+                        + cob.to_string().replace("\n", "\n    ") + "\n")
+            if 'spearman_users_ntags' in extra:
+                rho, pv, n = extra['spearman_users_ntags']
+                f.write(f"  Spearman (nº de leitores x nº total de tags): rho={rho:.3f}, p={pv:.4f}, n={n}\n")
+            if 'spice_por_pop' in extra:
+                f.write("  Spice positivo por quartil de popularidade (Wilson 95%):\n    "
+                        + extra['spice_por_pop'].round(3).to_string(index=False).replace("\n", "\n    ") + "\n")
+                extra['spice_por_pop'].to_csv(OUTPUT_DIR / 'spice_por_popularidade.csv', index=False, encoding='utf-8')
+
+        if 'Spice_Label' in ob.columns:
+            f.write("\nRÓTULO TRIANGULADO DE SPICE (rotulagem.py; supervisão fraca; 'indeterminado' = desconhecido)\n")
+            f.write(f"  Spice_Label: {ob['Spice_Label'].value_counts().to_dict()}\n")
+            f.write("  Rótulo x confiança:\n    "
+                    + pd.crosstab(ob['Spice_Label'], ob['Spice_Label_Confianca']).to_string().replace("\n", "\n    ") + "\n")
+            nrev = int((ob['Spice_Label_Confianca'] == 'conflito').sum())
+            f.write(f"  Obras em conflito entre fontes (revisão manual): {nrev}\n")
 
         if {'Flag_Spice_Tag', 'Tipo_Editorial_Editora'} <= set(df.columns):
             f.write("\nAssociação DESCRITIVA (não causal; amostra proposital, não representa o mercado):\n"
@@ -911,66 +1060,56 @@ def anexar_secao_v3(df: pd.DataFrame, output_dir: Path) -> None:
             f.write(tab.to_string() + "\n")
         if {'Spice_Status', 'Tipo_Editorial_Editora', 'Hardcover_Book_ID'} <= set(df.columns):
             misto = int((df.groupby('Hardcover_Book_ID')['Tipo_Editorial_Editora'].nunique() > 1).sum())
-            f.write("\nContagem de OBRAS por Spice_Status e tipo editorial (tipo da 1ª edição da obra; "
-                    f"{misto} obra(s) têm edições de tipos editoriais mistos):\n")
+            f.write(f"\nContagem de OBRAS por Spice_Status e tipo editorial (tipo da 1ª edição; {misto} obra(s) com tipos mistos):\n")
             tab2 = pd.crosstab(ob['Tipo_Editorial_Editora'].fillna('NA'), ob['Spice_Status'])
             tab2['n'] = tab2.sum(axis=1)
             f.write(tab2.to_string() + "\n")
+
+        if tab_ngrams:
+            f.write("\nTERMOS MAIS FREQUENTES (frequência de documento, nível obra; lista completa em ngrams_*.csv)\n")
+            for nome, t in tab_ngrams.items():
+                for tipo in ('unigrama', 'bigrama'):
+                    top = t[t['Tipo'] == tipo].head(10)
+                    f.write(f"  {nome}/{tipo}: " + ", ".join(f"{a} ({b})" for a, b in zip(top['Termo'], top['Freq_Doc'])) + "\n")
     log.info("  Seção v3 anexada ao eda_report.txt")
 
 
+# =====================================================================
+# MAIN
+# =====================================================================
+
 def main():
-    """Pipeline completo de EDA."""
+    global FIG_TITULOS, FORMATOS
+    ap = argparse.ArgumentParser(description="EDA BookTok PT-BR (v3.2)")
+    ap.add_argument('--ano-min', type=int, default=ANO_MIN_PADRAO, help='ano mínimo da edição PT-BR (padrão 2015)')
+    ap.add_argument('--titulos', action='store_true', help='inclui títulos dentro das figuras')
+    ap.add_argument('--formatos', nargs='+', default=list(FORMATOS), choices=['png', 'pdf', 'svg'])
+    args, _ = ap.parse_known_args()
+    FIG_TITULOS, FORMATOS = args.titulos, tuple(args.formatos)
+    aplicar_estilo()
 
-    log.info("EDA: BookTok PT-BR Consolidado | POC I - Engenharia de Dados")
-
-    # Carregamento
-    df = carregar_e_limpar_dados(CAMINHO_ENTRADA)
+    log.info(f"EDA: PT-BR Consolidado | POC I | filtro ano >= {args.ano_min}")
+    df = carregar_e_limpar_dados(CAMINHO_ENTRADA, args.ano_min)
     if df.empty:
-        log.error("Falha ao carregar dados. Abortando.")
+        log.error("Sem dados após carregamento/filtro. Abortando.")
         sys.exit(1)
 
-    # Análises
     stats_tags = analisar_tags(_por_obra(df))
     stats_dist = analisar_distribuicoes(df)
     stats_cat = analisar_categoricas(df)
+    extra = analisar_spice_cobertura(df)
 
-    # Visualizações
-    gerar_wordclouds(df, OUTPUT_DIR)
-    gerar_visualizacoes(df, OUTPUT_DIR, stats_tags, stats_dist, stats_cat)
+    tab_ngrams = gerar_wordclouds(df)
+    gerar_visualizacoes(df, stats_tags, stats_dist, stats_cat, extra)
 
-    # Exports
-    exportar_tags_frequency(df, OUTPUT_DIR, stats_tags)
-    exportar_auditoria_titulos(df, OUTPUT_DIR)
+    exportar_tags_frequency(stats_tags)
+    exportar_auditoria_titulos(df)
 
-    # Relatório
-    gerar_relatorio_consolidado(df, stats_tags, stats_dist, stats_cat, OUTPUT_DIR)
-    anexar_secao_v3(df, OUTPUT_DIR)
+    gerar_relatorio_consolidado(df, stats_tags, stats_dist, stats_cat)
+    anexar_secao_v3(df, extra, tab_ngrams)
 
-    # =====================================================================
-    # RESUMO FINAL
-    # =====================================================================
-    log.info("\n" + "="*90)
-    log.info("PIPELINE DE EDA CONCLUÍDO COM SUCESSO")
-    log.info("="*90)
-    log.info(f"\nOutputs gerados em: {OUTPUT_DIR}")
-    log.info("\nArquivos:")
-    log.info("  eda_report.txt                      relatório consolidado")
-    log.info("  fig_01_ratings_dist.png             distribuição de ratings")
-    log.info("  fig_02_anos_dist.png                distribuição temporal (ano da edição PT-BR)")
-    log.info("  fig_03_editoras_top10.png           top 10 editoras (grafias agrupadas)")
-    log.info("  fig_04_tags_top.png                 top tags por categoria")
-    log.info("  fig_05_rating_vs_qtd_scatter.png    rating vs quantidade de avaliações")
-    log.info("  fig_06_content_warnings.png         content warnings")
-    log.info("  fig_07_fonte_match_pie.png          fontes de match (se existir a coluna)")
-    log.info("  fig_wordcloud_titulos.png           nuvem de palavras: títulos limpos")
-    log.info("  fig_wordcloud_sinopses.png          nuvem de palavras: sinopses")
-    log.info("  tags_frequency.csv                  frequência consolidada de tags")
-    log.info("  titulos_limpeza_auditoria.csv       títulos alterados pela limpeza")
-    log.info("  editoras_normalizacao_auditoria.csv grafias de editora fundidas (conferir)")
-    log.info("  editoras_pares_suspeitos.csv        chaves prefixo uma da outra (decidir)")
-    log.info("  cobertura_por_popularidade.csv      cobertura de tags por quartil de popularidade")
-    log.info("\n" + "="*90 + "\n")
+    log.info("\n" + "=" * 90 + "\nPIPELINE DE EDA CONCLUÍDO\n" + "=" * 90)
+    log.info(f"Outputs em: {OUTPUT_DIR} (figuras: {', '.join(FORMATOS)})")
 
 
 if __name__ == "__main__":

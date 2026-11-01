@@ -1,0 +1,172 @@
+Corpus,Tipo,Termo,Freq_Doc
+titulos,unigrama,amor,25
+titulos,unigrama,jogo,7
+titulos,unigrama,chance,6
+titulos,unigrama,segunda,6
+titulos,unigrama,coração,6
+titulos,unigrama,noiva,4
+titulos,unigrama,filme,4
+titulos,unigrama,belo,4
+titulos,unigrama,dama,3
+titulos,unigrama,deus,3
+titulos,unigrama,casamento,3
+titulos,unigrama,coisas,3
+titulos,unigrama,história,3
+titulos,unigrama,garota,3
+titulos,unigrama,gelo,3
+titulos,unigrama,maldição,3
+titulos,unigrama,fazendo,3
+titulos,unigrama,império,3
+titulos,unigrama,corte,3
+titulos,unigrama,promessa,2
+titulos,unigrama,família,2
+titulos,unigrama,meneka,2
+titulos,unigrama,lenda,2
+titulos,unigrama,ano,2
+titulos,unigrama,sonhos,2
+titulos,unigrama,pior,2
+titulos,unigrama,natal,2
+titulos,unigrama,sonhando,2
+titulos,unigrama,puro,2
+titulos,unigrama,estrada,2
+titulos,unigrama,volta,2
+titulos,unigrama,destino,2
+titulos,unigrama,pedra,2
+titulos,unigrama,damas,2
+titulos,unigrama,perdida,2
+titulos,unigrama,doce,2
+titulos,unigrama,calor,2
+titulos,unigrama,bela,2
+titulos,unigrama,vida,2
+titulos,unigrama,aconteceu,2
+titulos,unigrama,desastre,2
+titulos,unigrama,melhor,2
+titulos,unigrama,pequena,2
+titulos,unigrama,verão,2
+titulos,unigrama,opostos,2
+titulos,unigrama,cidade,2
+titulos,unigrama,asas,2
+titulos,unigrama,estrelas,2
+titulos,unigrama,passo,2
+titulos,unigrama,nuvens,2
+titulos,unigrama,mar,2
+titulos,unigrama,inesquecível,2
+titulos,unigrama,paixão,2
+titulos,unigrama,indomável,2
+titulos,unigrama,férias,2
+titulos,unigrama,sorte,2
+titulos,unigrama,sombrio,1
+titulos,unigrama,romeu,1
+titulos,unigrama,bispo,1
+titulos,unigrama,cruel,1
+titulos,unigrama,apaixonar,1
+titulos,unigrama,formas,1
+titulos,unigrama,seis,1
+titulos,unigrama,desejos,1
+titulos,unigrama,peridoto,1
+titulos,unigrama,café,1
+titulos,unigrama,adorável,1
+titulos,unigrama,dragões,1
+titulos,unigrama,fantasma,1
+titulos,unigrama,tornou,1
+titulos,unigrama,rio,1
+titulos,unigrama,escolhemos,1
+titulos,unigrama,duologia,1
+titulos,unigrama,desfecho,1
+titulos,unigrama,épico,1
+titulos,unigrama,celestiais,1
+titulos,unigrama,romance,1
+titulos,unigrama,espirituoso,1
+titulos,unigrama,famosa,1
+titulos,unigrama,meio,1
+titulos,unigrama,diabo,1
+titulos,unigrama,cor-de-rosa,1
+titulos,unigrama,veste,1
+titulos,unigrama,ship,1
+titulos,unigrama,estelar,1
+titulos,unigrama,comédia,1
+titulos,unigrama,romântica,1
+titulos,unigrama,limite,1
+titulos,unigrama,ardente,1
+titulos,unigrama,rivalidade,1
+titulos,unigrama,colisão,1
+titulos,unigrama,rota,1
+titulos,unigrama,mudou,1
+titulos,unigrama,ritmo,1
+titulos,unigrama,virada,1
+titulos,unigrama,mundos,1
+titulos,unigrama,unidos,1
+titulos,unigrama,amigos,1
+titulos,unigrama,memórias,1
+titulos,unigrama,inesperado,1
+titulos,bigrama,segunda chance,5
+titulos,bigrama,romeu sombrio,1
+titulos,bigrama,bispo cruel,1
+titulos,bigrama,seis formas,1
+titulos,bigrama,adorável café,1
+titulos,bigrama,tornou rio,1
+titulos,bigrama,desfecho épico,1
+titulos,bigrama,romance espirituoso,1
+titulos,bigrama,diabo veste,1
+titulos,bigrama,veste cor-de-rosa,1
+titulos,bigrama,ship estelar,1
+titulos,bigrama,comédia romântica,1
+titulos,bigrama,rivalidade ardente,1
+titulos,bigrama,mundos unidos,1
+titulos,bigrama,amor inesperado,1
+titulos,bigrama,mil vezes,1
+titulos,bigrama,vezes amor,1
+titulos,bigrama,sonhando ramona,1
+titulos,bigrama,ramona riley,1
+titulos,bigrama,puro impulso,1
+titulos,bigrama,pior padrinho,1
+titulos,bigrama,herdeiro inadequado,1
+titulos,bigrama,cresce eve,1
+titulos,bigrama,rainha traidora,1
+titulos,bigrama,tiktok boom,1
+titulos,bigrama,música popular,1
+titulos,bigrama,popular brasileira,1
+titulos,bigrama,cinema explícito,1
+titulos,bigrama,livraria perdida,1
+titulos,bigrama,imperador goblin,1
+titulos,bigrama,guerreiro escocês,1
+titulos,bigrama,devasso sedutor,1
+titulos,bigrama,doce calor,1
+titulos,bigrama,creed livro,1
+titulos,bigrama,livro oficial,1
+titulos,bigrama,método charlie,1
+titulos,bigrama,regra dixon,1
+titulos,bigrama,espadas cruzadas,1
+titulos,bigrama,coração perdido,1
+titulos,bigrama,indigo ridge,1
+titulos,bigrama,maldição cravada,1
+titulos,bigrama,criança interior,1
+titulos,bigrama,amor atena,1
+titulos,bigrama,tarde demais,1
+titulos,bigrama,lado feio,1
+titulos,bigrama,pequenas luzes,1
+titulos,bigrama,belo casamento,1
+titulos,bigrama,desastre iminente,1
+titulos,bigrama,belo desastre,1
+titulos,bigrama,pequena mentira,1
+titulos,bigrama,puro impacto,1
+titulos,bigrama,cidade pequena,1
+titulos,bigrama,vento sussurra,1
+titulos,bigrama,beleza perdida,1
+titulos,bigrama,correndo descalça,1
+titulos,bigrama,asas feitas,1
+titulos,bigrama,garota errada,1
+titulos,bigrama,repente adolescente,1
+titulos,bigrama,ano inesquecível,1
+titulos,bigrama,magnolia parks,1
+titulos,bigrama,paixão inadequada,1
+titulos,bigrama,doce pesadelo,1
+titulos,bigrama,segunda vista,1
+titulos,bigrama,noiva rebelde,1
+titulos,bigrama,beijo inesquecível,1
+titulos,bigrama,amor verdadeiro,1
+titulos,bigrama,sonhando acordado,1
+titulos,bigrama,lua crescente,1
+titulos,bigrama,promessas cruéis,1
+titulos,bigrama,reverência indomável,1
+titulos,bigrama,dear heart,1

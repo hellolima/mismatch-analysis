@@ -1,0 +1,68 @@
+==========================================================================================
+ROTULAGEM TRIANGULADA DE CONTEÚDO INADEQUADO/SENSÍVEL (v3.1) | 2026-10-24 19:53:33
+==========================================================================================
+Edições: 262 | Obras: 252 | limiar de cobertura: >= 102 leitores (percentil 50) + Moods + Tags Gerais + Content Warnings preenchidos
+
+RÓTULO FINAL (por obra)
+Sensivel_Label
+indeterminado     155
+alto               91
+provavel_baixo      6
+
+Rótulo x confiança ('circular' = único voto alto era a sinopse de obra achada via termo:conteudo):
+Sensivel_Label_Confianca  circular  forte  fraca  nao_validado  sem_evidencia
+Sensivel_Label                                                               
+alto                             0     50     41             0              0
+indeterminado                   10      0      0             0            145
+provavel_baixo                   0      0      0             6              0
+
+RÓTULO COM SINOPSE x RÓTULO SEM SINOPSE (use o 2º como alvo ao treinar/avaliar o módulo de texto: a sinopse é a entrada do módulo e o léxico dela vazaria para o alvo)
+Sensivel_Label_sem_sinopse  alto  indeterminado  provavel_baixo
+Sensivel_Label                                                 
+alto                          82              9               0
+indeterminado                  0            155               0
+provavel_baixo                 0              0               6
+
+VOTOS POR FONTE (obra; vazio = abstenção)
+  V_tags     : {'abstem': 231, 'alto': 21}
+  V_vocab    : {'abstem': 227, 'alto': 25}
+  V_sinopse  : {'abstem': 205, 'alto': 47}
+  V_maturity : {'abstem': 211, 'alto': 41}
+  V_cw       : {'abstem': 209, 'alto': 43}
+  YA=84 | Cobertura_Boa=60 | YA & Cobertura_Boa=24
+
+CIRCULARIDADE: Via_Termo_Conteudo x Sensivel_Label (sinopse dessas obras não conta como independente)
+Sensivel_Label      alto  indeterminado  provavel_baixo
+Via_Termo_Conteudo                                     
+False                 69            139               5
+True                  22             16               1
+
+CONCORDÂNCIA ENTRE FONTES (obras com voto em ambas; linhas=tags, colunas=sinopse)
+V_sinopse  alto
+V_tags         
+alto          8
+
+SANIDADE POR ESTRATO (face validity; NÃO é voto: estratos foram critério de amostragem)
+Sensivel_Label      alto  indeterminado  provavel_baixo
+Estrato                                                
+(fora_das_autoras)    22             65               3
+contemporaneo          4              6               0
+controle_fantasia      2              2               0
+controle_wf            2             18               1
+controle_ya            0              7               0
+dark                   2              3               0
+esportivo             14              2               0
+indie_cauda            0              6               0
+nacional               0              7               0
+new_adult             12              9               1
+romantasia             9             11               0
+romcom                24             19               1
+
+RÓTULO x QUARTIL DE POPULARIDADE
+Sensivel_Label  alto  indeterminado  provavel_baixo
+_users                                             
+Q1                 7             56               0
+Q2                14             49               0
+Q3                26             34               3
+Q4                44             16               3
+
