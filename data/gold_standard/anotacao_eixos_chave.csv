@@ -1,0 +1,97 @@
+ISBN_PT,Titulo_PT,Q,Sensivel_Label,Sensivel_Label_Confianca,Sensivel_Label_Fontes,Sensivel_Label_sem_sinopse,V_tags,V_vocab,V_sinopse,V_maturity,V_cw,Via_Termo_Conteudo,Spice_Nivel,Spice_Status,Flag_Eixo_Sexo,Flag_Eixo_Violencia,Flag_Eixo_Drogas_Alcool,Flag_Eixo_Abuso_Gatilhos
+9786555951196,De volta,Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786560991101,Brothersong,Q3,alto,fraca,maturity,alto,,,,alto,,False,,sem_sinal,False,False,False,False
+9786555659153,Sem juízo,Q4,alto,forte,sinopse|maturity,alto,,,alto,alto,,False,,sem_sinal,True,False,False,False
+9788542807523,A Educação de Sebastian,Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788593911668,Duelo de damas,Q1,alto,fraca,sinopse|maturity,alto,,,alto,alto,,True,,sem_sinal,True,False,False,False
+9786559702718,A destruidora de casamentos,Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786559816491,Talvez não,Q3,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9788568432655,Maestra,Q2,indeterminado,circular,sinopse(via_termo_conteudo),indeterminado,,,alto,,,True,,sem_sinal,True,False,False,False
+9786559812295,Viralizou,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788539609505,De volta à escola,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788539822492,Aprendendo A Viver,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788543808574,O jogo – Sucesso no TikTok,Q4,alto,forte,maturity|cw,alto,,,,alto,alto,False,,sem_sinal,True,False,True,True
+9788584396382,Como escrever uma história de amor,Q2,alto,fraca,tags|vocab,alto,alto,alto,,,,False,2.0,positivo,True,False,False,False
+9788554514792,The Risk – Sucesso no TikTok,Q1,alto,fraca,sinopse,indeterminado,,,alto,,,False,,sem_sinal,True,False,False,False
+9786559812912,"Hoje, depois , amanhã",Q3,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9788581226644,A libertação da Bela,Q2,alto,forte,tags|vocab|sinopse|maturity,alto,alto,alto,alto,alto,,True,3.0,positivo,True,False,False,False
+9786559704354,"Jogo de corpo – Romance de hóquei de Elle Kennedy, autora de ""O acordo""",Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786588343210,Godsgrave,Q4,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9786559704569,Um casamento quase apropriado – Terceiro livro da trilogia Os Indomáveis Irmãos MacTaggert,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788551002414,A casa das marés,Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786559705269,O adorável café dos dragões – A romantasia cozy com dragõezinhos fofos,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788539821198,Os Irmãos de Angelis,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788556513984,Filha de mundo nenhum,Q4,alto,forte,tags|vocab|cw,alto,alto,alto,,,alto,False,3.0,positivo,True,True,False,True
+9786553932777,Comédia romântica,Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,True,False,False,False
+9786555952582,No calor do momento,Q4,alto,forte,sinopse|cw,alto,,,alto,,alto,True,,sem_sinal,True,False,True,False
+9786555607390,Um passo de sorte,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786559243556,Um namoro de mentirinha (Vol. 3 Série Lovelight),Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786585659260,A livraria perdida,Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,False,True,True,True
+9786559814626,Tarde demais (Edição revista),Q3,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9788551013311,O sobrevivente quer morrer no final,Q3,alto,forte,cw,alto,,,,,alto,True,,sem_sinal,False,True,False,True
+9788501118097,Império de tempestades - Trono de vidro - vol. 5,Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,True,True,True,False
+9786555606294,Nós dois sozinhos no Éter,Q4,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786556221083,Roteiristas do amor,Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788582356869,A balada do felizes para nunca (Sucesso no TikTok),Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,False,True,False,True
+9786555876314,Ondas do oeste (Vol. 3 Série Bússola),Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788554512217,Os números do amor (Nova edição) – Sucesso no TikTok,Q4,alto,forte,tags|vocab|sinopse|maturity|cw,alto,alto,alto,alto,alto,alto,True,2.0,positivo,True,True,False,True
+9786555953206,Dando o que falar,Q3,indeterminado,circular,sinopse(via_termo_conteudo),indeterminado,,,alto,,,True,,sem_sinal,True,False,False,False
+9786559241804,Loucos por livros,Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,True,False,True,True
+9786585348959,Mais ou menos 9 horas,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,True,,sem_sinal,False,False,False,False
+9788501110275,Nunca jamais - 2,Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788551009208,Mil vezes amor,Q3,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9788580578577,Baía da esperança,Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786555652178,Indomável,Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786555659474,Prometa que vai se lembrar de mim,Q4,alto,forte,cw,alto,,,,,alto,True,,sem_sinal,False,True,False,True
+9786559575909,Um sonho de férias,Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,True,False,True,False
+9788530601966,Bourbon e mentiras,Q3,alto,fraca,maturity,alto,,,,alto,,True,,sem_sinal,False,False,False,False
+9786559240265,A garota que não se calou,Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786555659511,"Vai sonhando, Ramona Riley",Q3,alto,forte,maturity|cw,alto,,,,alto,alto,True,,sem_sinal,True,False,True,False
+9786555661392,Desejo,Q4,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9786559706273,"Bispo cruel – Um dark romance de máfia intenso, perigoso e viciante da mesma autora de ""Meu Romeu sombrio""",Q3,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,True,True,False,True
+9788580414868,Um beijo inesquecível,Q4,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786555607420,Magnolia Parks,Q4,alto,fraca,maturity,alto,,,,alto,,False,,sem_sinal,False,False,False,False
+9786559241415,De férias com você,Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,False,False,True,False
+9786559706280,"A era dos celestiais – O desfecho épico da duologia ""A lenda de Meneka""",Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788580415148,A travessia,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786559576517,Armadilhas do amor,Q4,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9786557827383,Um passo de cada vez,Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788584396634,Canção de amor,Q2,indeterminado,circular,sinopse(via_termo_conteudo),indeterminado,,,alto,,,True,,sem_sinal,True,False,False,False
+9786559705931,Meio que famosa – Uma comédia romântica sensível sobre uma ex-estrela do rock e um empreiteiro atraente,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788584395927,O método Charlie,Q3,alto,fraca,tags|vocab|sinopse,alto,alto,alto,alto,,,True,3.0,positivo,True,False,False,False
+9788551012543,Táticas do amor,Q4,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9786585348034,Memórias de um amor inesperado,Q3,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,False,False,True,False
+9786588343234,Nevernight,Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,True,True,False,True
+9786555656534,Os sonhadores,Q2,alto,fraca,maturity,alto,,,,alto,,False,,sem_sinal,False,False,False,False
+9788501100849,O tipo certo de garota errada,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788558890694,Opostos,Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786559813032,É assim que acaba (Edição de colecionador),Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,True,True,False,True
+9786555357462,Paixão inadequada,Q1,alto,fraca,maturity,alto,,,,alto,,False,,sem_sinal,False,False,False,False
+9786559871667,Bunny (Sucesso no TikTok),Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,True,True,True,True
+9786555875454,As esposas,Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788582353110,Um ano inesquecível,Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788556513403,A andorinha e o coração de pedra,Q4,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788576868422,Lux (Vol. 3 Série Nocte),Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788558890571,Originais,Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788530600938,Não há segunda chance,Q3,alto,fraca,vocab,alto,,alto,,,,False,,sem_sinal,False,True,False,False
+9788550827148,No Limite,Q4,alto,forte,tags|vocab|maturity|cw,alto,alto,alto,,alto,alto,False,3.0,positivo,True,True,False,True
+9786559245345,Algo belo (Vol. 5 Belo Desastre),Q2,alto,fraca,maturity,alto,,,,alto,,False,,sem_sinal,False,False,False,False
+9788550303994,Sexo sem amor?,Q2,alto,forte,tags|vocab|maturity,alto,alto,alto,,alto,,False,3.0,positivo,True,False,False,False
+9786559703722,Meu Romeu sombrio – O dark romance de L.J. Shen e Parker S. Huntington é uma releitura moderna de Romeu e Julieta e A Bela e a Fera,Q3,alto,fraca,vocab,alto,,alto,,,,False,,sem_sinal,True,False,False,False
+9786555954302,Um amor sem roteiro,Q1,indeterminado,circular,sinopse(via_termo_conteudo),indeterminado,,,alto,,,True,,sem_sinal,True,False,False,False
+9788582358184,Fora de jogo,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788542819762,"Com amor, Atena",Q1,indeterminado,circular,sinopse(via_termo_conteudo),indeterminado,,,alto,,,True,,sem_sinal,True,False,False,False
+9786559570508,"Dear Heart, Eu Odeio Você!",Q2,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788584395071,A regra Dixon,Q3,alto,forte,tags|vocab|sinopse|cw,alto,alto,alto,alto,,alto,True,3.0,positivo,True,True,False,True
+9786559576340,Mais que amigos?,Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786555951974,Quebrando o gelo,Q4,alto,forte,sinopse|cw,alto,,,alto,,alto,True,,sem_sinal,True,False,False,True
+9786588343852,Império dos malditos,Q4,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788580576559,Um mais um,Q3,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9786559703371,Que vença o pior,Q3,alto,fraca,tags|vocab,alto,alto,alto,,,,False,3.0,positivo,True,False,False,False
+9786555607024,Secretamente sua,Q3,alto,forte,tags|vocab|sinopse|maturity,alto,alto,alto,alto,alto,,False,3.0,positivo,True,False,False,False
+9788550819228,As coisas que nunca superamos - série knockemout vol. 1 (sucesso no tiktok),Q4,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9786560990722,Em algum lugar além do mar,Q4,alto,forte,cw,alto,,,,,alto,False,,sem_sinal,False,True,False,True
+9786555394474,A noiva do Deus do Mar,Q4,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9788550820620,A dama do destino (sucesso no tiktok),Q4,provavel_baixo,nao_validado,cobertura_ya,provavel_baixo,,,,,,False,,sem_sinal,False,False,False,False
+9788582356166,Fazendo meu filme 4,Q1,indeterminado,sem_evidencia,,indeterminado,,,,,,False,,sem_sinal,False,False,False,False
+9788555344497,Uma maldição cravada em osso,Q3,alto,forte,tags|vocab|sinopse|cw,alto,alto,alto,alto,,alto,True,2.0,positivo,True,True,False,False

@@ -1,0 +1,6 @@
+Eixo,obras_com_CW_comunitario,sinopse_PT_nao_menciona,taxa_omissao,IC95_inf,IC95_sup
+Sexo / Erotismo / Spice,48,36,0.75,0.612,0.851
+Violência / Crime / Brutalidade,32,30,0.938,0.799,0.983
+Drogas / Bebidas Alcoólicas / Vício,18,18,1.0,0.824,1.0
+Abuso / Relacionamento Tóxico / Saúde Mental,38,36,0.947,0.827,0.985
+QUALQUER (V_cw=alto e V_sinopse abstem),61,42,0.689,0.564,0.791

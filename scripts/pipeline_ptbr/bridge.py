@@ -4,17 +4,16 @@ from typing import Dict, List, Optional, Tuple
 
 import pandas as pd
 
-from ptbr_common import norm, so_digitos, eh_kit_ou_box, limpar_titulo, autor_confere
-from editoras_norm import chave_editora
 from . import config as C
+from .common import norm, so_digitos, eh_kit_ou_box, limpar_titulo, autor_confere, indexar_autoras, tokens_autor
+from .publishers import chave_editora
 from .util import v, carregar_tabela, ler_json, gravar_json
 from .hardcover import ponte_por_isbn, buscar_obras, casar_catalogo, ponte_por_busca, Embedder
 from .labeling import montar_obra
 
 log = logging.getLogger("pipeline.bridge")
 
-# Ordem das colunas de data/seeds/autores_v2.txt. CONFIRA com a chamada equivalente no run.py:
-# se estiver diferente, o backfill de estrato/origem sai trocado (ha um aviso automatico para o caso EN/BR).
+# Ordem das colunas de data/seeds/autores_v2.txt.
 COLUNAS_AUTORES = ["nome", "estrato", "origem", "tipo_editorial"]
 
 
@@ -34,7 +33,7 @@ def tipo_editorial(editora: Optional[str], tipos: List[Tuple[str, str]]) -> Opti
 
 
 def carregar_autoras() -> List[dict]:
-    """Linhas de autores_v2.txt como [{'nome','estrato','origem'}]."""
+    """Linhas de autores_v2.txt como [{'nome','estrato','origem','tipo_editorial'}]."""
     autoras = carregar_tabela(C.AUTORES_TXT, COLUNAS_AUTORES, False)
     estratos = {a["estrato"] for a in autoras if a.get("estrato")}
     if estratos and estratos <= {"EN", "BR"}:
@@ -47,9 +46,8 @@ def carregar_autoras() -> List[dict]:
 
 def backfill_proveniencia(df_ed: pd.DataFrame, autoras: List[dict]) -> pd.DataFrame:
     """Preenche Estratos_Origem/Origens_Pais vazios casando Autor_PT com a lista de autoras (autor_confere).
-    Necessario porque o seed v2 migrado nao carrega o estrato e as consultas ja 'completas' no checkpoint nunca
-    sao refeitas. Deterministico e sem gastar cota de API. Quem nao casa recebe '(fora_das_autoras)', que e
-    diferente de dado faltante. So preenche celulas vazias: o que o seed ja trouxe e preservado."""
+    Usa indice invertido por sobrenome para lookup O(1) em vez de varrer toda a lista a cada linha.
+    """
     if not autoras:
         log.warning("[ponte] sem lista de autoras (autores_v2.txt): backfill de estrato/origem ignorado")
         return df_ed
@@ -58,13 +56,20 @@ def backfill_proveniencia(df_ed: pd.DataFrame, autoras: List[dict]) -> pd.DataFr
         if c not in d.columns:
             d[c] = None
 
+    idx_sobrenome = indexar_autoras(autoras)
+
     def derivar(autor_pt) -> Tuple[str, str]:
         nomes = [x.strip() for x in str(autor_pt or "").split(",") if x.strip()]
         est, ori = set(), set()
-        for a in autoras:
-            if nomes and autor_confere(a["nome"], nomes):
-                est.add(a.get("estrato") or "")
-                ori.add(a.get("origem") or "")
+        candidatas_vistas = set()
+        for nome_ed in nomes:
+            for tok in tokens_autor(nome_ed):
+                for a in idx_sobrenome.get(tok, ()):
+                    chave_a = a["nome"]
+                    if chave_a not in candidatas_vistas and autor_confere(chave_a, nomes):
+                        candidatas_vistas.add(chave_a)
+                        est.add(a.get("estrato") or "")
+                        ori.add(a.get("origem") or "")
         est.discard("")
         ori.discard("")
         return " | ".join(sorted(est)) or "(fora_das_autoras)", " | ".join(sorted(ori)) or "(fora_das_autoras)"
@@ -169,7 +174,6 @@ def executar_ponte(df_seed: pd.DataFrame, limite: Optional[int] = None, usar_emb
             obras[bid] = montar_obra(bid, obras_cache[bid], min_count_spice)
         via_isbn = r["metodo"] in ("isbn13_edicao", "isbn10_edicao")
         revisar = (not via_isbn) and (C.REVISAR_TODO_FALLBACK or r["score"] < C.REVISAR_ABAIXO)
-        # checagem independente do metodo: a autora da edicao PT aparece entre os autores da obra no Hardcover?
         autores_hc = [x.strip() for x in obras[bid].get("Autores_Hardcover", "").split("|") if x.strip()]
         autores_pt = [x.strip() for x in (s.get("Autor") or "").split(",") if x.strip()]
         conf = any(autor_confere(ap, autores_hc) for ap in autores_pt) if autores_hc and autores_pt else None
@@ -245,9 +249,11 @@ def relatorio(df_ed: pd.DataFrame, df_ob: pd.DataFrame, n_seed: int, n_nao: int)
     n = len(df_ob)
     print(f"\nObras unicas:                 {n}  (edicoes/obra media: {len(df_ed) / n:.2f})")
     print(f"Autor_Confere: {df_ed['Autor_Confere'].value_counts(dropna=False).to_dict()}  (False = autor PT nao aparece na obra)")
-    for c in ["Flag_Romance", "Flag_New_Adult", "Flag_Formato_Excluir", "Flag_Spice_Tag", "Flag_CW_Sexual_Content",
-              "Flag_Closed_Door_Tag"]:
-        print(f"  {c:<24} {int(df_ob[c].sum())} ({p(df_ob[c].sum(), n)})")
+    for c in ["Flag_Romance", "Flag_New_Adult", "Flag_Formato_Excluir", "Flag_Spice_Tag",
+              "Flag_CW_Sexual_Content", "Flag_CW_Violencia", "Flag_CW_Drogas_Alcool",
+              "Flag_CW_Abuso_Gatilhos", "Flag_Has_CW", "Flag_Closed_Door_Tag"]:
+        if c in df_ob.columns:
+            print(f"  {c:<24} {int(df_ob[c].sum())} ({p(df_ob[c].sum(), n)})")
     if "Spice_Status" in df_ob.columns:
         print("Spice_Status (obras):         ", df_ob["Spice_Status"].value_counts().to_dict(),
               " (sem_sinal = desconhecido, nao e ausencia de spice)")

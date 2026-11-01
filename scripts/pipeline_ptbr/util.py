@@ -1,3 +1,4 @@
+"""Utilitarios de I/O atomico e sanitizacao de valores escalares."""
 import os
 import re
 import sys
@@ -6,15 +7,22 @@ from typing import List, Optional
 
 
 def v(x) -> Optional[str]:
-    """NaN/''/'nan'/'None' -> None; senao string aparada."""
+    """Converte NaN/''/'nan'/'None' para None; caso contrario devolve string aparada."""
     if x is None or (isinstance(x, float) and x != x):
         return None
     s = str(x).strip()
     return None if s in ("", "nan", "None") else s
 
 
+def como_bool(x) -> bool:
+    """Interpreta representacoes booleanas em CSV ('True', '1', '1.0', True)."""
+    if isinstance(x, bool):
+        return x
+    return str(x).strip().lower() in ("true", "1", "1.0")
+
+
 def carregar_tabela(caminho: str, colunas: List[str], obrigatorio: bool = True) -> List[dict]:
-    """Le listas 'a | b | c' (ou TAB). Linhas com '#' sao comentarios."""
+    """Le listas delimitadas por '|' ou TAB. Linhas vazias ou iniciadas por '#' sao ignoradas."""
     if not os.path.exists(caminho):
         if obrigatorio:
             sys.exit(f"Arquivo obrigatorio nao encontrado: {caminho}")
@@ -44,7 +52,7 @@ def ler_json(caminho: str, padrao):
 
 
 def gravar_json(caminho: str, obj) -> None:
-    """Escrita atomica: um Ctrl+C no meio nao corrompe o cache."""
+    """Escrita atomica via arquivo temporario: um Ctrl+C no meio nao corrompe o cache."""
     tmp = caminho + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False)

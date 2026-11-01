@@ -1,9 +1,10 @@
-"""Obra (Hardcover) -> tags com contagem, sinais de spice e flags."""
+"""Obra (Hardcover) -> tags com contagem, sinais de conteudo sensivel (sexo, violencia, drogas/alcool, abuso) e spice."""
 import re
 import json
 from typing import Dict, List, Optional, Tuple
 
-from ptbr_common import norm, sem_acento
+from .common import norm, sem_acento
+from .lexicon import RE_CW_SENSIVEL, RE_POR_EIXO  # fonte unica do lexico dos 4 eixos
 
 
 def tags_por_categoria(cached) -> Dict[str, List[Tuple[str, Optional[int]]]]:
@@ -29,11 +30,17 @@ def tags_por_categoria(cached) -> Dict[str, List[Tuple[str, Optional[int]]]]:
 RE_FORMATO_EXCLUIR = re.compile(
     r"\b(manga|manhwa|manhua|comics?|graphic novel|light novel|webtoon|"
     r"picture book|children|kids|doujinshi)\b")
-# Sinais de spice na folksonomia (o centro do projeto: o relatorio mede cobertura deles)
+
+# Sinais de spice na folksonomia (dimensao erotica/sexual) -- escala ordinal, nao e um eixo
 RE_SPICE = re.compile(r"\b(steamy|spicy|explicit|open door|erotic\w*|smut\w*|sex scenes?|"
                       r"graphic sex|high heat)\b")
-# "Sexual content" e uma CONTENT WARNING (presenca de conteudo sexual), nao um nivel de spice: fica em flag propria.
-RE_CW_SEXUAL = re.compile(r"\bsexual content\b")
+
+# Content Warnings por eixo tematico (compilados a partir de lexicon.EIXOS)
+RE_CW_SEXUAL = RE_POR_EIXO["sexo"]["cw"]
+RE_CW_VIOLENCIA = RE_POR_EIXO["violencia"]["cw"]
+RE_CW_DROGAS_ALCOOL = RE_POR_EIXO["drogas_alcool"]["cw"]
+RE_CW_ABUSO_GATILHOS = RE_POR_EIXO["abuso_gatilhos"]["cw"]
+
 CAT_CW = "Content Warning"
 # papeis de contribuicao que NAO sao autoria (o tradutor nao e o autor da obra)
 NAO_AUTOR = ("translat", "tradut", "illustrat", "ilustr", "editor", "narrat", "foreword", "introduction",
@@ -74,18 +81,12 @@ def sinais_regex(cats: dict, regex: "re.Pattern", min_count: int, so_cw: bool = 
 
 
 # ---------------------------------------------------------------------------
-# Spice ORDINAL e TRI-ESTADO (v3.1). Substitui o booleano Flag_Spice_Tag como rotulo central; o flag antigo
-# continua nas colunas para comparar antes/depois.
+# Spice ORDINAL e TRI-ESTADO (v3.1).
 #   Spice_Nivel : 0 fechado | 1 sensual/implicito | 2 cena aberta (steamy/spicy/open door) | 3 explicito
 #   Spice_Status: positivo (>=2) | intermediario (1) | negativo (0) | sem_sinal
 # 'sem_sinal' e DESCONHECIDO, nao ausencia de spice: tags sao esparsas e acompanham popularidade (MNAR).
-# Diferencas em relacao ao RE_SPICE: varre TODAS as categorias (inclusive Content Warning, onde aparecem
-# 'graphic sex' e 'spice 4/5'), le notas numericas ('spice-4', 'spice 4/5') e nao usa limiar duro de votos
-# (o peso fica em Spice_Fontes; min_count e parametro para a analise de sensibilidade).
-# 'heated' fica DE FORA de proposito: "fanfic/trashy.heated rivalry" e estante de usuario, nao nivel de calor.
-# A escala de 5 pimentas -> 4 niveis e um julgamento: calibrar contra o Gold Standard.
 # ---------------------------------------------------------------------------
-_NUM_SPICE = re.compile(r"\bspice[\s-]*(?:level[\s-]*)?([0-5])(?:\s*/\s*5)?\b")
+_NUM_SPICE = re.compile(r"\bspice[\s-]*(?:level[\s-]*)?([0-5])(?:\s*/\s*5)?\b|(?<!\d)([0-5])\s*peppers?\b")
 _MAPA_NUM_SPICE = {0: 0, 1: 1, 2: 1, 3: 2, 4: 3, 5: 3}
 _REGRAS_SPICE = [
     (0, re.compile(r"\b(closed[\s-]door|fade[\s-]to[\s-]black|clean romance|sweet romance|no spice|low heat|no sex)\b")),
@@ -101,14 +102,16 @@ def nivel_tag(nome) -> Optional[int]:
     achados = []
     m = _NUM_SPICE.search(n)
     if m:
-        achados.append(_MAPA_NUM_SPICE[int(m.group(1))])
+        num = int(m.group(1) or m.group(2))
+        achados.append(_MAPA_NUM_SPICE[num])
     achados += [nv for nv, rx in _REGRAS_SPICE if rx.search(n)]
     return max(achados) if achados else None
 
 
 def spice_da_obra(cats: dict, min_count: int = 1) -> dict:
     """cats = tags_por_categoria(...). Nivel = o de maior peso (soma de votos); empate -> o mais alto.
-    min_count>1 ignora tags com menos votos (so para sensibilidade); contagem ausente conta como 1 voto."""
+    min_count>1 ignora tags com menos votos (so para sensibilidade); contagem ausente conta como 1 voto.
+    """
     votos, fontes = {}, []
     for cat, itens in cats.items():
         for nome, cnt in itens:
@@ -136,6 +139,11 @@ def montar_obra(book_id: int, obra: dict, min_count_spice: int) -> dict:
     sp, sp_total, sp_flag = sinais_regex(cats, RE_SPICE, min_count_spice)
     cl, cl_total, cl_flag = sinais_regex(cats, RE_CLOSED, min_count_spice)
     cw_sex, cw_sex_total, cw_sex_flag = sinais_regex(cats, RE_CW_SEXUAL, 1, so_cw=True)
+    cw_vio, cw_vio_total, cw_vio_flag = sinais_regex(cats, RE_CW_VIOLENCIA, 1, so_cw=True)
+    cw_drg, cw_drg_total, cw_drg_flag = sinais_regex(cats, RE_CW_DROGAS_ALCOOL, 1, so_cw=True)
+    cw_abu, cw_abu_total, cw_abu_flag = sinais_regex(cats, RE_CW_ABUSO_GATILHOS, 1, so_cw=True)
+    _, cw_sens_total, cw_sens_flag = sinais_regex(cats, RE_CW_SENSIVEL, 1, so_cw=True)
+
     autores = autores_da_obra(obra.get("contributions"))
     autor_en = autores[0] if autores else None
     img = obra.get("image") or {}
@@ -162,8 +170,16 @@ def montar_obra(book_id: int, obra: dict, min_count_spice: int) -> dict:
         "Flag_Closed_Door_Tag": cl_flag,
         "Flag_CW_Sexual_Content": cw_sex_flag,
         "CW_Sexual_Content_Contagem": cw_sex_total,
+        "Flag_CW_Violencia": cw_vio_flag,
+        "CW_Violencia_Contagem": cw_vio_total,
+        "Flag_CW_Drogas_Alcool": cw_drg_flag,
+        "CW_Drogas_Alcool_Contagem": cw_drg_total,
+        "Flag_CW_Abuso_Gatilhos": cw_abu_flag,
+        "CW_Abuso_Gatilhos_Contagem": cw_abu_total,
+        "Flag_Has_CW": cw_sens_flag,
+        "CW_Sensivel_Contagem": cw_sens_total,
         "Flag_Romance": "romance" in todos,
         "Flag_New_Adult": ("new adult" in todos) or ("new-adult" in todos),
         "Flag_Formato_Excluir": bool(RE_FORMATO_EXCLUIR.search(todos)),
-        **spice_da_obra(cats),
+        **spice_da_obra(cats, min_count=min_count_spice),   # mesmo limiar de Flag_Spice_Tag (consistencia)
     }

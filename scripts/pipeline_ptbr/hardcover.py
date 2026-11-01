@@ -6,8 +6,8 @@ from typing import Dict, List, Optional, Tuple
 
 import requests
 
-from ptbr_common import norm, sim, chunks, isbn13_para_10, limpar_titulo, autor_confere
 from . import config as C
+from .common import norm, sim, chunks, isbn13_para_10, limpar_titulo, autor_confere
 from .util import ler_json, gravar_json
 
 log = logging.getLogger("pipeline.hardcover")
@@ -172,9 +172,17 @@ class Embedder:
     def __init__(self, modelo: str):
         from sentence_transformers import SentenceTransformer     # import tardio: dependencia opcional
         self.m = SentenceTransformer(modelo)
+        self._cache_catalogo_emb: Dict[str, object] = {}
 
     def enc(self, textos: List[str]):
         return self.m.encode(textos, normalize_embeddings=True, show_progress_bar=False)
+
+    def enc_catalogo(self, chave_autora: str, textos: List[str]):
+        """Cacheia em memoria os embeddings do catalogo de uma autora para nao recodificar a cada edicao."""
+        key = f"{chave_autora}:{len(textos)}"
+        if key not in self._cache_catalogo_emb:
+            self._cache_catalogo_emb[key] = self.enc(textos)
+        return self._cache_catalogo_emb[key]
 
 
 def casar_catalogo(titulo: str, autor: str, embedder: Optional[Embedder]) -> Optional[dict]:
@@ -198,7 +206,7 @@ def casar_catalogo(titulo: str, autor: str, embedder: Optional[Embedder]) -> Opt
         fuzzy[o] = max(fuzzy.get(o, 0.0), sim(tit, n))
     emb: Dict[int, float] = {}
     if embedder is not None:
-        s = embedder.enc(nomes) @ embedder.enc([tit])[0]
+        s = embedder.enc_catalogo(norm(primeiro), nomes) @ embedder.enc([tit])[0]
         for o, x in zip(donos, s):
             emb[o] = max(emb.get(o, -1.0), float(x))
     comb = {o: max(fuzzy[o], emb.get(o, 0.0)) for o in fuzzy}

@@ -9,8 +9,8 @@ from typing import Dict, List, Optional, Tuple
 import requests
 import pandas as pd
 
-from ptbr_common import so_digitos, eh_isbn_br, isbn10_para_13, eh_kit_ou_box, limpar_html, autor_confere
 from . import config as C
+from .common import so_digitos, eh_isbn_br, isbn10_para_13, eh_kit_ou_box, limpar_html, autor_confere
 from .util import v
 
 log = logging.getLogger("pipeline.gbooks")
@@ -91,43 +91,32 @@ def _set(s) -> set:
     return {p.strip() for p in str(s).split(" | ") if p.strip()} if v(s) else set()
 
 
-def _caminho_seed() -> Optional[str]:
-    for c in (C.SEED_CSV, C.SEED_V2_CSV):
-        if os.path.exists(c) and os.path.getsize(c) > 5:
-            return c
+def carregar_df_seed() -> Optional[pd.DataFrame]:
+    """Carrega o seed consolidado (v3) como DataFrame."""
+    if os.path.exists(C.SEED_CSV) and os.path.getsize(C.SEED_CSV) > 5:
+        return pd.read_csv(C.SEED_CSV, dtype=str)
     return None
 
 
-def carregar_df_seed() -> Optional[pd.DataFrame]:
-    """Seed como DataFrame (o v3; se nao existir, o v2 antigo)."""
-    c = _caminho_seed()
-    return pd.read_csv(c, dtype=str) if c else None
-
-
 def carregar_seed_existente() -> Dict[str, dict]:
-    caminho = _caminho_seed()
     rows: Dict[str, dict] = {}
-    if not caminho:
+    if not (os.path.exists(C.SEED_CSV) and os.path.getsize(C.SEED_CSV) > 5):
         return rows
     try:
-        df = pd.read_csv(caminho, dtype=str)
+        df = pd.read_csv(C.SEED_CSV, dtype=str)
     except Exception as e:
-        log.warning(f"[seed] nao foi possivel ler {caminho}: {e}")
+        log.warning(f"[seed] nao foi possivel ler {C.SEED_CSV}: {e}")
         return rows
     for reg in df.to_dict("records"):
         reg = {k: v(x) for k, x in reg.items()}
         isbn = so_digitos(reg.get("ISBN"))
         if not isbn:
             continue
-        if "Consulta_Origem" in reg:                    # migracao do schema v2
-            reg["Consultas_Origem"] = reg.pop("Consulta_Origem")
-        if "Tipo_Origem" in reg:
-            reg["Tipos_Origem"] = reg.pop("Tipo_Origem")
         for c in SET_COLS:
             reg[c] = _set(reg.get(c))
         reg["ISBN"] = isbn
         rows[isbn] = reg
-    log.info(f"[seed] {len(rows)} registros carregados de {os.path.basename(caminho)}")
+    log.info(f"[seed] {len(rows)} registros carregados de {os.path.basename(C.SEED_CSV)}")
     return rows
 
 

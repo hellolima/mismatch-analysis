@@ -1,0 +1,7 @@
+Etapa,N,Pct_do_seed,canal:autora,canal:termo:booktok,canal:termo:conteudo,canal:termo:genero,canal:termo:tropo
+"1. Edicoes no seed (Google Books, ISBN BR)",646,100.0,203,27,173,86,189
+2. Resolvidas na ponte (edicao -> obra Hardcover),291,45.0,152,20,42,36,60
+"3. Em escopo (ano >= 2015, sem formato excluido)",262,40.6,,,,,
+4. Obras unicas (dedup FRBR),252,39.0,135,19,39,34,44
+5. Rotuladas (alto | baixo | provavel_baixo),124,19.2,67,11,27,17,15
+5a.   das quais 'alto',107,16.6,54,9,27,16,13

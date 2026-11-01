@@ -4,8 +4,8 @@ import json
 
 import pandas as pd
 
-from ptbr_common import eh_isbn_br, so_digitos
 from . import config as C
+from .common import eh_isbn_br, so_digitos
 from .hardcover import hc
 
 
@@ -23,7 +23,7 @@ def inspecionar_schema():
 
 
 def sondar_inverso(autora: str, n: int = 50):
-    """EXPERIMENTAL: os nomes de campo/relacao abaixo sao palpites; ajuste com a saida de 'schema'."""
+    """EXPERIMENTAL: avalia edicoes PT cadastradas diretamente no Hardcover para uma autora."""
     q = ('query { editions(where: {language: {language: {_eq: "Portuguese"}}, '
          'book: {contributions: {author: {name: {_eq: %s}}}}}, limit: %d) '
          '{ id isbn_13 title book_id } }' % (json.dumps(autora), n))

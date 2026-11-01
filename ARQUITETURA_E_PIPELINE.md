@@ -11,16 +11,16 @@
 
 O projeto **BookTok Mismatch Analysis** é uma infraestrutura de engenharia de dados projetada para dar suporte a uma investigação científica em humanidades digitais, ciência social computacional e processamento de linguagem natural / visão computacional.
 
-### O Problema de Pesquisa: A Hipótese da Discrepância (*Mismatch*)
-No ecossistema contemporâneo do mercado editorial — impulsionado fortemente pela comunidade literária do TikTok (**BookTok**) —, observou-se uma tendência de mercado expressiva: livros com alto teor de conteúdo adulto, erotismo (*spice*), temas sombrios (*dark romance*) e gatilhos severos (*content warnings*) vêm sendo frequentemente embalados comercialmente com **capas de estética fofa, cartunesca, ilustrada e em tons pastéis**, associadas historicamente à literatura infantojuvenil (*Young Adult* / *Middle Grade*).
+### O Problema de Pesquisa: A Hipótese da Discrepância (*Mismatch*) em Conteúdos Sensíveis e Problemáticos
+No ecossistema contemporâneo do mercado editorial — impulsionado fortemente pela comunidade literária do TikTok (**BookTok**) —, observou-se uma tendência de mercado expressiva: livros com alto teor de **conteúdos sensíveis e "problemáticos" no geral** — abrangendo **conteúdo sexual/erótico (*spice*), uso e tráfico de drogas, consumo de bebidas alcoólicas/alcoolismo, violência explícita/brutalidade e gatilhos de abuso/saúde mental** — vêm sendo frequentemente embalados comercialmente com **capas de estética fofa, cartunesca, ilustrada e em tons pastéis**, associadas historicamente à literatura infantojuvenil (*Young Adult* / *Middle Grade*).
 
 Esse descompasso gera a **Hipótese da Discrepância (*Mismatch*)**:
-$$\text{Score de Discrepância} = f(\text{Estética Visual da Capa}, \text{Maturidade Temática da Narrativa})$$
+$$\text{Score de Discrepância} = f(\text{Estética Visual da Capa}, \text{Sensibilidade / Problematicidade Temática da Narrativa})$$
 
 Onde uma obra pode apresentar:
-1. **Capa Fofa / Cartunesca** $\times$ **Baixo Spice / Romance Leve** $\rightarrow$ *Concordante (Controle Negativo)*.
-2. **Capa Sombria / Tradicional** $\times$ **Alto Spice / Dark Romance** $\rightarrow$ *Concordante*.
-3. **Capa Fofa / Cartunesca** $\times$ **Alto Spice / Temas Explícitos** $\rightarrow$ ***Discrepante (Alvo Principal do Fenômeno)***.
+1. **Capa Fofa / Cartunesca** $\times$ **Baixa Sensibilidade / Romance Leve** $\rightarrow$ *Concordante (Controle Negativo)*.
+2. **Capa Sombria / Adulta** $\times$ **Alta Sensibilidade (Sexo, Drogas, Bebidas, Violência ou Abuso)** $\rightarrow$ *Concordante*.
+3. **Capa Fofa / Cartunesca** $\times$ **Alta Sensibilidade (Sexo, Drogas, Bebidas, Violência ou Abuso)** $\rightarrow$ ***Discrepante (Alvo Principal do Fenômeno)***.
 
 ### Desafio Central de Engenharia de Dados
 Para analisar quantitativamente e de forma reprodutível esse fenômeno no mercado brasileiro, deparou-se com um desafio clássico de **Record Linkage / Resolução de Entidades Bibliográficas**:
@@ -36,51 +36,72 @@ Este pipeline resolve essa assimetria construindo uma **ponte determinística e 
 A árvore de diretórios foi estruturada segundo princípios de modularidade, separação de preocupações (*SoC*) e garantia de reprodutibilidade científica:
 
 ```
-booktok-mismatch-analysis/
+mismatch-analysis/
+├── README.md                        # Guia rápido de instalação, execução e estrutura
+├── ARQUITETURA_E_PIPELINE.md        # Documentação técnica e metodológica completa
 ├── requirements.txt                 # Dependências essenciais do pipeline (Core + EDA)
 ├── requirements-embeddings.txt      # Dependência opcional de Sentence Transformers
 ├── .env                             # Segredos locais e chaves de API (tokens)
 ├── .env.example                     # Modelo documentado de variáveis de ambiente
 ├── scripts/
 │   ├── run.py                       # Orquestrador central (CLI unificado)
-│   ├── ptbr_common.py               # Biblioteca core de normalização e regras de negócio
-│   ├── 02_eda_booktok_ptbr.py       # Pipeline de Análise Exploratória e Engenharia de Features
+│   ├── 02_eda_booktok_ptbr.py       # Orquestrador da Análise Exploratória de Dados (EDA)
+│   ├── ptbr_common.py               # Re-export de compatibilidade para pipeline_ptbr.common
+│   ├── editoras_norm.py             # Re-export de compatibilidade para pipeline_ptbr.publishers
 │   └── pipeline_ptbr/
 │       ├── __init__.py              # Declaração do pacote Python
 │       ├── config.py                # Hiperparâmetros, caminhos de I/O e setup de rede
+│       ├── common.py                # Biblioteca core (stdlib): normalização, ISBN, títulos e autoria
+│       ├── publishers.py            # Canonização de editoras e detecção de pares suspeitos
+│       ├── dataset.py               # Filtro canônico (ano >= 2015, formato) e deduplicação por Obra
 │       ├── util.py                  # I/O atômico de arquivos e helpers estruturais
 │       ├── gbooks.py                # Módulo de Ingestão: Google Books API (Seed)
 │       ├── hardcover.py             # Cliente GraphQL Hardcover & Resolução de Entidades
 │       ├── bridge.py                # Orquestrador da Ponte (Resolução, Cache e Junção)
-│       ├── labeling.py              # Parser de Folksonomia, Tags e Extração de Sinais
+│       ├── labeling.py              # Parser de Folksonomia, Tags e Extração de Sinais (Spice_Nivel)
+│       ├── rotulagem.py             # Rotulagem triangulada multi-fonte (Sensivel_Label v3.1)
+│       ├── diagnostico_rotulo.py    # Diagnóstico de cobertura, circularidade e recall do rótulo
 │       ├── covers.py                # Ingestão Visual, Padronização e Fingerprinting de Capas
+│       ├── eda_stats.py             # Cálculos estatísticos puros (Wilson IC, Bootstrap, n-gramas)
+│       ├── eda_plots.py             # Geração de figuras científicas (Okabe-Ito, 300 dpi, PNG/PDF)
+│       ├── eda_report.py            # Exportação de tabelas, auditorias e relatório consolidado
 │       └── probes.py                # Ferramental de diagnóstico e introspecção de schema
+├── tests/
+│   └── test_pipeline.py             # Suíte de testes unitários das regras determinísticas e rotulagem
 ├── data/
 │   ├── seeds/                       # Parâmetros de entrada e estado de paginação do seed
+│   ├── gold_standard/               # Planilhas de anotação humana cega (Gold Standard)
 │   ├── cache/                       # Caches atômicos da ponte (persistência local)
 │   ├── covers/                      # Armazenamento físico das capas (JPEGs normalizados)
 │   └── processed/                   # Tabelas analíticas geradas pelo pipeline
-└── outputs/                         # Gráficos, relatórios analíticos e logs de execução
+└── outputs/
+    ├── figures/                     # Figuras prontas para publicação (PNG 300 dpi + PDF vetorial)
+    ├── tables/                      # Tabelas de frequências, n-gramas, prevalências e cobertura
+    ├── audits/                      # Auditorias de títulos, editoras e conflitos de rotulagem
+    └── reports/                     # Relatórios analíticos (eda_report.txt, rotulagem_resumo.txt)
 ```
 
 ### Detalhamento Arquitetural de Cada Arquivo
 
 | Arquivo / Diretório | Necessidade no Projeto | Utilidade Técnica & Científica |
 | :--- | :--- | :--- |
-| `scripts/run.py` | Ponto de entrada unificado (*CLI Facade*). Evita que pesquisadores precisem rodar múltiplos scripts manuais em ordem incorreta. | Controla o fluxo `seed -> ponte -> capas -> eda`, gerencia argumentos de linha de comando (`--teste`, `--etapas`, `--retentar-falhas`) e garante injeção de parâmetros em tempo de execução. |
-| `scripts/ptbr_common.py` | Elimina duplicação de regras de negócio entre o pipeline de dados e o script analítico de EDA. Depende estritamente da *stdlib*. | Contém as funções de normalização (`norm`), cálculo de similaridade fonética/léxica (`sim`), conversão bidirecional de ISBN-10/ISBN-13, higienização HTML e limpeza profunda de títulos via regex. |
+| `scripts/run.py` | Ponto de entrada unificado (*CLI Facade*). Evita que pesquisadores precisem rodar múltiplos scripts manuais em ordem incorreta. | Controla o fluxo `seed -> ponte -> rotulagem -> capas -> eda`, gerencia argumentos de linha de comando (`--teste`, `--etapas`, `--retentar-falhas`, `--sondar`) e garante injeção de parâmetros em tempo de execução. |
+| `scripts/pipeline_ptbr/common.py` | Elimina duplicação de regras de negócio entre o pipeline de dados, a rotulagem e a EDA. Depende estritamente da *stdlib*. | Contém as funções de normalização (`norm`, `sem_acento`), similaridade léxica (`sim`), conversão bidirecional de ISBN-10/ISBN-13, higienização HTML, guarda estrita de autoria (`autor_confere`, `indexar_autoras`) e limpeza profunda de títulos (`limpar_titulo`). |
+| `scripts/pipeline_ptbr/publishers.py` | Padroniza grafias de selos e grupos editoriais brasileiros sem alterar o dado bruto. | Implementa `chave_editora` e `pares_suspeitos` para agrupar variantes como *"Editora Arqueiro"* e *"Arqueiro"*. |
+| `scripts/pipeline_ptbr/dataset.py` | Fonte única de verdade para filtragem de escopo e unidade de análise FRBR. | Centraliza `filtrar_escopo` (`Ano >= 2015` e exclusão de formatos fora de escopo) e `deduplicar_por_obra` (`Hardcover_Book_ID`), garantindo consistência entre rotulagem, diagnóstico e EDA. |
 | `scripts/pipeline_ptbr/config.py` | Centraliza caminhos absolutos, variáveis de ambiente e hiperparâmetros numéricos. | Elimina *hardcoded strings*, carrega o `.env` e aplica correção de nível de socket (`urllib3_cn.allowed_gai_family = AF_INET`) para evitar travamentos silenciosos de rede por IPv6 instável. |
-| `scripts/pipeline_ptbr/util.py` | Garante integridade transacional dos dados em operações de disco. | Implementa sanitização de valores nulos (`v()`), leitura tolerante de tabelas de seeds com delimitador `pipe` (`\|`) e escrita atômica de JSONs via substituição de arquivo temporário (`.tmp -> replace`). |
+| `scripts/pipeline_ptbr/util.py` | Garante integridade transacional dos dados em operações de disco. | Implementa sanitização de valores nulos (`v()`, `como_bool()`), leitura tolerante de tabelas de seeds com delimitador `pipe` (`\|`) e escrita atômica de JSONs via substituição de arquivo temporário (`.tmp -> replace`). |
 | `scripts/pipeline_ptbr/gbooks.py` | Ingestão primária do mercado editorial em português. | Consulta a API v1 do Google Books através de 4 canais, gerencia cotas e rate limit (429), deduplica registros em tempo real e mantém estado de paginação persistente em JSONL. |
-| `scripts/pipeline_ptbr/hardcover.py` | Comunicação com a base de conhecimento de folksonomia. | Cliente GraphQL para a API Hardcover. Contém a lógica de degradação graciosa de queries, extração de catálogo de autoras, cálculo de similaridade semântica por embeddings e busca de fallback. |
+| `scripts/pipeline_ptbr/hardcover.py` | Comunicação com a base de conhecimento de folksonomia. | Cliente GraphQL para a API Hardcover. Contém a lógica de degradação graciosa de queries, extração de catálogo de autoras, cálculo de similaridade semântica por embeddings (com cache por autora) e busca de fallback. |
 | `scripts/pipeline_ptbr/bridge.py` | Motor da Resolução de Entidades (*Record Linkage*). | Orquestra as etapas de resolução (ISBN $\rightarrow$ Catálogo $\rightarrow$ Busca), gerencia caches incrementais, monta as tabelas finais de Edições e Obras e extrai amostras de auditoria. |
-| `scripts/pipeline_ptbr/labeling.py` | Engenharia de atributos (*Feature Engineering*) das marcações sociais. | Processa o JSON complexo de `cached_tags` do Hardcover, separa categorias (Genre, Mood, Tag, Content Warning), filtra ruídos e extrai flags booleanas e contagens de *Spice* e *Closed Door*. |
+| `scripts/pipeline_ptbr/labeling.py` | Engenharia de atributos (*Feature Engineering*) das marcações sociais do Hardcover. | Processa o JSON complexo de `cached_tags`, separa categorias (Genre, Mood, Tag, Content Warning), e calcula o nível ordinal `Spice_Nivel` (0–3) e `Spice_Status`. |
+| `scripts/pipeline_ptbr/rotulagem.py` | Triangulação multi-fonte para o rótulo de conteúdo sensível (`Sensivel_Label` v3.1). | Combina votos de tags, vocabulário, sinopse PT, *maturity* e *Content Warnings* com abstenção explícita e proteção contra circularidade do canal `termo:conteudo`. |
+| `scripts/pipeline_ptbr/diagnostico_rotulo.py` | Auditoria estatística do rótulo triangulado. | Mede composição por combinação de fontes, circularidade, recall relativo e vocabulário residual (`N peppers`). |
 | `scripts/pipeline_ptbr/covers.py` | Ingestão e garantia de qualidade de ativos visuais para visão computacional. | Baixa imagens em ordem de prioridade de resolução, valida dimensões mínimas ($\ge 200\text{ px}$ para modelos ViT/CLIP), converte para RGB JPEG e calcula *hashes* SHA-256 para expurgar imagens de erro/placeholder. |
-| `scripts/pipeline_ptbr/probes.py` | Diagnóstico de engenharia e inspeção de schemas GraphQL externos. | Realiza introspecção de tipos (`__type`) no Hardcover e roda consultas de viabilidade inversa (autora $\rightarrow$ edições brasileiras indexadas no Hardcover). |
-| `scripts/02_eda_booktok_ptbr.py` | Análise Exploratória de Dados (EDA) e validação estatística. | Gera estatísticas descritivas, gráficos de distribuição, nuvens de palavras textuais, matrizes de frequência de tags e tabelas de contingência editoriais, separando rigorosamente a granularidade Edição vs. Obra. |
+| `scripts/02_eda_booktok_ptbr.py` + `eda_{stats,plots,report}.py` | Análise Exploratória de Dados (EDA) desacoplada em lógica estatística, visualização e relatórios. | Gera estatísticas descritivas (IC de Wilson e Bootstrap), gráficos em padrão de publicação (Okabe-Ito, PDF/PNG) e matrizes de frequência/cobertura separando a granularidade Edição vs. Obra. |
 | `data/seeds/*.txt` | Definição da moldura amostral controlada da pesquisa. | Contém listas intencionais estratificadas de autoras (`autores_v2.txt`), termos de busca e tropos (`termos_v2.txt`), mapeamento tipológico de editoras (`editoras.txt`) e títulos-âncora (`titulos.txt`). |
-| `data/cache/*.json` | Persistência do estado da ponte de resolução. | Caches de resolução de ISBN (`ponte_cache.json`), metadados de obras (`obras_cache.json`) e catálogos de autores (`catalogo_autora.json`), tornando o pipeline incremental e de baixo custo de requisições. |
-| `data/processed/*.csv` | Camada analítica final (tabelas processadas). | Armazena as entidades canônicas do projeto (`edicoes_ptbr_v3.csv`, `obras_ptbr_v3.csv`, `livros_ptbr_v3.csv`), a fila de validação humana (`auditoria_ponte.csv`) e os registros não resolvidos. |
+| `data/gold_standard/*.csv` | Validação humana cega (*Human-in-the-Loop*). | Contém as planilhas de anotação cega e gabarito para aferição empírica de precisão e recall. |
+| `outputs/{figures,tables,audits,reports}/` | Artefatos analíticos organizados por finalidade. | Separa figuras vetorizadas (`figures/`), tabelas estatísticas (`tables/`), planilhas de auditoria (`audits/`) e relatórios consolidados (`reports/`). |
 
 ---
 
@@ -256,14 +277,14 @@ Títulos brasileiros no Google Books frequentemente sofrem com poluição mercad
 Exemplo real extraído da base:  
 `"Meu Romeu sombrio – O dark romance de L.J. Shen e Parker S. Huntington é uma releitura moderna de Romeu e Julieta e A Bela e a Fera"` $\rightarrow$ Higienizado para: `"Meu Romeu sombrio"`.
 
-O algoritmo em [ptbr_common.py](file:///home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/scripts/ptbr_common.py#L146-L187):
+O algoritmo em [`common.py`](./scripts/pipeline_ptbr/common.py):
 1. Avalia parênteses e colchetes com regex `RE_MARKETING` (remove tags como *(Romantasia sucesso no TikTok)*, *(Edição Especial)*, *(Livro 2)*).
 2. Localiza separadores de subtítulo (`–`, `—`, `-`, `:`) e testa se a porção subsequente contém termos mercadológicos ou repetição do título original.
 3. Remove numerais de volume finais (`vol. 1`, `livro 2`).
 4. Preserva subtítulos legítimos que pertençam à obra literária.
 
 #### 4. Camada 4: Coleta de Catálogo da Autora e Guarda Estrita (`autor_confere`)
-Para evitar falsos positivos comuns em bases bibliográficas, o sistema implementa a função [autor_confere](file:///home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/scripts/ptbr_common.py#L123-L141):
+Para evitar falsos positivos comuns em bases bibliográficas, o sistema implementa a função [`autor_confere`](./scripts/pipeline_ptbr/common.py):
 * **Regra:** O sobrenome é obrigatório. O primeiro nome é obrigatório se for palavra completa; se for inicial, exige todas as iniciais.
 * **Casos Críticos Resolvidos com Sucesso:**
   * Impede que `"Christina Lauren"` (pseudônimo duplo) case com livros de `"Lauren Asher"`.
@@ -327,28 +348,32 @@ O objetivo de longo prazo do projeto exige analisar as capas por meio de modelos
 
 ---
 
-## 5. Extração de Sinais, Tags e Engenharia de Atributos (`labeling.py` & `eda`)
+## 5. Extração de Sinais, Tags e Engenharia de Atributos Multi-Eixo (`labeling.py`, `rotulagem.py` & `eda`)
 
-No módulo `labeling.py`, os metadados agregados pelo Hardcover sob a chave `cached_tags` são descompactados e transformados em variáveis tabulares numéricas e booleanas.
+Nos módulos [`labeling.py`](./scripts/pipeline_ptbr/labeling.py) e [`rotulagem.py`](./scripts/pipeline_ptbr/rotulagem.py), os metadados comunitários do Hardcover (`cached_tags`), as sinopses brasileiras (`Sinopse_PT`) e a classificação do Google Books (`Maturity_GB`) são integrados para capturar **conteúdos sensíveis e problemáticos em 4 eixos temáticos complementares**, indo além do simples *spice level*:
 
-### Sinais de Spice e Conteúdo Explícito
-Para mensurar a maturidade da obra sem incorrer em subjetividade, o pipeline realiza a mineração de texto nos termos cadastrados pela comunidade:
-* **Regex de Spice (`RE_SPICE`):**
-  Identifica menções a termos como `steamy`, `spicy`, `explicit`, `open door`, `erotic`, `smut`, `sex scenes`, `graphic sex`, `high heat`.
-* **Regex de Romance Sem Sexo / Fechado (`RE_CLOSED`):**
-  Identifica o polo oposto: `closed door`, `fade to black`, `clean romance`, `sweet romance`, `no spice`, `low heat`, `no sex`.
-* **Separação Ontológica de Content Warnings:**
-  O pipeline separa formalmente a presença da tag comunitária de *spice* da **Content Warning (CW) de Conteúdo Sexual**:
-  * *Spice Tag:* Avalia a intensidade estética/erótica do relacionamento romântico.
-  * *CW Sexual Content:* Alerta sobre a existência de temas sexuais sensíveis (podendo incluir violência sexual, agressão ou conteúdo não consentido).
-* **Parâmetro `min_count_spice`:**
-  Uma tag só aciona uma *Flag* booleana se a contagem comunitária de votos no Hardcover for maior ou igual ao limiar configurado (padrão: 2 votos), filtrando marcações acidentais ou isoladas de usuários individuais.
+### Os 4 Eixos de Conteúdo Sensível e Problemático
+1. **Eixo 1 — Conteúdo Sexual e Erótico (`Flag_Eixo_Sexo`, `Flag_CW_Sexual_Content`, `Spice_Nivel`):**
+   * **Escala Ordinal `Spice_Nivel` (0–3):** Mensura especificamente a intensidade erótica/sexual a partir das tags comunitárias (`0 = closed door / clean`, `1 = mild / slow burn`, `2 = steamy / open door / 3 peppers`, `3 = explicit / smut / erotica / 4–5 peppers`).
+   * **Content Warnings e Léxico:** Detecta `sexual content`, `explicit sex`, `spicy`, `cenas quentes/picantes/explícitas`, `conteúdo adulto`, `erótico`, `+18`.
+2. **Eixo 2 — Drogas e Bebidas Alcoólicas (`Flag_Eixo_Drogas_Alcool`, `Flag_CW_Drogas_Alcool`):**
+   * **Content Warnings e Tags (EN):** Detecta `alcohol`, `alcoholism`, `drinking`, `drunk`, `drug use`, `drug abuse`, `drugs`, `substance abuse`, `addiction`, `overdose`, `narcotics`, `intoxication`.
+   * **Sinopse (PT-BR):** Detecta `alcoolismo`, `abuso de álcool`, `bebidas alcoólicas`, `embriaguez`, `vício em álcool/bebida/drogas`, `uso/tráfico/abuso de drogas`, `drogas ilícitas`, `substâncias ilícitas`, `dependência química`, `overdose`, `entorpecentes`.
+3. **Eixo 3 — Violência, Crime e Brutalidade (`Flag_Eixo_Violencia`, `Flag_CW_Violencia`):**
+   * **Content Warnings e Tags (EN):** Detecta `violence`, `graphic violence`, `gun violence`, `murder`, `torture`, `kidnapping`, `abduction`, `gore`, `blood`, `death`, `killing`, `mafia`, `stalking`, `serial killer`.
+   * **Sinopse (PT-BR):** Detecta `violência extrema/física/gráfica/doméstica`, `assassinato`, `homicídio`, `tortura`, `sequestro`, `cárcere privado`, `máfia`, `cartel`, `sangue`, `carnificina`, `massacre`, `brutalidade`.
+4. **Eixo 4 — Abuso, Violência Sexual e Gatilhos Psicológicos (`Flag_Eixo_Abuso_Gatilhos`, `Flag_CW_Abuso_Gatilhos`):**
+   * **Content Warnings e Tags (EN):** Detecta `rape`, `sexual assault`, `sexual violence`, `non-con`, `dub-con`, `abuse`, `domestic abuse`, `child abuse`, `emotional/physical abuse`, `toxic relationship`, `gaslighting`, `self harm`, `suicidal thoughts`, `suicide`, `eating disorder`, `trauma`.
+   * **Sinopse (PT-BR):** Detecta `estupro`, `assédio sexual`, `violência sexual`, `abuso sexual/doméstico/infantil/emocional/psicológico`, `relacionamento tóxico/abusivo`, `suicídio`, `automutilação`, `depressão profunda`, `transtorno alimentar`.
+
+* **Parâmetro `min_count_spice`:** Uma tag no Hardcover só aciona uma *Flag* booleana se a contagem comunitária de votos for $\ge 2$, filtrando marcações acidentais de usuários isolados.
+* **Triangulação e Guarda de Circularidade (`Sensivel_Label`):** O rótulo consolidado (`alto`, `baixo`, `provavel_baixo`, `indeterminado`) combina 5 fontes independentes (`V_tags`, `V_vocab`, `V_sinopse`, `V_maturity`, `V_cw`). Se o único voto `alto` vier de `V_sinopse` e a obra tiver entrado no *seed* pelo canal `termo:conteudo`, o rótulo é rebaixado para `indeterminado` (`confianca = "circular"`).
 
 ### Desacoplamento da Unidade de Análise no EDA
-No script [02_eda_booktok_ptbr.py](file:///home/gabriella/Documents/faculdade/ufmg/projeto_completo/booktok-mismatch-analysis/scripts/02_eda_booktok_ptbr.py#L138-L145), foi implementada uma diferenciação metodológica vital:
+No módulo [`dataset.py`](./scripts/pipeline_ptbr/dataset.py) e em [`02_eda_booktok_ptbr.py`](./scripts/02_eda_booktok_ptbr.py), foi implementada uma diferenciação metodológica vital:
 * **Atributos da Edição:** `Editora_PT`, `Ano_Publicacao_PT`, `Num_Paginas_PT`, `Capa_URL_PT`. A unidade amostral é a manifestação comercial no Brasil (ISBN).
-* **Atributos da Obra:** `Rating`, `Generos`, `Moods`, `Tags_Gerais`, `Content_Warnings`, `Flags de Spice`. A unidade de análise é a obra intelectual (`Hardcover_Book_ID`).
-* **Função `_por_obra(df)`:** Deduplica a base pelo identificador da obra para o cálculo de médias, histogramas e correlações de conteúdo. Sem essa salvaguarda, obras com 5 ou 6 reedições no Brasil teriam seu peso artificialmente inflado em 500% nas estatísticas descritivas globais.
+* **Atributos da Obra:** `Rating`, `Generos`, `Moods`, `Tags_Gerais`, `Content_Warnings`, `Spice_Nivel`, `Sensivel_Label`, `Flag_Eixo_*`. A unidade de análise é a obra intelectual (`Hardcover_Book_ID`).
+* **Função `deduplicar_por_obra(df)`:** Deduplica a base pelo identificador da obra para o cálculo de médias, histogramas e correlações de conteúdo. Sem essa salvaguarda, obras com 5 ou 6 reedições no Brasil teriam seu peso artificialmente inflado em 500% nas estatísticas descritivas globais.
 
 ---
 
@@ -369,8 +394,8 @@ No script [02_eda_booktok_ptbr.py](file:///home/gabriella/Documents/faculdade/uf
 
 ## 7. Dicionário de Dados: Schemas das Tabelas Processadas
 
-### 7.1. Tabela Principal Consolidada: `livros_ptbr_v3.csv`
-Esta tabela é o *join* analítico final entre a Edição Brasileira e a Obra no Hardcover (`df_ed.merge(df_ob, on="Hardcover_Book_ID", how="left")`):
+### 7.1. Tabela Principal Consolidada: `livros_ptbr_v3.csv` e `livros_ptbr_v3_rotulado.csv`
+Esta tabela é o *join* analítico final entre a Edição Brasileira e a Obra no Hardcover (`df_ed.merge(df_ob, on="Hardcover_Book_ID", how="left")`), acrescida das colunas de triangulação multi-eixo geradas por `rotulagem.py`:
 
 | Campo | Tipo | Origem | Descrição / Significado |
 | :--- | :--- | :--- | :--- |
@@ -411,15 +436,28 @@ Esta tabela é o *join* analítico final entre a Edição Brasileira e a Obra no
 | `Generos_Hardcover` | `string` | Hardcover | Gêneros literários comunitários (ex.: `Romance \| Fantasy \| Dark Romance`). |
 | `Moods_Hardcover` | `string` | Hardcover | Ambientes emocionais atribuídos pelos leitores (ex.: `emotional \| funny \| dark`). |
 | `Tags_Gerais_Hardcover` | `string` | Hardcover | Tropos e marcações gerais (ex.: `enemies to lovers \| forced proximity`). |
-| `Content_Warnings` | `string` | Hardcover | Alertas de gatilho votados pela comunidade (ex.: `sexual content \| violence \| death`). |
+| `Content_Warnings` | `string` | Hardcover | Alertas de gatilho votados pela comunidade (ex.: `sexual content \| violence \| alcohol \| drug use`). |
 | `Tags_JSON` | `json` | Hardcover | JSON serializado original preservando a contagem de votos (`count`) de cada tag. |
 | `Spice_Tags` | `string` | Pipeline | Tags de *spice* identificadas seguidas de seus votos (ex.: `explicit:4 \| steamy:2`). |
 | `Spice_Tags_Contagem` | `integer` | Pipeline | Soma total dos votos comunitários de *spice*. |
 | `Flag_Spice_Tag` | `boolean` | Pipeline | `True` se houver tag de *spice* com contagem $\ge \text{min\_count\_spice}$. |
 | `Closed_Door_Tags` | `string` | Pipeline | Tags de romance sem sexo explícito (ex.: `closed door \| sweet romance`). |
 | `Flag_Closed_Door_Tag` | `boolean` | Pipeline | `True` se a obra for explicitamente identificada como *closed door*. |
-| `Flag_CW_Sexual_Content`| `boolean` | Pipeline | `True` se constar o alerta de conteúdo sexual nos Content Warnings. |
+| `Flag_CW_Sexual_Content`| `boolean` | Pipeline | `True` se constar alerta de conteúdo sexual nos Content Warnings. |
 | `CW_Sexual_Content_Contagem` | `integer` | Pipeline | Votos na Content Warning de conteúdo sexual. |
+| `Flag_CW_Violencia` | `boolean` | Pipeline | `True` se constar alerta de violência, assassinato, tortura, armas ou gore nos Content Warnings. |
+| `CW_Violencia_Contagem` | `integer` | Pipeline | Soma de votos nos Content Warnings de violência/crime. |
+| `Flag_CW_Drogas_Alcool` | `boolean` | Pipeline | `True` se constar alerta de drogas, álcool, alcoolismo, embriaguez ou vício nos Content Warnings. |
+| `CW_Drogas_Alcool_Contagem` | `integer` | Pipeline | Soma de votos nos Content Warnings de drogas e bebidas alcoólicas. |
+| `Flag_CW_Abuso_Gatilhos` | `boolean` | Pipeline | `True` se constar alerta de estupro, violência sexual, abuso, relacionamento tóxico, automutilação ou suicídio nos Content Warnings. |
+| `CW_Abuso_Gatilhos_Contagem` | `integer` | Pipeline | Soma de votos nos Content Warnings de abuso e saúde mental. |
+| `Flag_Has_CW` | `boolean` | Pipeline | `True` se a obra possuir qualquer Content Warning sensível com votos $\ge \text{min\_count}$. |
+| `Flag_Eixo_Sexo` | `boolean` | Pipeline (`rotulagem.py`) | `True` se a obra apresentar sinal positivo de conteúdo sexual/erótico em qualquer fonte (Tags, CW ou Sinopse). |
+| `Flag_Eixo_Violencia` | `boolean` | Pipeline (`rotulagem.py`) | `True` se a obra apresentar sinal positivo de violência/brutalidade/crime em qualquer fonte. |
+| `Flag_Eixo_Drogas_Alcool` | `boolean` | Pipeline (`rotulagem.py`) | `True` se a obra apresentar sinal positivo de drogas ou bebidas alcoólicas/alcoolismo em qualquer fonte. |
+| `Flag_Eixo_Abuso_Gatilhos` | `boolean` | Pipeline (`rotulagem.py`) | `True` se a obra apresentar sinal positivo de abuso, violência sexual ou gatilhos psicológicos em qualquer fonte. |
+| `Sensivel_Label` | `string` | Pipeline (`rotulagem.py`) | Rótulo triangulado de conteúdo sensível: `alto`, `baixo`, `provavel_baixo` ou `indeterminado`. |
+| `Sensivel_Label_Confianca` | `string` | Pipeline (`rotulagem.py`) | Grau de confiança da triangulação: `forte`, `medio`, `fraco`, `inferido_ya`, `conflito`, `circular` ou `sem_dados`. |
 | `Flag_Romance` | `boolean` | Pipeline | Validador temático: confirma se a obra possui a marcação de Romance. |
 | `Flag_New_Adult` | `boolean` | Pipeline | Validador temático: confirma marcação de literatura New Adult. |
 | `Flag_Formato_Excluir` | `boolean` | Pipeline | Flag de expurgo: indica se a obra é mangá, quadrinho, graphic novel ou infantil. |

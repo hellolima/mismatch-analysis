@@ -1,0 +1,14 @@
+Combinacao,n_obras
+(nenhum),154
+Sexo,39
+Sexo + Violencia + Abuso_Gatilhos,18
+Sexo + Abuso_Gatilhos,8
+Sexo + Drogas_Alcool,7
+Violencia,6
+Violencia + Abuso_Gatilhos,6
+Sexo + Drogas_Alcool + Abuso_Gatilhos,4
+Sexo + Violencia,3
+Drogas_Alcool,2
+Sexo + Violencia + Drogas_Alcool + Abuso_Gatilhos,2
+Sexo + Violencia + Drogas_Alcool,2
+Violencia + Drogas_Alcool + Abuso_Gatilhos,1

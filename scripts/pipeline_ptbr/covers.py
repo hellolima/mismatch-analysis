@@ -1,12 +1,11 @@
 """Etapa 3: baixa e versiona capas (URLs mudam; CLIP precisa >= 224 px)."""
 import io
 import os
-import sys
 import time
 import hashlib
 import logging
 from datetime import datetime
-from typing import Optional
+from typing import Dict, Optional
 
 import requests
 import pandas as pd
@@ -29,8 +28,11 @@ def baixar_capas(limite: Optional[int] = None, lado_min: int = 200):
     df = pd.read_csv(C.OUT_EDICOES, dtype=str)
     if limite:
         df = df.head(limite)
-    manifest = pd.read_csv(C.CAPAS_MANIFEST, dtype=str).to_dict("records") if os.path.exists(C.CAPAS_MANIFEST) else []
-    feitos = {m["ISBN_PT"] for m in manifest if v(m.get("Arquivo"))}
+
+    manifest_rows = pd.read_csv(C.CAPAS_MANIFEST, dtype=str).to_dict("records") if os.path.exists(C.CAPAS_MANIFEST) else []
+    por_isbn: Dict[str, dict] = {m["ISBN_PT"]: m for m in manifest_rows if m.get("ISBN_PT")}
+    feitos = {isbn for isbn, m in por_isbn.items() if v(m.get("Arquivo"))}
+
     for i, r in enumerate(df.to_dict("records")):
         isbn = r["ISBN_PT"]
         if isbn in feitos:
@@ -61,7 +63,6 @@ def baixar_capas(limite: Optional[int] = None, lado_min: int = 200):
                 continue
             achou = (fonte, url, raw, w, h)
             break
-        manifest = [m for m in manifest if m["ISBN_PT"] != isbn]
         if achou:
             fonte, url, raw, w, h = achou
             arq = os.path.join(C.COVERS_DIR, f"{isbn}.jpg")
@@ -70,17 +71,21 @@ def baixar_capas(limite: Optional[int] = None, lado_min: int = 200):
             else:
                 with open(arq, "wb") as f:
                     f.write(raw)
-            manifest.append({"ISBN_PT": isbn, "Arquivo": os.path.relpath(arq, C.ROOT), "Fonte": fonte, "URL": url,
-                             "Largura": w, "Altura": h, "Bytes": len(raw),
-                             "SHA256": hashlib.sha256(raw).hexdigest(), "Baixado_Em": datetime.now().isoformat()})
+            por_isbn[isbn] = {
+                "ISBN_PT": isbn, "Arquivo": os.path.relpath(arq, C.ROOT), "Fonte": fonte, "URL": url,
+                "Largura": w, "Altura": h, "Bytes": len(raw),
+                "SHA256": hashlib.sha256(raw).hexdigest(), "Baixado_Em": datetime.now().isoformat(),
+            }
         else:
-            manifest.append({"ISBN_PT": isbn, "Arquivo": "", "Fonte": "", "URL": "", "Largura": "", "Altura": "",
-                             "Bytes": "", "SHA256": "", "Baixado_Em": datetime.now().isoformat()})
+            por_isbn[isbn] = {
+                "ISBN_PT": isbn, "Arquivo": "", "Fonte": "", "URL": "", "Largura": "", "Altura": "",
+                "Bytes": "", "SHA256": "", "Baixado_Em": datetime.now().isoformat(),
+            }
         if (i + 1) % 25 == 0:
-            pd.DataFrame(manifest).to_csv(C.CAPAS_MANIFEST, index=False)
+            pd.DataFrame(list(por_isbn.values())).to_csv(C.CAPAS_MANIFEST, index=False)
             log.info(f"[capas] {i + 1}/{len(df)}")
         time.sleep(0.2)
-    m = pd.DataFrame(manifest)
+    m = pd.DataFrame(list(por_isbn.values()))
     if m.empty:
         return
     # Google devolve a MESMA imagem 'capa indisponivel' para varios livros: hash repetido >= 3 = suspeito

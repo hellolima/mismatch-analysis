@@ -1,0 +1,131 @@
+Eixo,Rotulo_Eixo,Fonte,Termo
+sexo,Sexo / Erotismo / Spice,cw,sexual content
+sexo,Sexo / Erotismo / Spice,cw,explicit sexual content
+sexo,Sexo / Erotismo / Spice,cw,rape
+sexo,Sexo / Erotismo / Spice,cw,sexual assault
+sexo,Sexo / Erotismo / Spice,cw,sexual violence
+sexo,Sexo / Erotismo / Spice,cw,sexual harassment
+sexo,Sexo / Erotismo / Spice,cw,non[\s-]?con
+sexo,Sexo / Erotismo / Spice,cw,dub[\s-]?con
+sexo,Sexo / Erotismo / Spice,tags,spicy
+sexo,Sexo / Erotismo / Spice,tags,steamy
+sexo,Sexo / Erotismo / Spice,tags,smut+y?
+sexo,Sexo / Erotismo / Spice,tags,erotic(?:a|ism)?
+sexo,Sexo / Erotismo / Spice,tags,erotic stories
+sexo,Sexo / Erotismo / Spice,tags,open[\s-]door
+sexo,Sexo / Erotismo / Spice,tags,high heat
+sexo,Sexo / Erotismo / Spice,tags,explicit
+sexo,Sexo / Erotismo / Spice,tags,dark romance
+sexo,Sexo / Erotismo / Spice,pt,conteudo adulto
+sexo,Sexo / Erotismo / Spice,pt,conteudo explicito
+sexo,Sexo / Erotismo / Spice,pt,conteudo sexual
+sexo,Sexo / Erotismo / Spice,pt,cenas? (?:de sexo|explicitas?|quentes|picantes?)
+sexo,Sexo / Erotismo / Spice,pt,sexo explicito
+sexo,Sexo / Erotismo / Spice,pt,erotic[oa]s?
+sexo,Sexo / Erotismo / Spice,pt,\+ ?18
+sexo,Sexo / Erotismo / Spice,pt,18 ?\+
+sexo,Sexo / Erotismo / Spice,pt,maiores de 18
+sexo,Sexo / Erotismo / Spice,pt,dark romance
+sexo,Sexo / Erotismo / Spice,pt,smut
+sexo,Sexo / Erotismo / Spice,pt,spicy
+sexo,Sexo / Erotismo / Spice,pt,steamy
+sexo,Sexo / Erotismo / Spice,pt,torrid[oa]
+sexo,Sexo / Erotismo / Spice,pt,alta voltagem
+sexo,Sexo / Erotismo / Spice,pt,hot romance
+sexo,Sexo / Erotismo / Spice,pt,estupro
+sexo,Sexo / Erotismo / Spice,pt,assedio sexual
+sexo,Sexo / Erotismo / Spice,pt,violencia sexual
+violencia,Violência / Crime / Brutalidade,cw,violence
+violencia,Violência / Crime / Brutalidade,cw,graphic violence
+violencia,Violência / Crime / Brutalidade,cw,gun violence
+violencia,Violência / Crime / Brutalidade,cw,murder
+violencia,Violência / Crime / Brutalidade,cw,homicide
+violencia,Violência / Crime / Brutalidade,cw,blood
+violencia,Violência / Crime / Brutalidade,cw,gore
+violencia,Violência / Crime / Brutalidade,cw,torture
+violencia,Violência / Crime / Brutalidade,cw,kidnapping
+violencia,Violência / Crime / Brutalidade,cw,abduction
+violencia,Violência / Crime / Brutalidade,cw,confinement
+violencia,Violência / Crime / Brutalidade,cw,animal cruelty
+violencia,Violência / Crime / Brutalidade,cw,massacre
+violencia,Violência / Crime / Brutalidade,tags,bloody
+violencia,Violência / Crime / Brutalidade,tags,serial killer
+violencia,Violência / Crime / Brutalidade,tags,mafia
+violencia,Violência / Crime / Brutalidade,pt,violencia (?:extrema|fisica|grafica|psicologica|domestica)
+violencia,Violência / Crime / Brutalidade,pt,agressao
+violencia,Violência / Crime / Brutalidade,pt,tortura
+violencia,Violência / Crime / Brutalidade,pt,sequestro
+violencia,Violência / Crime / Brutalidade,pt,carcere privado
+violencia,Violência / Crime / Brutalidade,pt,\bgore\b
+violencia,Violência / Crime / Brutalidade,pt,carnificina
+violencia,Violência / Crime / Brutalidade,pt,mutilacao
+violencia,Violência / Crime / Brutalidade,pt,assassinato brutal
+violencia,Violência / Crime / Brutalidade,pt,canibalismo
+violencia,Violência / Crime / Brutalidade,pt,massacre
+violencia,Violência / Crime / Brutalidade,pt,chacina
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,alcohol
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,alcoholism
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,drinking
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,drunk\w*
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,drug use
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,drug abuse
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,drugs
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,addiction
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,substance abuse
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,overdose
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,cw,narcotics
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,uso de drogas
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,trafico de drogas
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,abuso de drogas
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,drogas ilicitas
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,substancias? ilicitas?
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,dependencia quimica
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,overdose
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,entorpecentes
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,alcoolismo
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,abuso de alcool
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,bebidas? alcoolicas?
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,embriaguez
+drogas_alcool,Drogas / Bebidas Alcoólicas / Vício,pt,vicio em (?:drogas|alcool|bebida)
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,child abuse
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,domestic abuse
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,emotional abuse
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,physical abuse
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,abuse
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,self[\s-]?harm
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,suicidal thoughts
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,suicide
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,stalking
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,toxic relationship
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,gaslighting
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,bullying
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,rape
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,sexual assault
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,cw,sexual violence
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,tags,trigger warning
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,pt,abuso (?:fisico|emocional|psicologico|sexual|infantil|domestico)
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,pt,relacionamento toxico
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,pt,suicidio
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,pt,ideacao suicida
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,pt,automutilacao
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,pt,estupro
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,pt,assedio sexual
+abuso_gatilhos,Abuso / Relacionamento Tóxico / Saúde Mental,pt,violencia sexual
+baixo,Polo negativo (leve/fechado),tags,closed[\s-]door
+baixo,Polo negativo (leve/fechado),tags,clean romance
+baixo,Polo negativo (leve/fechado),tags,sweet romance
+baixo,Polo negativo (leve/fechado),tags,fade to black
+baixo,Polo negativo (leve/fechado),tags,low heat
+baixo,Polo negativo (leve/fechado),tags,no spice
+baixo,Polo negativo (leve/fechado),tags,no sex
+baixo,Polo negativo (leve/fechado),tags,family[\s-]friendly
+baixo,Polo negativo (leve/fechado),tags,all ages
+baixo,Polo negativo (leve/fechado),pt,romance clean
+baixo,Polo negativo (leve/fechado),pt,clean romance
+baixo,Polo negativo (leve/fechado),pt,sweet romance
+baixo,Polo negativo (leve/fechado),pt,sem cenas? (?:de sexo|explicitas?)
+baixo,Polo negativo (leve/fechado),pt,sem conteudo (?:adulto|explicito|sexual)
+baixo,Polo negativo (leve/fechado),pt,porta fechada
+baixo,Polo negativo (leve/fechado),pt,closed door
+baixo,Polo negativo (leve/fechado),pt,fade to black
+baixo,Polo negativo (leve/fechado),pt,para todas as idades

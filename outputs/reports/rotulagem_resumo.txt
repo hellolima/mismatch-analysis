@@ -1,0 +1,74 @@
+==========================================================================================
+ROTULAGEM TRIANGULADA DE CONTEÚDO INADEQUADO/SENSÍVEL (v3.1) | 2026-11-01 19:32:30
+==========================================================================================
+Edições: 262 | Obras: 252 | limiar de cobertura: >= 102 leitores (percentil 50) + Gêneros + Moods + Tags Gerais preenchidos
+
+RÓTULO FINAL (por obra)
+Sensivel_Label
+indeterminado     128
+alto              107
+provavel_baixo     17
+
+PREVALÊNCIA POR EIXO DE CONTEÚDO SENSÍVEL/PROBLEMÁTICO (por obra)
+  Sexo / Erotismo / Violência Sexual          : 83/252 (32.9%)
+  Violência / Crime / Brutalidade             : 38/252 (15.1%)
+  Drogas / Bebidas Alcoólicas / Vício         : 18/252 (7.1%)
+  Abuso / Relacionamento Tóxico / Saúde Mental: 39/252 (15.5%)
+
+Rótulo x confiança ('circular' = único voto alto era a sinopse de obra achada via termo:conteudo):
+Sensivel_Label_Confianca  circular  forte  fraca  nao_validado  sem_evidencia
+Sensivel_Label                                                               
+alto                             0     66     41             0              0
+indeterminado                    8      0      0             0            120
+provavel_baixo                   0      0      0            17              0
+
+RÓTULO COM SINOPSE x RÓTULO SEM SINOPSE (use o 2º como alvo ao treinar/avaliar o módulo de texto: a sinopse é a entrada do módulo e o léxico dela vazaria para o alvo)
+Sensivel_Label_sem_sinopse  alto  indeterminado  provavel_baixo
+Sensivel_Label                                                 
+alto                          98              8               1
+indeterminado                  0            128               0
+provavel_baixo                 0              0              17
+
+VOTOS POR FONTE (obra; vazio = abstenção)
+  V_tags     : {'abstem': 225, 'alto': 27}
+  V_vocab    : {'abstem': 225, 'alto': 27}
+  V_sinopse  : {'abstem': 205, 'alto': 47}
+  V_maturity : {'abstem': 211, 'alto': 41}
+  V_cw       : {'abstem': 191, 'alto': 61}
+  YA=84 | Cobertura_Boa=117 | YA & Cobertura_Boa=46
+
+CIRCULARIDADE: Via_Termo_Conteudo x Sensivel_Label (sinopse dessas obras não conta como independente)
+Sensivel_Label      alto  indeterminado  provavel_baixo
+Via_Termo_Conteudo                                     
+False                 80            116              17
+True                  27             12               0
+
+CONCORDÂNCIA ENTRE FONTES (obras com voto em ambas; linhas=tags, colunas=sinopse)
+V_sinopse  alto
+V_tags         
+alto         12
+
+SANIDADE POR ESTRATO (face validity; NÃO é voto: estratos foram critério de amostragem)
+Sensivel_Label      alto  indeterminado  provavel_baixo
+Estrato                                                
+(fora_das_autoras)    31             57               2
+contemporaneo          5              5               0
+controle_fantasia      2              1               1
+controle_wf            3             18               0
+controle_ya            0              5               2
+dark                   3              2               0
+esportivo             14              2               0
+indie_cauda            1              5               0
+nacional               0              7               0
+new_adult             13              6               3
+romantasia             9              8               3
+romcom                26             12               6
+
+RÓTULO x QUARTIL DE POPULARIDADE
+Sensivel_Label  alto  indeterminado  provavel_baixo
+_users                                             
+Q1                 7             56               0
+Q2                15             48               0
+Q3                34             20               9
+Q4                51              4               8
+

@@ -1,0 +1,9 @@
+Regra,Condicao,Rotulo,Confianca
+R1,"Conflito entre familias, ou voto 'baixo' coexistindo com 'alto'/CW",indeterminado,conflito
+R2,Unico voto 'alto' e a sinopse de obra achada via termo:conteudo (circularidade),indeterminado,circular
+R3,">= 2 familias independentes 'alto', ou Content Warning sensivel",alto,forte
+R4,Exatamente 1 familia independente 'alto',alto,fraca
+R5,">= 2 familias 'baixo' (closed door, clean, etc.)",baixo,forte
+R6,Exatamente 1 familia 'baixo',baixo,fraca
+R7,"Nenhum voto, mas obra YA com boa cobertura comunitaria (inferencia, nao medicao)",provavel_baixo,nao_validado
+R8,Nenhum voto e cobertura insuficiente: abstencao honesta,indeterminado,sem_evidencia

@@ -1,0 +1,108 @@
+AVALIAÇÃO DE ROBUSTEZ DO RÓTULO TRIANGULADO (Sensivel_Label)
+==========================================================================================
+Obras: 252 | ano >= 2015 | pop_pct = 50
+
+E3) FUNIL DE ATRITO (seed -> rótulo), por canal de origem
+                                            Etapa   N  Pct_do_seed canal:autora canal:termo:booktok canal:termo:conteudo canal:termo:genero canal:termo:tropo
+       1. Edicoes no seed (Google Books, ISBN BR) 646        100.0          203                  27                  173                 86               189
+2. Resolvidas na ponte (edicao -> obra Hardcover) 291         45.0          152                  20                   42                 36                60
+ 3. Em escopo (ano >= 2015, sem formato excluido) 262         40.6                                                                                           
+                     4. Obras unicas (dedup FRBR) 252         39.0          135                  19                   39                 34                44
+     5. Rotuladas (alto | baixo | provavel_baixo) 124         19.2           67                  11                   27                 17                15
+                           5a.   das quais 'alto' 107         16.6           54                   9                   27                 16                13
+
+E4) ABLAÇÃO DE FONTES (Δ = obras cujo rótulo muda em relação à configuração completa)
+              Configuracao  alto  baixo  provavel_baixo  indeterminado  alto_forte  obras_que_mudaram_vs_completo
+       completo (5 fontes)   107      0              17            128          66                              0
+                  sem tags   106      0              17            129          66                              1
+                 sem vocab   103      0              18            131          66                              4
+               sem sinopse    98      0              18            136          64                              9
+              sem maturity    85      0              19            148          62                             22
+                    sem cw    74      0              30            148          15                             33
+so comunidade (tags+vocab)    31      0              39            182           0                             76
+                so sinopse    18      0              37            197           0                             89
+                     so cw    61      0              23            168          61                             46
+
+E5) SENSIBILIDADE: pop_pct × definição de Cobertura_Boa (exige CW = definição antiga)
+ pop_pct  Cobertura_Boa_exige_CW  limiar_leitores  n_Cobertura_Boa  alto  baixo  provavel_baixo  indeterminado
+      25                   False                2              132   107      0              19            126
+      35                   False               17              132   107      0              19            126
+      50                   False              102              117   107      0              17            128
+      65                   False              219               88   107      0              13            132
+      75                   False              381               63   107      0               8            137
+      25                    True                2               62   107      0               1            144
+      35                    True               17               62   107      0               1            144
+      50                    True              102               59   107      0               1            144
+      65                    True              219               51   107      0               1            144
+      75                    True              381               43   107      0               0            145
+
+E6) CONCORDÂNCIA ENTRE FONTES
+  Cohen par-a-par (só obras onde ambas votaram):
+ Fonte_A  Fonte_B  n_obras_com_ambos  concordancia_bruta  kappa_cohen  n_categorias_observadas                                                                 nota
+    tags    vocab                 23                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+    tags  sinopse                 12                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+    tags maturity                 11                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+    tags       cw                 18                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+   vocab  sinopse                 12                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+   vocab maturity                 11                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+   vocab       cw                 15                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+ sinopse maturity                 15                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+ sinopse       cw                 19                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+maturity       cw                 14                 1.0          1.0                        1 degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+  Fleiss por nº de votos por obra:
+ n_votos_por_obra  n_obras  kappa_fleiss  prop_unanime_alto
+                2       26           1.0                1.0
+                3        8           1.0                1.0
+                4       10           1.0                1.0
+                5        4           1.0                1.0
+  Leitura: como quase não há voto 'baixo', a concordância bruta é alta e o kappa é degenerado (sem variância de categoria). Isso É o achado: o sistema é Positive-Unlabeled.
+
+E7) COOCORRÊNCIA DOS 4 EIXOS
+  Jaccard:
+                          Flag_Eixo_Sexo  Flag_Eixo_Violencia  Flag_Eixo_Drogas_Alcool  Flag_Eixo_Abuso_Gatilhos
+Flag_Eixo_Sexo                      1.00                 0.26                     0.17                      0.36
+Flag_Eixo_Violencia                 0.26                 1.00                     0.10                      0.54
+Flag_Eixo_Drogas_Alcool             0.17                 0.10                     1.00                      0.14
+Flag_Eixo_Abuso_Gatilhos            0.36                 0.54                     0.14                      1.00
+  Nº de eixos por obra:
+ n_eixos  n_obras  pct_obras
+       0      154       61.1
+       1       47       18.7
+       2       24        9.5
+       3       25        9.9
+       4        2        0.8
+  Combinações mais frequentes:
+                                       Combinacao  n_obras
+                                         (nenhum)      154
+                                             Sexo       39
+                Sexo + Violencia + Abuso_Gatilhos       18
+                            Sexo + Abuso_Gatilhos        8
+                             Sexo + Drogas_Alcool        7
+                                        Violencia        6
+                       Violencia + Abuso_Gatilhos        6
+            Sexo + Drogas_Alcool + Abuso_Gatilhos        4
+                                 Sexo + Violencia        3
+                                    Drogas_Alcool        2
+Sexo + Violencia + Drogas_Alcool + Abuso_Gatilhos        2
+                 Sexo + Violencia + Drogas_Alcool        2
+
+E9) OMISSÃO EDITORIAL (a sinopse PT-BR menciona o que a comunidade sinaliza?)
+                                        Eixo  obras_com_CW_comunitario  sinopse_PT_nao_menciona  taxa_omissao  IC95_inf  IC95_sup
+                     Sexo / Erotismo / Spice                        48                       36         0.750     0.612     0.851
+             Violência / Crime / Brutalidade                        32                       30         0.938     0.799     0.983
+         Drogas / Bebidas Alcoólicas / Vício                        18                       18         1.000     0.824     1.000
+Abuso / Relacionamento Tóxico / Saúde Mental                        38                       36         0.947     0.827     0.985
+     QUALQUER (V_cw=alto e V_sinopse abstem)                        61                       42         0.689     0.564     0.791
+
+REGRAS DE DECISÃO (ordem = prioridade)
+Regra                                                                         Condicao         Rotulo     Confianca
+   R1               Conflito entre familias, ou voto 'baixo' coexistindo com 'alto'/CW  indeterminado      conflito
+   R2  Unico voto 'alto' e a sinopse de obra achada via termo:conteudo (circularidade)  indeterminado      circular
+   R3                  >= 2 familias independentes 'alto', ou Content Warning sensivel           alto         forte
+   R4                                         Exatamente 1 familia independente 'alto'           alto         fraca
+   R5                                 >= 2 familias 'baixo' (closed door, clean, etc.)          baixo         forte
+   R6                                                     Exatamente 1 familia 'baixo'          baixo         fraca
+   R7 Nenhum voto, mas obra YA com boa cobertura comunitaria (inferencia, nao medicao) provavel_baixo  nao_validado
+   R8                          Nenhum voto e cobertura insuficiente: abstencao honesta  indeterminado sem_evidencia
+
+Léxico exportado: /home/gabrielladlima/UFMG/mismatch-analysis/outputs/tables/lexico_eixos.csv (130 termos)

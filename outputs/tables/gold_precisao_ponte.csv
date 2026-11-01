@@ -1,0 +1,3 @@
+Metodo_Ponte,n_auditadas,n_corretas,precisao,IC95_inf,IC95_sup,n_total_no_metodo
+catalogo_autora,0,0,,,,144
+TODOS (auditados),16,14,0.875,0.64,0.965,174

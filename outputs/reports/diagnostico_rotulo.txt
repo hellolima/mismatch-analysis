@@ -1,0 +1,74 @@
+DIAGNÓSTICO DO RÓTULO (Sensivel_Label) | obras: 252 (ano >= 2015, sem formatos excluídos)
+==========================================================================================
+
+1) COMPOSIÇÃO DO RÓTULO POR COMBINAÇÃO DE FONTES
+Sensivel_Label  Sensivel_Label_Fontes         
+alto            cw                                 28
+                maturity                           17
+                maturity|cw                         4
+                sinopse                             9
+                sinopse|cw                          9
+                sinopse|maturity                    7
+                sinopse|maturity|cw                 2
+                tags                                1
+                tags|cw                             3
+                tags|vocab                          3
+                tags|vocab|cw                       3
+                tags|vocab|maturity                 1
+                tags|vocab|maturity|cw              4
+                tags|vocab|sinopse                  2
+                tags|vocab|sinopse|cw               4
+                tags|vocab|sinopse|maturity         2
+                tags|vocab|sinopse|maturity|cw      4
+                vocab                               4
+indeterminado                                     120
+                sinopse(via_termo_conteudo)         8
+provavel_baixo  cobertura_ya                       17
+
+  'baixo'/'provavel_baixo' sem NENHUM voto próprio (só regra cobertura+YA): 17/17
+  Se for ~100%, 'provavel_baixo' é uma INFERÊNCIA a partir do gênero YA, não uma medição: não use como negativo sem validação humana (e evite o atalho 'capa fofa/YA => baixo' no POC II).
+
+1b) PREVALÊNCIA POR EIXO DE CONTEÚDO SENSÍVEL (nível obra)
+  Flag_Eixo_Sexo             (Sexo / Erótico / Spice                 ):  83/252 (32.9%)
+  Flag_Eixo_Violencia        (Violência / Crime / Gore               ):  38/252 (15.1%)
+  Flag_Eixo_Drogas_Alcool    (Drogas / Bebidas Alcoólicas            ):  18/252 (7.1%)
+  Flag_Eixo_Abuso_Gatilhos   (Abuso / Violência Sexual / Saúde Mental):  39/252 (15.5%)
+
+2) CIRCULARIDADE COM O CANAL 'termo:conteudo' (seed buscou por termos de conteúdo adulto)
+  Obras que entraram via termo:conteudo: 39/252
+  V_sinopse x via_termo_conteudo:
+    via_conteudo  False  True 
+    V_sinopse                 
+    abstem          195     10
+    alto             18     29
+  Sensivel_Label x via_termo_conteudo:
+    via_conteudo    False  True 
+    Sensivel_Label              
+    alto               80     27
+    indeterminado     116     12
+    provavel_baixo     17      0
+  Sensivel_Label SEM as obras via termo:conteudo (análise de sensibilidade):
+    Sensivel_Label
+    indeterminado     116
+    alto               80
+    provavel_baixo     17
+
+3) RECALL RELATIVO: entre obras com V_tags=alto, % em que cada outra fonte também vota alto
+  n (referência, V_tags=alto) = 27  [n pequeno: leia como ordem de grandeza]
+  V_vocab     23/27 = 85%
+  V_sinopse   12/27 = 44%
+  V_maturity  11/27 = 41%
+  V_cw        18/27 = 67%
+  Recall baixo da sinopse/maturity = o léxico/fonte perde muita coisa; o 'indeterminado' esconde conteúdo sensível.
+
+4) TAGS COM VOCABULÁRIO DE CONTEÚDO SENSÍVEL (sexo, violência, drogas/álcool, abuso) em Tags_Gerais/Generos/Moods/CW
+  sexual content (43), violence (26), murder (13), alcohol (11), child abuse (9), blood (8), toxic relationship (7), spicy (6), rape (6), self harm (6), alcoholism (6), sexual assault (6), 4 peppers (5), smut (5), stalking (5), suicidal thoughts (5), torture (5), kidnapping (5), gun violence (4), domestic abuse (4), sexual violence (4), steamy (3), emotional abuse (3), drug use (3), gore (3), toxic friendship (3), sexual harassment (3), addiction (3), spicy (open door) (2), fanfic/trashy.heated rivalry (2), erotic stories (2), abused women (2), sexism (2), suicide attempt (2), physical abuse (2), explicit sexual content (2), stalker (1), bisexual (1), bisexual mc (1), abuse-non-mc (1), asexual-hero (1), spice-4 (1), high heat (1), open-door spice (1), 3 peppers (1)
+
+  Obras com tag 'N peppers': 6 (outputs/audits/diagnostico_peppers.csv). Cruze com Sensivel_Label: se 4-5 peppers aparecem como 'indeterminado' ou 'baixo', o labeling.py não está lendo essa escala.
+    Sensivel_Label  alto
+    Peppers             
+    3                  1
+    4                  5
+
+5) 'BAIXO' / 'PROVAVEL_BAIXO' EM ESTRATOS QUE ESPERAMOS COM CONTEÚDO SENSÍVEL (revisar à mão)
+  12 obras em outputs/audits/diagnostico_baixo_revisar.csv. Cada falso 'baixo' aqui é evidência de que a regra YA erra.

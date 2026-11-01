@@ -1,0 +1,6 @@
+Campo,n_pares_anotados,concordancia_bruta,kappa_cohen
+Sexo,12,0.833,0.657
+Violencia,12,0.833,0.657
+Drogas_Alcool,12,0.667,0.351
+Abuso_Gatilhos,12,0.833,0.636
+Geral,12,0.75,0.471

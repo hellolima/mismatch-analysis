@@ -1,0 +1,11 @@
+Fonte_A,Fonte_B,n_obras_com_ambos,concordancia_bruta,kappa_cohen,n_categorias_observadas,nota
+tags,vocab,23,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+tags,sinopse,12,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+tags,maturity,11,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+tags,cw,18,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+vocab,sinopse,12,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+vocab,maturity,11,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+vocab,cw,15,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+sinopse,maturity,15,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+sinopse,cw,19,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo
+maturity,cw,14,1.0,1.0,1,degenerado: so 1 categoria observada ('alto'); kappa nao informativo

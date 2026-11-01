@@ -1,0 +1,11 @@
+pop_pct,Cobertura_Boa_exige_CW,limiar_leitores,n_Cobertura_Boa,alto,baixo,provavel_baixo,indeterminado
+25,False,2,132,107,0,19,126
+35,False,17,132,107,0,19,126
+50,False,102,117,107,0,17,128
+65,False,219,88,107,0,13,132
+75,False,381,63,107,0,8,137
+25,True,2,62,107,0,1,144
+35,True,17,62,107,0,1,144
+50,True,102,59,107,0,1,144
+65,True,219,51,107,0,1,144
+75,True,381,43,107,0,0,145
