@@ -174,19 +174,30 @@ def gerar_relatorio_eda(df: pd.DataFrame,
             cob = cobertura_por_popularidade(ob)
             if cob is not None:
                 cob.to_csv(tables_dir / "cobertura_por_popularidade.csv", encoding="utf-8")
-                f.write("  Cobertura de tags por quartil de popularidade (queda nos quartis baixos = faltante NÃO aleatório):\n    "
+                f.write("  Cobertura de tags por faixa de popularidade (nº de leitores; queda nas faixas baixas = faltante NÃO aleatório):\n    "
                         + cob.to_string().replace("\n", "\n    ") + "\n")
             if "spearman_users_ntags" in extra:
                 rho, pv, n = extra["spearman_users_ntags"]
                 f.write(f"  Spearman (nº de leitores x nº total de tags): rho={rho:.3f}, p={pv:.4f}, n={n}\n")
             if "spice_por_pop" in extra:
-                f.write("  Spice positivo por quartil de popularidade (Wilson 95%):\n    "
+                f.write("  Spice positivo por faixa de popularidade (Wilson 95%):\n    "
                         + extra["spice_por_pop"].round(3).to_string(index=False).replace("\n", "\n    ") + "\n")
                 extra["spice_por_pop"].to_csv(tables_dir / "spice_por_popularidade.csv", index=False, encoding="utf-8")
             if "sensivel_por_pop" in extra:
-                f.write("  Conteúdo Sensível Geral (alto / qualquer eixo) por quartil de popularidade (Wilson 95%):\n    "
+                f.write("  Conteúdo Sensível Geral (alto / qualquer eixo) por faixa de popularidade (Wilson 95%):\n    "
                         + extra["sensivel_por_pop"].round(3).to_string(index=False).replace("\n", "\n    ") + "\n")
                 extra["sensivel_por_pop"].to_csv(tables_dir / "sensivel_por_popularidade.csv", index=False, encoding="utf-8")
+            if "nota_exclusoes" in extra:
+                f.write("\n  POR FAIXA DE NOTA (descritivo; nota média do Hardcover, só obras com nº mínimo de avaliações):\n")
+                f.write(f"    Exclusões: {extra['nota_exclusoes']}\n")
+            if "sensivel_por_nota" in extra:
+                f.write("  Conteúdo Sensível Geral (alto) por faixa de nota (Wilson 95%):\n    "
+                        + extra["sensivel_por_nota"].round(3).to_string(index=False).replace("\n", "\n    ") + "\n")
+                extra["sensivel_por_nota"].to_csv(tables_dir / "sensivel_por_nota.csv", index=False, encoding="utf-8")
+            if "spice_por_nota" in extra:
+                f.write("  Spice positivo por faixa de nota (Wilson 95%):\n    "
+                        + extra["spice_por_nota"].round(3).to_string(index=False).replace("\n", "\n    ") + "\n")
+                extra["spice_por_nota"].to_csv(tables_dir / "spice_por_nota.csv", index=False, encoding="utf-8")
 
         col_lbl, col_conf, _ = resolver_colunas_rotulo(ob)
         if col_lbl in ob.columns:

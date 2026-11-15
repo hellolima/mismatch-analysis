@@ -217,8 +217,9 @@ def omissao_editorial(ob: pd.DataFrame) -> pd.DataFrame:
     rows = []
     sin = ob["Sinopse_PT"].map(sem_acento) if "Sinopse_PT" in ob.columns else pd.Series("", index=ob.index)
     cw = ob["Content_Warnings"].map(sem_acento) if "Content_Warnings" in ob.columns else pd.Series("", index=ob.index)
+    tem_sinopse = sin.ne("")
     for e in ORDEM_EIXOS:
-        tem_cw = cw.map(lambda s: bool(RE_POR_EIXO[e]["cw"].search(s)))
+        tem_cw = cw.map(lambda s: bool(RE_POR_EIXO[e]["cw"].search(s))) & tem_sinopse
         avisa_pt = sin.map(lambda s: bool(RE_POR_EIXO[e]["pt"].search(s)))
         n = int(tem_cw.sum())
         k_omite = int((tem_cw & ~avisa_pt).sum())
@@ -226,13 +227,15 @@ def omissao_editorial(ob: pd.DataFrame) -> pd.DataFrame:
         rows.append({"Eixo": EIXOS[e]["rotulo"], "obras_com_CW_comunitario": n,
                      "sinopse_PT_nao_menciona": k_omite, "taxa_omissao": round(p, 3) if n else np.nan,
                      "IC95_inf": round(lo, 3) if n else np.nan, "IC95_sup": round(hi, 3) if n else np.nan})
-    # geral: V_cw=alto e V_sinopse abstem
+    # geral: CW em algum dos 4 eixos (nao basta "ter algum CW") E sinopse disponivel; omissao = V_sinopse abstem
     if {"V_cw", "V_sinopse"} <= set(ob.columns):
-        base = ob[ob["V_cw"] == "alto"]
+        tem_cw_eixo = pd.concat([cw.map(lambda s, e=e: bool(RE_POR_EIXO[e]["cw"].search(s))) for e in ORDEM_EIXOS],
+                                axis=1).any(axis=1)
+        base = ob[(ob["V_cw"] == "alto") & tem_cw_eixo & sin.ne("")]
         n = len(base)
         k = int(base["V_sinopse"].isna().sum())
         p, lo, hi = wilson_ic(k, n)
-        rows.append({"Eixo": "QUALQUER (V_cw=alto e V_sinopse abstem)", "obras_com_CW_comunitario": n,
+        rows.append({"Eixo": "Qualquer eixo", "obras_com_CW_comunitario": n,
                      "sinopse_PT_nao_menciona": k, "taxa_omissao": round(p, 3) if n else np.nan,
                      "IC95_inf": round(lo, 3) if n else np.nan, "IC95_sup": round(hi, 3) if n else np.nan})
     return pd.DataFrame(rows)

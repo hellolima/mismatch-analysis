@@ -1,5 +1,5 @@
-Pop_Quartil,Generos_Hardcover,Moods_Hardcover,Tags_Gerais_Hardcover,Content_Warnings
-Q1 (menos lidas),0.302,0.032,0.032,0.016
-Q2,0.794,0.349,0.365,0.048
-Q3,0.952,0.905,0.937,0.27
-Q4 (mais lidas),1.0,1.0,1.0,0.683
+Pop_Faixa,Generos_Hardcover,Moods_Hardcover,Tags_Gerais_Hardcover,Content_Warnings
+<10,0.393,0.06,0.036,0.012
+10–99,0.854,0.463,0.512,0.073
+100–999,0.97,0.93,0.96,0.35
+≥1000,1.0,1.0,1.0,0.926

@@ -315,7 +315,7 @@ def gerar_visualizacoes(df: pd.DataFrame, stats_tags: Dict, stats_dist: Dict, st
             axes[1].grid(axis="x", visible=False)
         salvar_fig(fig, "fig_10_spice", formatos, out_dir)
 
-    # FIG 11: Cobertura de tags por quartil de popularidade (com % e n claros)
+    # FIG 11: Cobertura de tags por faixa de popularidade (com % e n claros)
     cob = cobertura_por_popularidade(ob)
     if cob is not None:
         fig, ax = plt.subplots(figsize=(W1 + 1.6, 3.2))
@@ -324,15 +324,15 @@ def gerar_visualizacoes(df: pd.DataFrame, stats_tags: Dict, stats_dist: Dict, st
         annot_cob = (c2 * 100).round(1).astype(str).map(lambda s: s.replace(".", ",") + "%")
         sns.heatmap(c2, annot=annot_cob, fmt="", cmap=CMAP_SEQ, vmin=0, vmax=1, linewidths=0.6, linecolor="white",
                     cbar_kws={"label": "Fração de obras com ≥1 tag"}, ax=ax, annot_kws={"fontsize": 9, "fontweight": "bold"})
-        ax.set_ylabel("Quartil de popularidade")
+        ax.set_ylabel("Faixa de popularidade (leitores)")
         ax.set_xlabel("")
         plt.setp(ax.get_xticklabels(), rotation=25, ha="right")
         salvar_fig(fig, "fig_11_cobertura_popularidade", formatos, out_dir)
 
-    # FIG 12: Conteudo Sensivel Geral e Spice positivo por quartil de popularidade (com % e k/n explicitos)
-    sp = extra.get("spice_por_pop")
-    sn = extra.get("sensivel_por_pop")
-    if (sp is not None and len(sp)) or (sn is not None and len(sn)):
+    # FIG 12 / 12b: Conteudo Sensivel Geral e Spice positivo por faixa de popularidade e por faixa de nota
+    def _fig_prop_por_faixa(sn, sp, xlabel: str, nome: str) -> None:
+        if not ((sp is not None and len(sp)) or (sn is not None and len(sn))):
+            return
         fig, axes = plt.subplots(1, 2, figsize=(W2 + 0.6, 3.4), sharey=True)
         paineis = [
             (axes[0], sn, "k_sensivel_alto", COR_PRIM, "(a) Conteúdo Sensível Geral (alto)"),
@@ -346,7 +346,7 @@ def gerar_visualizacoes(df: pd.DataFrame, stats_tags: Dict, stats_dist: Dict, st
             ax.errorbar(xs, tab["p"], yerr=[tab["p"] - tab["lo"], tab["hi"] - tab["p"]],
                         fmt="o-", color=cor, ecolor="black", capsize=4, markersize=6, lw=1.2)
             ax.set_xticks(xs)
-            ax.set_xticklabels(tab["Quartil"])
+            ax.set_xticklabels(tab["Faixa"])
             for x, (_, row) in enumerate(tab.iterrows()):
                 p_val = float(row["p"])
                 k_val = int(row[col_k])
@@ -356,10 +356,15 @@ def gerar_visualizacoes(df: pd.DataFrame, stats_tags: Dict, stats_dist: Dict, st
                 ax.text(x, y_pos, txt, fontsize=8.5, ha="center", va="bottom", fontweight="bold",
                         bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="none", alpha=0.8))
             ax.set_ylim(-0.02, 1.08)
-            ax.set_xlabel("Quartil de popularidade (leitores)")
+            ax.set_xlabel(xlabel)
             ax.set_title(tit, loc="left", fontsize=10, fontweight="bold")
         axes[0].set_ylabel("Proporção de obras (IC de Wilson 95%)")
-        salvar_fig(fig, "fig_12_spice_vs_popularidade", formatos, out_dir)
+        salvar_fig(fig, nome, formatos, out_dir)
+
+    _fig_prop_por_faixa(extra.get("sensivel_por_pop"), extra.get("spice_por_pop"),
+                        "Faixa de popularidade (nº de leitores)", "fig_12_spice_vs_popularidade")
+    _fig_prop_por_faixa(extra.get("sensivel_por_nota"), extra.get("spice_por_nota"),
+                        "Faixa de nota média (obras com ≥10 avaliações)", "fig_12b_spice_vs_nota")
 
     # FIG 13: Tipo editorial × Sensivel_Label e × Spice_Status
     col_lbl, col_conf, _ = resolver_colunas_rotulo(ob)

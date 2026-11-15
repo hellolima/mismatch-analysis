@@ -37,7 +37,7 @@ if __package__ in (None, ""):
 from pipeline_ptbr import config as C                                 # noqa: E402
 from pipeline_ptbr.dataset import deduplicar_por_obra                 # noqa: E402
 from pipeline_ptbr.lexicon import ORDEM_EIXOS, COLUNA_EIXO, EIXOS     # noqa: E402
-from pipeline_ptbr.eda_stats import wilson_ic                         # noqa: E402
+from pipeline_ptbr.eda_stats import wilson_ic, faixa_popularidade    # noqa: E402
 
 GOLD = Path(C.GOLD_DIR)
 CEGA = GOLD / "anotacao_eixos_cega.csv"
@@ -54,15 +54,14 @@ CAMPOS = [EIXO_CURTO[e] for e in ORDEM_EIXOS] + ["Geral"]
 # Fase 1: gerar planilhas
 # ---------------------------------------------------------------------------
 def _selecionar_obras(ob: pd.DataFrame) -> pd.DataFrame:
-    """Reaproveita os ISBNs da planilha antiga (96 obras estratificadas por quartil), se existir;
-    senao amostra 24 por quartil de popularidade (seed fixo)."""
+    """Reaproveita os ISBNs da planilha antiga (96 obras estratificadas por popularidade), se existir;
+    senao amostra 24 por faixa de popularidade (seed fixo)."""
     if CEGA_ANTIGA.exists():
         antiga = pd.read_csv(CEGA_ANTIGA, dtype={"ISBN_PT": str})
         sel = ob[ob["ISBN_PT"].astype(str).isin(antiga["ISBN_PT"].astype(str))]
         if len(sel) >= 50:
             return sel
-    u = pd.to_numeric(ob["Qtd_Usuarios_Hardcover"], errors="coerce")
-    q = pd.qcut(u.rank(method="first"), 4, labels=["Q1", "Q2", "Q3", "Q4"])
+    q = faixa_popularidade(ob["Qtd_Usuarios_Hardcover"])
     return pd.concat([g.sample(min(24, len(g)), random_state=42) for _, g in ob.groupby(q, observed=True)])
 
 
@@ -72,10 +71,8 @@ def gerar(n_por_metodo: int = 20) -> None:
     rot = pd.read_csv(C.OUT_LIVROS_ROTULADO, dtype={"ISBN_PT": str})
     ob = deduplicar_por_obra(rot).reset_index(drop=True)
     sel = _selecionar_obras(ob).copy()
-    u = pd.to_numeric(ob["Qtd_Usuarios_Hardcover"], errors="coerce")
-    quart = pd.qcut(u.rank(method="first"), 4, labels=["Q1", "Q2", "Q3", "Q4"])
-    sel["Q"] = quart.loc[sel.index].astype(str)
-    sel = sel.sample(frac=1.0, random_state=7)          # embaralha para o anotador nao ver blocos por quartil
+    sel["Q"] = faixa_popularidade(ob["Qtd_Usuarios_Hardcover"]).loc[sel.index].astype(str)
+    sel = sel.sample(frac=1.0, random_state=7)          # embaralha para o anotador nao ver blocos por faixa
 
     # Planilha CEGA: contexto para julgar + colunas de resposta. SEM rotulo, SEM V_*, SEM Flag_*.
     ctx_cols = ["ISBN_PT", "Titulo_PT", "Autor_PT", "Editora_PT", "Sinopse_PT",

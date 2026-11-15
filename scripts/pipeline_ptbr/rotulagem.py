@@ -389,10 +389,10 @@ def resumo(d: pd.DataFrame, pop_pct: float) -> None:
             f.write("SANIDADE POR ESTRATO (face validity; NÃO é voto: estratos foram critério de amostragem)\n")
             e = ob.assign(Estrato=ob["Estratos_Origem"].fillna("(fora_das_autoras)").str.split(r" \| ")).explode("Estrato")
             f.write(pd.crosstab(e["Estrato"], e["Sensivel_Label"]).to_string() + "\n\n")
-        q = pd.qcut(ob["_users"].rank(method="first"), 4, labels=["Q1", "Q2", "Q3", "Q4"]) if ob["_users"].notna().sum() >= 8 else None
-        if q is not None:
-            f.write("RÓTULO x QUARTIL DE POPULARIDADE\n")
-            f.write(pd.crosstab(q, ob["Sensivel_Label"]).to_string() + "\n\n")
+        if ob["_users"].notna().sum() >= 8:
+            from pipeline_ptbr.eda_stats import faixa_popularidade
+            f.write("RÓTULO x FAIXA DE POPULARIDADE (nº de leitores; cortes fixos)\n")
+            f.write(pd.crosstab(faixa_popularidade(ob["_users"]), ob["Sensivel_Label"]).to_string() + "\n\n")
 
     conf = ob[ob["Sensivel_Label_Confianca"] == "conflito"]
     cols = [c for c in ("ISBN_PT", "Titulo_PT", "Autor_PT", "V_tags", "V_vocab", "V_sinopse", "V_maturity", "V_cw",

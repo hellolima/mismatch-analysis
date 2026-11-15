@@ -1,7 +1,7 @@
 ==========================================================================================
 ANÁLISE EXPLORATÓRIA DE DADOS (EDA)
 Dataset: PT-BR Consolidado (v3.2)
-Gerado em: 2026-11-01 19:32:31
+Gerado em: 2026-11-15 21:35:06
 ==========================================================================================
 
 FILTRO TEMPORAL E DE ESCOPO
@@ -159,26 +159,39 @@ EIXO SEXUAL / SPICE TRI-ESTADO (por obra). 'sem_sinal' = DESCONHECIDO, não é a
     min_count>=1: {'sem_sinal': 225, 'positivo': 27}
     min_count>=2: {'sem_sinal': 251, 'positivo': 1}
     min_count>=3: {'sem_sinal': 252}
-  Cobertura de tags por quartil de popularidade (queda nos quartis baixos = faltante NÃO aleatório):
-                      Generos_Hardcover  Moods_Hardcover  Tags_Gerais_Hardcover  Content_Warnings
-    Pop_Quartil                                                                                  
-    Q1 (menos lidas)              0.302            0.032                  0.032             0.016
-    Q2                            0.794            0.349                  0.365             0.048
-    Q3                            0.952            0.905                  0.937             0.270
-    Q4 (mais lidas)               1.000            1.000                  1.000             0.683
+  Cobertura de tags por faixa de popularidade (nº de leitores; queda nas faixas baixas = faltante NÃO aleatório):
+               Generos_Hardcover  Moods_Hardcover  Tags_Gerais_Hardcover  Content_Warnings
+    Pop_Faixa                                                                             
+    <10                    0.393            0.060                  0.036             0.012
+    10–99                  0.854            0.463                  0.512             0.073
+    100–999                0.970            0.930                  0.960             0.350
+    ≥1000                  1.000            1.000                  1.000             0.926
   Spearman (nº de leitores x nº total de tags): rho=0.914, p=0.0000, n=252
-  Spice positivo por quartil de popularidade (Wilson 95%):
-    Quartil  n  k_positivo     p    lo    hi
-         Q1 63           0 0.000 0.000 0.057
-         Q2 63           3 0.048 0.016 0.131
-         Q3 63          12 0.190 0.112 0.304
-         Q4 63          12 0.190 0.112 0.304
-  Conteúdo Sensível Geral (alto / qualquer eixo) por quartil de popularidade (Wilson 95%):
-    Quartil  n  k_sensivel_alto     p    lo    hi
-         Q1 63                7 0.111 0.055 0.212
-         Q2 63               15 0.238 0.150 0.356
-         Q3 63               34 0.540 0.418 0.657
-         Q4 63               51 0.810 0.696 0.888
+  Spice positivo por faixa de popularidade (Wilson 95%):
+      Faixa   n  k_positivo     p    lo    hi
+        <10  84           1 0.012 0.002 0.064
+      10–99  41           1 0.024 0.004 0.126
+    100–999 100          20 0.200 0.133 0.289
+      ≥1000  27           5 0.185 0.082 0.367
+  Conteúdo Sensível Geral (alto / qualquer eixo) por faixa de popularidade (Wilson 95%):
+      Faixa   n  k_sensivel_alto     p    lo    hi
+        <10  84                9 0.107 0.057 0.191
+      10–99  41               12 0.293 0.176 0.445
+    100–999 100               61 0.610 0.512 0.700
+      ≥1000  27               25 0.926 0.766 0.979
+
+  POR FAIXA DE NOTA (descritivo; nota média do Hardcover, só obras com nº mínimo de avaliações):
+    Exclusões: {'sem_nota': 45, 'nota_com_<10_avaliacoes': 57, 'incluidas': 150}
+  Conteúdo Sensível Geral (alto) por faixa de nota (Wilson 95%):
+       Faixa  n  k_sensivel_alto     p    lo    hi
+        <3,5 20               12 0.600 0.387 0.781
+    3,5–3,99 85               51 0.600 0.494 0.698
+        ≥4,0 45               31 0.689 0.543 0.805
+  Spice positivo por faixa de nota (Wilson 95%):
+       Faixa  n  k_positivo     p    lo    hi
+        <3,5 20           5 0.250 0.112 0.469
+    3,5–3,99 85          14 0.165 0.101 0.258
+        ≥4,0 45           7 0.156 0.077 0.288
 
 RÓTULO TRIANGULADO DE CONTEÚDO SENSÍVEL (Sensivel_Label; rotulagem.py; supervisão fraca; 'indeterminado' = desconhecido)
   Sensivel_Label: {'indeterminado': 128, 'alto': 107, 'provavel_baixo': 17}
@@ -210,7 +223,7 @@ trad                          24        176  200
 trad_nicho                     1          8    9
 
 TERMOS MAIS FREQUENTES (frequência de documento, nível obra; lista completa em outputs/tables/ngrams_*.csv)
-  titulos/unigrama: amor (25), jogo (7), segunda (6), chance (6), coração (6), noiva (4), filme (4), belo (4), dama (3), deus (3)
+  titulos/unigrama: amor (25), jogo (7), chance (6), segunda (6), coração (6), noiva (4), filme (4), belo (4), dama (3), deus (3)
   titulos/bigrama: segunda chance (5), romeu sombrio (1), bispo cruel (1), seis formas (1), adorável café (1), tornou rio (1), desfecho épico (1), romance espirituoso (1), diabo veste (1), veste cor-de-rosa (1)
   sinopses/unigrama: vida (129), amor (119), anos (75), mundo (67), vez (66), família (60), precisa (60), coração (60), fazer (58), tempo (58)
   sinopses/bigrama: conteúdo adulto (33), comédia romântica (23), segunda chance (14), casamento arranjado (11), melhor amigo (11), primeira vez (9), alta sociedade (8), final feliz (8), passam juntos (7), bad boy (7)

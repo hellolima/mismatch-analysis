@@ -114,6 +114,47 @@ def wilson_ic(k: int, n: int, z: float = 1.96) -> Tuple[float, float, float]:
     return p, max(0.0, centro - marg), min(1.0, centro + marg)
 
 
+# ---------------------------------------------------------------------------
+# Faixas de popularidade e de nota (cortes FIXOS, pre-especificados)
+# ---------------------------------------------------------------------------
+# Popularidade = nº de leitores no Hardcover. Cortes por ordem de grandeza (escala log), nao por
+# quantil: 76 obras tem <=2 leitores, entao qualquer quartil exige desempate arbitrario entre obras
+# indistinguiveis. Tamanhos desiguais sao esperados e o IC de Wilson lida com isso.
+POP_CORTES = (0, 10, 100, 1000, np.inf)
+POP_ROTULOS = ("<10", "10–99", "100–999", "≥1000")
+
+# Nota media no Hardcover. Exige minimo de avaliacoes: notas com 1–2 votos sao ruido (todas as
+# obras com nota 5,0 tem 1 voto). Cortes fixos em torno da massa da distribuicao (3,5–4,25).
+NOTA_MIN_AVALIACOES = 10
+NOTA_CORTES = (0, 3.5, 4.0, 5.01)
+NOTA_ROTULOS = ("<3,5", "3,5–3,99", "≥4,0")
+
+
+def faixa_popularidade(usuarios: pd.Series) -> pd.Series:
+    """Categoriza nº de leitores em faixas fixas (NaN permanece NaN)."""
+    u = pd.to_numeric(usuarios, errors="coerce")
+    return pd.cut(u, bins=list(POP_CORTES), right=False, labels=list(POP_ROTULOS))
+
+
+def faixa_nota(nota: pd.Series, n_avaliacoes: pd.Series,
+               min_aval: int = NOTA_MIN_AVALIACOES) -> pd.Series:
+    """Categoriza nota media em faixas fixas; obras com < min_aval avaliacoes ou sem nota ficam NaN."""
+    r = pd.to_numeric(nota, errors="coerce")
+    n = pd.to_numeric(n_avaliacoes, errors="coerce")
+    r = r.where(n >= min_aval)
+    return pd.cut(r, bins=list(NOTA_CORTES), right=False, labels=list(NOTA_ROTULOS))
+
+
+def proporcao_por_grupo(d: pd.DataFrame, grupo: str, positivo: pd.Series, col_k: str) -> pd.DataFrame:
+    """Tabela k/n/p + IC de Wilson de `positivo` por categoria de `grupo` (ordem das categorias)."""
+    linhas = []
+    for g, idx in d.groupby(grupo, observed=True).groups.items():
+        k, n = int(positivo.loc[idx].sum()), len(idx)
+        p, lo, hi = wilson_ic(k, n)
+        linhas.append({"Faixa": str(g), "n": n, col_k: k, "p": p, "lo": lo, "hi": hi})
+    return pd.DataFrame(linhas)
+
+
 def bootstrap_ic_media(x: pd.Series, B: int = 5000, seed: int = SEED) -> Tuple[float, float]:
     """IC bootstrap percentil 95% para a media."""
     arr = x.dropna().to_numpy(dtype=float)
@@ -295,19 +336,18 @@ def cobertura_por_popularidade(ob: pd.DataFrame,
                                cols: Tuple[str, ...] = ("Generos_Hardcover", "Moods_Hardcover",
                                                         "Tags_Gerais_Hardcover", "Content_Warnings")
                                ) -> Optional[pd.DataFrame]:
-    """Taxa de obras com >=1 tag por quartil de popularidade (nº de leitores no Hardcover)."""
+    """Taxa de obras com >=1 tag por faixa de popularidade (nº de leitores no Hardcover)."""
     if col_users not in ob.columns:
         return None
     usuarios = pd.to_numeric(ob[col_users], errors="coerce")
     if usuarios.notna().sum() < 8:
         return None
     d = ob.copy()
-    d["Pop_Quartil"] = pd.qcut(usuarios.rank(method="first"), 4,
-                               labels=["Q1 (menos lidas)", "Q2", "Q3", "Q4 (mais lidas)"])
+    d["Pop_Faixa"] = faixa_popularidade(usuarios)
     usadas = [c for c in cols if c in d.columns]
     for c in usadas:
         d[c] = d[c].fillna("").astype(str).ne("")
-    return d.groupby("Pop_Quartil", observed=True)[usadas].mean().round(3)
+    return d.groupby("Pop_Faixa", observed=True)[usadas].mean().round(3)
 
 
 def sensibilidade_min_count(ob: pd.DataFrame, limiares: Tuple[int, ...] = (1, 2, 3)) -> Optional[Dict[str, Dict]]:
@@ -343,14 +383,7 @@ def analisar_spice_cobertura(df: pd.DataFrame) -> Dict:
             out["spearman_users_ntags"] = (rho, p, int(ok.sum()))
     if u.notna().sum() >= 8:
         d = ob.assign(_u=u).dropna(subset=["_u"]).copy()
-        d["Pop_Quartil"] = pd.qcut(d["_u"].rank(method="first"), 4, labels=["Q1", "Q2", "Q3", "Q4"])
-        if "Spice_Status" in d.columns:
-            linhas = []
-            for q, g in d.groupby("Pop_Quartil", observed=True):
-                k, n = int((g["Spice_Status"] == "positivo").sum()), len(g)
-                p, lo, hi = wilson_ic(k, n)
-                linhas.append({"Quartil": q, "n": n, "k_positivo": k, "p": p, "lo": lo, "hi": hi})
-            out["spice_por_pop"] = pd.DataFrame(linhas)
+        d["Pop_Faixa"] = faixa_popularidade(d["_u"])
 
         # Conteudo sensivel geral (qualquer um dos 4 eixos: sexo, violencia, drogas/alcool, abuso)
         cols_eixos = ("Flag_Eixo_Sexo", "Flag_Eixo_Violencia", "Flag_Eixo_Drogas_Alcool", "Flag_Eixo_Abuso_Gatilhos")
@@ -359,16 +392,28 @@ def analisar_spice_cobertura(df: pd.DataFrame) -> Dict:
             for c in cols_eixos:
                 d[c] = eixos_df[c]
         col_lbl, _, _ = resolver_colunas_rotulo(d)
-        linhas_sens = []
-        for q, g in d.groupby("Pop_Quartil", observed=True):
-            if col_lbl in g.columns:
-                k = int((g[col_lbl] == "alto").sum())
-            else:
-                k = int(g[list(cols_eixos)].any(axis=1).sum())
-            n = len(g)
-            p, lo, hi = wilson_ic(k, n)
-            linhas_sens.append({"Quartil": q, "n": n, "k_sensivel_alto": k, "p": p, "lo": lo, "hi": hi})
-        out["sensivel_por_pop"] = pd.DataFrame(linhas_sens)
+        sens_pos = (d[col_lbl] == "alto") if col_lbl in d.columns else d[list(cols_eixos)].any(axis=1)
+        spice_pos = (d["Spice_Status"] == "positivo") if "Spice_Status" in d.columns else None
+
+        if spice_pos is not None:
+            out["spice_por_pop"] = proporcao_por_grupo(d, "Pop_Faixa", spice_pos, "k_positivo")
+        out["sensivel_por_pop"] = proporcao_por_grupo(d, "Pop_Faixa", sens_pos, "k_sensivel_alto")
+
+        # Por faixa de NOTA (descritivo; pedido do orientador). So obras com >= NOTA_MIN_AVALIACOES votos.
+        if "Avaliacao_Hardcover" in d.columns and "Qtd_Avaliacoes_Hardcover" in d.columns:
+            d["Nota_Faixa"] = faixa_nota(d["Avaliacao_Hardcover"], d["Qtd_Avaliacoes_Hardcover"])
+            n_aval = pd.to_numeric(d["Qtd_Avaliacoes_Hardcover"], errors="coerce")
+            tem_nota = pd.to_numeric(d["Avaliacao_Hardcover"], errors="coerce").notna()
+            out["nota_exclusoes"] = {
+                "sem_nota": int((~tem_nota).sum()),
+                f"nota_com_<{NOTA_MIN_AVALIACOES}_avaliacoes": int((tem_nota & (n_aval < NOTA_MIN_AVALIACOES)).sum()),
+                "incluidas": int(d["Nota_Faixa"].notna().sum()),
+            }
+            dn = d.dropna(subset=["Nota_Faixa"])
+            if len(dn):
+                out["sensivel_por_nota"] = proporcao_por_grupo(dn, "Nota_Faixa", sens_pos.loc[dn.index], "k_sensivel_alto")
+                if spice_pos is not None:
+                    out["spice_por_nota"] = proporcao_por_grupo(dn, "Nota_Faixa", spice_pos.loc[dn.index], "k_positivo")
     return out
 
 
