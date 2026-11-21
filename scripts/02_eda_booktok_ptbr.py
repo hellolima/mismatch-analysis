@@ -28,6 +28,7 @@ from pipeline_ptbr.eda_stats import (                               # noqa: E402
     analisar_categoricas,
     analisar_spice_cobertura,
     calcular_ngramas_corpora,
+    bigramas_sinopse_vs_circularidade,
 )
 from pipeline_ptbr.eda_report import (                              # noqa: E402
     exportar_tabelas_e_auditorias,
@@ -60,6 +61,9 @@ def executar_eda(ano_min: int = C.ANO_MIN_PADRAO,
     stats_cat = analisar_categoricas(df)
     extra = analisar_spice_cobertura(df)
     tab_ngrams, para_plot_wc = calcular_ngramas_corpora(df)
+    tab_bigramas = bigramas_sinopse_vs_circularidade(df)
+    if tab_bigramas is not None:
+        tab_bigramas.to_csv(Path(C.OUT_TABLES) / "bigramas_sinopse_circularidade.csv", index=False, encoding="utf-8")
 
     exportar_tabelas_e_auditorias(df, stats_tags, tab_ngrams, aud_ed)
     gerar_relatorio_eda(df, meta_filtro, stats_tags, stats_dist, extra, tab_ngrams)
@@ -68,11 +72,13 @@ def executar_eda(ano_min: int = C.ANO_MIN_PADRAO,
         from pipeline_ptbr.eda_plots import (
             aplicar_estilo,
             plotar_wordclouds,
+            plotar_bigramas_sinopse,
             gerar_visualizacoes,
         )
         aplicar_estilo()
         fmt_tuple = tuple(formatos)
         plotar_wordclouds(para_plot_wc, fmt_tuple, fig_titulos)
+        plotar_bigramas_sinopse(tab_bigramas, fmt_tuple)
         gerar_visualizacoes(df, stats_tags, stats_dist, stats_cat, extra, fmt_tuple, fig_titulos)
     except ImportError as e:
         log.warning(f"Visualizacoes graficas ignoradas ({e}). Tabelas e eda_report.txt foram gerados com sucesso.")

@@ -1,206 +1,206 @@
 ==========================================================================================
 ANÁLISE EXPLORATÓRIA DE DADOS (EDA)
 Dataset: PT-BR Consolidado (v3.2)
-Gerado em: 2026-11-15 21:35:06
+Gerado em: 2026-11-15 22:47:53
 ==========================================================================================
 
 FILTRO TEMPORAL E DE ESCOPO
 ------------------------------------------------------------------------------------------
 Critério: ano da edição PT-BR >= 2015
-Edições no CSV: 262 | removidas por ano < 2015: 0 | removidas por ano ausente/inparseável: 0 | removidas por formato fora de escopo (mangá/HQ/infantil): 0 | mantidas: 262
+Edições no CSV: 261 | removidas por ano < 2015: 0 | removidas por ano ausente/inparseável: 0 | removidas por formato fora de escopo (mangá/HQ/infantil): 0 | mantidas: 261
 
 VISÃO GERAL DO DATASET (após filtro)
 ------------------------------------------------------------------------------------------
-Total de registros (edições): 262
-Total de obras únicas: 252
-Total de colunas: 94
+Total de registros (edições): 261
+Total de obras únicas: 251
+Total de colunas: 95
 Período temporal (ano da edição PT-BR): 2015-2026
 Cobertura de Editora: 96.9%
 Cobertura de ISBN: 100.0%
 
 RATINGS (por obra)
 ------------------------------------------------------------------------------------------
-  Média: 3.773 | Mediana: 3.800 | DP: 0.602 | Q1-Q3: 3.50-4.00 | Mín-Máx: 1.00-5.00 | N: 207
-  IC bootstrap 95% da média: [3.689, 3.855]
+  Média: 3.777 | Mediana: 3.800 | DP: 0.563 | Q1-Q3: 3.50-4.00 | Mín-Máx: 1.00-5.00 | N: 202
+  IC bootstrap 95% da média: [3.697, 3.854]
 
 QTD DE AVALIAÇÕES (por obra)
 ------------------------------------------------------------------------------------------
-  Média: 158.020 | Mediana: 35.500 | DP: 366.566 | Q1-Q3: 1.00-144.25 | Mín-Máx: 0.00-3456.00 | N: 252
+  Média: 169.586 | Mediana: 41.000 | DP: 390.178 | Q1-Q3: 1.00-155.00 | Mín-Máx: 0.00-3665.00 | N: 251
 
 PÁGINAS (por edição)
 ------------------------------------------------------------------------------------------
-  Média: 407.577 | Mediana: 388.000 | DP: 161.510 | Q1-Q3: 330.00-448.00 | Mín-Máx: 15.00-1294.00 | N: 253
+  Média: 407.528 | Mediana: 387.000 | DP: 161.829 | Q1-Q3: 329.75-448.00 | Mín-Máx: 15.00-1294.00 | N: 252
 
 ANÁLISE DE TAGS E METADADOS
 ------------------------------------------------------------------------------------------
 
   GENEROS
-    Tags únicas: 218
-    Total de tags: 841
-    Registros com tag: 192/252 obras (76.2%)
+    Tags únicas: 227
+    Total de tags: 875
+    Registros com tag: 196/251 obras (78.1%)
     Top 10:
-       1. romance                                  117 ( 13.9%)
-       2. young adult                               74 (  8.8%)
-       3. fantasy                                   67 (  8.0%)
-       4. contemporary                              33 (  3.9%)
-       5. lgbtq                                     25 (  3.0%)
-       6. fiction                                   25 (  3.0%)
-       7. adventure                                 24 (  2.9%)
-       8. young adult fiction                       19 (  2.3%)
-       9. romantic comedy                           14 (  1.7%)
-      10. science fiction & fantasy                 14 (  1.7%)
+       1. romance                                  126 ( 14.4%)
+       2. young adult                               78 (  8.9%)
+       3. fantasy                                   73 (  8.3%)
+       4. contemporary                              35 (  4.0%)
+       5. adventure                                 27 (  3.1%)
+       6. lgbtq                                     24 (  2.7%)
+       7. young adult fiction                       18 (  2.1%)
+       8. romantic comedy                           14 (  1.6%)
+       9. science fiction                           13 (  1.5%)
+      10. science fiction & fantasy                 13 (  1.5%)
 
   MOODS
     Tags únicas: 32
-    Total de tags: 1017
-    Registros com tag: 144/252 obras (57.1%)
+    Total de tags: 1044
+    Registros com tag: 145/251 obras (57.8%)
     Top 10:
-       1. emotional                                127 ( 12.5%)
-       2. funny                                    110 ( 10.8%)
-       3. hopeful                                   92 (  9.0%)
-       4. lighthearted                              91 (  8.9%)
-       5. adventurous                               83 (  8.2%)
-       6. reflective                                81 (  8.0%)
-       7. tense                                     70 (  6.9%)
-       8. inspiring                                 68 (  6.7%)
-       9. sad                                       59 (  5.8%)
-      10. relaxing                                  54 (  5.3%)
+       1. emotional                                131 ( 12.5%)
+       2. funny                                    110 ( 10.5%)
+       3. hopeful                                   96 (  9.2%)
+       4. lighthearted                              91 (  8.7%)
+       5. adventurous                               86 (  8.2%)
+       6. reflective                                84 (  8.0%)
+       7. tense                                     72 (  6.9%)
+       8. inspiring                                 70 (  6.7%)
+       9. sad                                       61 (  5.8%)
+      10. relaxing                                  56 (  5.4%)
 
   TAGS_GERAIS
-    Tags únicas: 131
-    Total de tags: 243
-    Registros com tag: 94/252 obras (37.3%)
+    Tags únicas: 155
+    Total de tags: 289
+    Registros com tag: 124/251 obras (49.4%)
     Top 10:
-       1. enemies to lovers                         15 (  6.2%)
-       2. childfree                                  9 (  3.7%)
-       3. forced proximity                           7 (  2.9%)
-       4. friends to lovers                          7 (  2.9%)
-       5. audiobook                                  5 (  2.1%)
-       6. 4 peppers                                  5 (  2.1%)
-       7. fake relationship                          5 (  2.1%)
-       8. small town                                 5 (  2.1%)
-       9. angst                                      5 (  2.1%)
-      10. dual pov                                   4 (  1.6%)
+       1. enemies to lovers                         11 (  3.8%)
+       2. forced proximity                           8 (  2.8%)
+       3. childfree                                  8 (  2.8%)
+       4. spicy (open door)                          5 (  1.7%)
+       5. lighthearted                               5 (  1.7%)
+       6. fake relationship                          5 (  1.7%)
+       7. 2023 release; 2020s; modern discovery; goodreads 2020-2025 collection; romance   5 (  1.7%)
+       8. small town                                 5 (  1.7%)
+       9. friends to lovers                          5 (  1.7%)
+      10. audiobook                                  4 (  1.4%)
 
   TAGS_ESTRUTURADAS
     Tags únicas: 9
-    Total de tags: 934
-    Registros com tag: 138/252 obras (54.8%)
+    Total de tags: 948
+    Registros com tag: 138/251 obras (55.0%)
     Top 10:
-       1. strong character development             126 ( 13.5%)
-       2. loveable characters                      122 ( 13.1%)
-       3. a mix driven                             114 ( 12.2%)
-       4. character driven                         112 ( 12.0%)
-       5. diverse characters                       110 ( 11.8%)
-       6. not diverse characters                   106 ( 11.3%)
-       7. weak character development                98 ( 10.5%)
-       8. unloveable characters                     89 (  9.5%)
-       9. plot driven                               57 (  6.1%)
+       1. strong character development             127 ( 13.4%)
+       2. loveable characters                      124 ( 13.1%)
+       3. character driven                         116 ( 12.2%)
+       4. a mix driven                             114 ( 12.0%)
+       5. not diverse characters                   110 ( 11.6%)
+       6. diverse characters                       109 ( 11.5%)
+       7. weak character development                98 ( 10.3%)
+       8. unloveable characters                     92 (  9.7%)
+       9. plot driven                               58 (  6.1%)
 
   CONTENT_WARNINGS
-    Tags únicas: 97
-    Total de tags: 422
-    Registros com tag: 64/252 obras (25.4%)
+    Tags únicas: 104
+    Total de tags: 441
+    Registros com tag: 65/251 obras (25.9%)
     Top 10:
-       1. sexual content                            43 ( 10.2%)
-       2. violence                                  26 (  6.2%)
-       3. death                                     20 (  4.7%)
-       4. death of parent                           19 (  4.5%)
-       5. grief                                     15 (  3.6%)
-       6. injury/injury detail                      13 (  3.1%)
-       7. murder                                    12 (  2.8%)
-       8. alcohol                                   11 (  2.6%)
-       9. abandonment                                9 (  2.1%)
-      10. medical content                            9 (  2.1%)
+       1. sexual content                            44 ( 10.0%)
+       2. violence                                  25 (  5.7%)
+       3. death                                     22 (  5.0%)
+       4. death of parent                           18 (  4.1%)
+       5. murder                                    14 (  3.2%)
+       6. grief                                     14 (  3.2%)
+       7. injury/injury detail                      13 (  2.9%)
+       8. alcohol                                   11 (  2.5%)
+       9. abandonment                               10 (  2.3%)
+      10. blood                                     10 (  2.3%)
 
 ==========================================================================================
 
 SEÇÃO v3: UNIDADES, PONTE E SINAIS DE CONTEÚDO SENSÍVEL (SEXO, DROGAS/ÁLCOOL, VIOLÊNCIA, ABUSO)
 ------------------------------------------------------------------------------------------
-Edições (ISBN): 262 | Obras únicas: 252
-Metodo_Ponte: {'catalogo_autora': 147, 'isbn13_edicao': 109, 'busca_titulo_autor': 6}
-E_Ebook: {True: 249, False: 13}
-Tipo_Editorial_Editora: {'trad': 209, 'desconhecido': 35, 'trad_nicho': 9, nan: 8, 'selfpub': 1}
-Revisar_Ponte (entra na auditoria Gold Standard): 154
-Estratos de origem (quadro amostral proposital): {'(fora_das_autoras)': 93, 'romcom': 48, 'new_adult': 23, 'controle_wf': 21, 'romantasia': 20, 'esportivo': 16, 'contemporaneo': 10, 'controle_ya': 9, 'nacional': 7, 'indie_cauda': 6, 'dark': 5, 'controle_fantasia': 4}
-Origens (país da autora no seed): {'EN': 155, '(fora_das_autoras)': 93, 'BR': 14}
-Tipos de origem (canal do seed; base da sensibilidade sem 'termo:conteudo'): {'autora': 141, 'termo:tropo': 46, 'termo:conteudo': 40, 'termo:genero': 35, 'termo:booktok': 19}
+Edições (ISBN): 261 | Obras únicas: 251
+Metodo_Ponte: {'catalogo_autora': 146, 'isbn13_edicao': 109, 'busca_titulo_autor': 6}
+E_Ebook: {True: 248, False: 13}
+Tipo_Editorial_Editora: {'trad': 208, 'desconhecido': 35, 'trad_nicho': 9, nan: 8, 'selfpub': 1}
+Revisar_Ponte (entra na auditoria Gold Standard): 153
+Estratos de origem (quadro amostral proposital): {'(fora_das_autoras)': 93, 'romcom': 48, 'new_adult': 23, 'controle_wf': 21, 'romantasia': 20, 'esportivo': 16, 'contemporaneo': 10, 'controle_ya': 8, 'nacional': 7, 'indie_cauda': 6, 'dark': 5, 'controle_fantasia': 4}
+Origens (país da autora no seed): {'EN': 154, '(fora_das_autoras)': 93, 'BR': 14}
+Tipos de origem (canal do seed; base da sensibilidade sem 'termo:conteudo'): {'autora': 141, 'termo:tropo': 45, 'termo:conteudo': 40, 'termo:genero': 35, 'termo:booktok': 19}
 
 Editoras: 49 grafias brutas -> 42 chaves canônicas
 Editoras 'desconhecido' mais frequentes: {'valentina': 4, 'plataforma21': 4, 'morro branco': 3, 'astral cultural': 3, 'hr': 2, 'jangada': 2, 'novo seculo': 2, 'thomas nelson': 1, 'saida de emergencia': 1, 'perspectiva': 1, 'livros da alice': 1, 'viseu': 1, 'senac sao paulo': 1, 'darkside entretenimento': 1, 'hoo': 1}
 
 Flags e Eixos de Conteúdo Sensível por obra (proporção com IC de Wilson 95%):
-  Flag_Romance                  120/252 =  47.6%  [41.5, 53.8]
-  Flag_New_Adult                  1/252 =   0.4%  [0.1, 2.2]
-  Flag_Spice_Tag                 18/252 =   7.1%  [4.6, 11.0]
-  Flag_CW_Sexual_Content         47/252 =  18.7%  [14.3, 23.9]
-  Flag_CW_Violencia              32/252 =  12.7%  [9.1, 17.4]
-  Flag_CW_Drogas_Alcool          15/252 =   6.0%  [3.6, 9.6]
-  Flag_CW_Abuso_Gatilhos         38/252 =  15.1%  [11.2, 20.0]
-  Flag_Has_CW                    59/252 =  23.4%  [18.6, 29.0]
-  Flag_Closed_Door_Tag            0/252 =   0.0%  [0.0, 1.5]
-  Flag_Formato_Excluir            0/252 =   0.0%  [0.0, 1.5]
-  Flag_Eixo_Sexo                 83/252 =  32.9%  [27.4, 39.0]
-  Flag_Eixo_Violencia            38/252 =  15.1%  [11.2, 20.0]
-  Flag_Eixo_Drogas_Alcool        18/252 =   7.1%  [4.6, 11.0]
-  Flag_Eixo_Abuso_Gatilhos       39/252 =  15.5%  [11.5, 20.5]
-  Flag_Qualquer_Eixo_Sensivel    98/252 =  38.9%  [33.1, 45.0]
+  Flag_Romance                  129/251 =  51.4%  [45.2, 57.5]
+  Flag_New_Adult                  3/251 =   1.2%  [0.4, 3.5]
+  Flag_Spice_Tag                 19/251 =   7.6%  [4.9, 11.5]
+  Flag_CW_Sexual_Content         47/251 =  18.7%  [14.4, 24.0]
+  Flag_CW_Violencia              32/251 =  12.7%  [9.2, 17.4]
+  Flag_CW_Drogas_Alcool          14/251 =   5.6%  [3.4, 9.1]
+  Flag_CW_Abuso_Gatilhos         37/251 =  14.7%  [10.9, 19.7]
+  Flag_Has_CW                    59/251 =  23.5%  [18.7, 29.1]
+  Flag_Closed_Door_Tag            0/251 =   0.0%  [0.0, 1.5]
+  Flag_Formato_Excluir            0/251 =   0.0%  [0.0, 1.5]
+  Flag_Eixo_Sexo                 87/251 =  34.7%  [29.0, 40.7]
+  Flag_Eixo_Violencia            38/251 =  15.1%  [11.2, 20.1]
+  Flag_Eixo_Drogas_Alcool        17/251 =   6.8%  [4.3, 10.6]
+  Flag_Eixo_Abuso_Gatilhos       38/251 =  15.1%  [11.2, 20.1]
+  Flag_Qualquer_Eixo_Sensivel   102/251 =  40.6%  [34.7, 46.8]
 
 EIXO SEXUAL / SPICE TRI-ESTADO (por obra). 'sem_sinal' = DESCONHECIDO, não é ausência de conteúdo:
-  Spice_Status: {'sem_sinal': 225, 'positivo': 27}
-  Spice positivo: 27/252 = 10.7% [IC Wilson 95%: 7.5, 15.1]
-  Spice_Nivel (0 fechado, 1 sensual, 2 cena aberta, 3 explícito): {2: 10, 3: 17, 'sem_sinal': 225}
+  Spice_Status: {'sem_sinal': 228, 'positivo': 23}
+  Spice positivo: 23/251 = 9.2% [IC Wilson 95%: 6.2, 13.4]
+  Spice_Nivel (0 fechado, 1 sensual, 2 cena aberta, 3 explícito): {2: 12, 3: 11, 'sem_sinal': 228}
   Flag_Spice_Tag (antigo) x Spice_Status (novo):
     Spice_Status    positivo  sem_sinal
     Flag_Spice_Tag                     
-    False                  9        225
-    True                  18          0
+    False                  4        228
+    True                  19          0
   Sensibilidade ao limiar mínimo de votos por tag:
-    min_count>=1: {'sem_sinal': 225, 'positivo': 27}
-    min_count>=2: {'sem_sinal': 251, 'positivo': 1}
-    min_count>=3: {'sem_sinal': 252}
+    min_count>=1: {'sem_sinal': 228, 'positivo': 23}
+    min_count>=2: {'sem_sinal': 250, 'positivo': 1}
+    min_count>=3: {'sem_sinal': 251}
   Cobertura de tags por faixa de popularidade (nº de leitores; queda nas faixas baixas = faltante NÃO aleatório):
                Generos_Hardcover  Moods_Hardcover  Tags_Gerais_Hardcover  Content_Warnings
     Pop_Faixa                                                                             
-    <10                    0.393            0.060                  0.036             0.012
-    10–99                  0.854            0.463                  0.512             0.073
-    100–999                0.970            0.930                  0.960             0.350
-    ≥1000                  1.000            1.000                  1.000             0.926
-  Spearman (nº de leitores x nº total de tags): rho=0.914, p=0.0000, n=252
+    <10                    0.398            0.060                  0.048             0.012
+    10–99                  0.897            0.436                  0.487             0.077
+    100–999                0.990            0.940                  1.000             0.350
+    ≥1000                  1.000            1.000                  1.000             0.897
+  Spearman (nº de leitores x nº total de tags): rho=0.922, p=0.0000, n=251
   Spice positivo por faixa de popularidade (Wilson 95%):
       Faixa   n  k_positivo     p    lo    hi
-        <10  84           1 0.012 0.002 0.064
-      10–99  41           1 0.024 0.004 0.126
-    100–999 100          20 0.200 0.133 0.289
-      ≥1000  27           5 0.185 0.082 0.367
+        <10  83           1 0.012 0.002 0.065
+      10–99  39           2 0.051 0.014 0.169
+    100–999 100          17 0.170 0.109 0.255
+      ≥1000  29           3 0.103 0.036 0.264
   Conteúdo Sensível Geral (alto / qualquer eixo) por faixa de popularidade (Wilson 95%):
       Faixa   n  k_sensivel_alto     p    lo    hi
-        <10  84                9 0.107 0.057 0.191
-      10–99  41               12 0.293 0.176 0.445
-    100–999 100               61 0.610 0.512 0.700
-      ≥1000  27               25 0.926 0.766 0.979
+        <10  83                9 0.108 0.058 0.193
+      10–99  39               12 0.308 0.186 0.464
+    100–999 100               63 0.630 0.532 0.718
+      ≥1000  29               26 0.897 0.736 0.964
 
   POR FAIXA DE NOTA (descritivo; nota média do Hardcover, só obras com nº mínimo de avaliações):
-    Exclusões: {'sem_nota': 45, 'nota_com_<10_avaliacoes': 57, 'incluidas': 150}
+    Exclusões: {'sem_nota': 49, 'nota_com_<10_avaliacoes': 53, 'incluidas': 149}
   Conteúdo Sensível Geral (alto) por faixa de nota (Wilson 95%):
        Faixa  n  k_sensivel_alto     p    lo    hi
-        <3,5 20               12 0.600 0.387 0.781
-    3,5–3,99 85               51 0.600 0.494 0.698
-        ≥4,0 45               31 0.689 0.543 0.805
+        <3,5 22               15 0.682 0.473 0.836
+    3,5–3,99 85               52 0.612 0.505 0.708
+        ≥4,0 42               30 0.714 0.564 0.828
   Spice positivo por faixa de nota (Wilson 95%):
        Faixa  n  k_positivo     p    lo    hi
-        <3,5 20           5 0.250 0.112 0.469
-    3,5–3,99 85          14 0.165 0.101 0.258
-        ≥4,0 45           7 0.156 0.077 0.288
+        <3,5 22           5 0.227 0.101 0.434
+    3,5–3,99 85          12 0.141 0.083 0.231
+        ≥4,0 42           5 0.119 0.052 0.250
 
 RÓTULO TRIANGULADO DE CONTEÚDO SENSÍVEL (Sensivel_Label; rotulagem.py; supervisão fraca; 'indeterminado' = desconhecido)
-  Sensivel_Label: {'indeterminado': 128, 'alto': 107, 'provavel_baixo': 17}
+  Sensivel_Label: {'indeterminado': 125, 'alto': 110, 'provavel_baixo': 16}
   Rótulo x confiança:
     Sensivel_Label_Confianca  circular  forte  fraca  nao_validado  sem_evidencia
     Sensivel_Label                                                               
-    alto                             0     66     41             0              0
-    indeterminado                    8      0      0             0            120
-    provavel_baixo                   0      0      0            17              0
+    alto                             0     67     43             0              0
+    indeterminado                    8      0      0             0            117
+    provavel_baixo                   0      0      0            16              0
   Obras em conflito entre fontes (revisão manual): 0
 
 Associação DESCRITIVA (não causal; amostra proposital, não representa o mercado):
@@ -210,8 +210,8 @@ Tipo_Editorial_Editora
 NA                          7     1    8
 desconhecido               34     1   35
 selfpub                     1     0    1
-trad                      194    15  209
-trad_nicho                  8     1    9
+trad                      191    17  208
+trad_nicho                  9     0    9
 
 Contagem de OBRAS por Spice_Status e tipo editorial (tipo da 1ª edição; 1 obra(s) com tipos mistos):
 Spice_Status            positivo  sem_sinal    n
@@ -219,11 +219,11 @@ Tipo_Editorial_Editora
 NA                             1          6    7
 desconhecido                   1         34   35
 selfpub                        0          1    1
-trad                          24        176  200
-trad_nicho                     1          8    9
+trad                          21        178  199
+trad_nicho                     0          9    9
 
 TERMOS MAIS FREQUENTES (frequência de documento, nível obra; lista completa em outputs/tables/ngrams_*.csv)
-  titulos/unigrama: amor (25), jogo (7), chance (6), segunda (6), coração (6), noiva (4), filme (4), belo (4), dama (3), deus (3)
-  titulos/bigrama: segunda chance (5), romeu sombrio (1), bispo cruel (1), seis formas (1), adorável café (1), tornou rio (1), desfecho épico (1), romance espirituoso (1), diabo veste (1), veste cor-de-rosa (1)
-  sinopses/unigrama: vida (129), amor (119), anos (75), mundo (67), vez (66), família (60), precisa (60), coração (60), fazer (58), tempo (58)
+  titulos/unigrama: amor (25), jogo (7), segunda (6), chance (6), coração (6), noiva (4), filme (4), belo (4), dama (3), deus (3)
+  titulos/bigrama: segunda chance (5), romeu sombrio (1), bispo cruel (1), seis formas (1), adorável café (1), tornou rio (1), desfecho épico (1), romance espirituoso (1), veste cor-de-rosa (1), diabo veste (1)
+  sinopses/unigrama: vida (129), amor (118), anos (75), mundo (66), vez (65), coração (60), precisa (60), família (59), fazer (58), faz (58)
   sinopses/bigrama: conteúdo adulto (33), comédia romântica (23), segunda chance (14), casamento arranjado (11), melhor amigo (11), primeira vez (9), alta sociedade (8), final feliz (8), passam juntos (7), bad boy (7)

@@ -125,7 +125,7 @@ A discrepância entre apresentação e conteúdo foi estudada em vídeos (\emph{
 \label{sec:metodo}
 
 \subsection{A ideia em uma figura}
-A Figura~\ref{fig:pipeline} resume o processo. Partimos de listas de busca (autoras, termos, editoras, títulos), consultamos o Google Books para obter edições brasileiras com sinopse e capa, ligamos cada edição à obra correspondente no Hardcover --- uma plataforma de leitores com API aberta --- para obter as etiquetas e alertas, e combinamos tudo em um rótulo por obra. Em paralelo, baixamos e validamos as capas para uso futuro. Cada etapa pode ser interrompida e retomada sem perder trabalho, o que importa porque as APIs têm limites diários de consulta.
+A Figura~\ref{fig:pipeline} resume o processo. Partimos de listas de busca (autoras, termos, editoras, títulos), consultamos o Google Books para obter edições brasileiras com sinopse e capa, ligamos cada edição à obra correspondente no Hardcover --- uma plataforma de leitores com API aberta --- para obter as etiquetas e alertas, e combinamos tudo em um rótulo por obra. Em paralelo, baixamos e validamos as capas para uso futuro. Cada etapa pode ser interrompida e retomada sem perder trabalho, o que importa porque as APIs têm limites diários de consulta. Os dados do Hardcover usados em todas as análises deste texto foram coletados em \textbf{15 de novembro de 2026}; como contagens, etiquetas e alertas mudam continuamente, cada coleta é guardada como um instantâneo datado, e uma coleta anterior (1º de novembro) é usada na Seção~\ref{sec:res-mnar} para medir quanto a informação muda em duas semanas.
 
 \begin{figure}[H]
 \centering
@@ -217,7 +217,7 @@ Um rótulo automático precisa ser testado. Fazemos isso de duas maneiras. A pri
 \label{sec:res-funil}
 Das 646 edições coletadas, conseguimos ligar 291 (45\%) a uma obra no Hardcover (Figura~\ref{fig:funil}). O número parece baixo, mas o padrão da perda é mais revelador que a perda em si: três em cada quatro edições encontradas pelo nome da autora foram ligadas, contra apenas uma em cada quatro das encontradas por termos de conteúdo. Em outras palavras, os livros mais explícitos do catálogo brasileiro --- frequentemente de autoras nacionais ou autopublicados --- são justamente os que menos existem na plataforma internacional. Isso tem uma consequência direta: a base final tende a conter mais autoras estrangeiras traduzidas por editoras grandes, e menos do que há de mais ``de nicho'' no mercado nacional. Qualquer conclusão sobre ``o mercado brasileiro'' deve ser lida com essa ressalva.
 
-Após excluir edições anteriores a 2015 e agrupar reedições da mesma obra, a base final tem \textbf{252 obras} em 262 edições, publicadas por 49 editoras.
+Após excluir edições anteriores a 2015 e agrupar reedições da mesma obra, a base final tem \textbf{251 obras} em 261 edições, publicadas por 49 editoras.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_16_funil.pdf}
@@ -227,9 +227,11 @@ Após excluir edições anteriores a 2015 e agrupar reedições da mesma obra, a
 
 \subsection{A informação dos leitores depende da popularidade}
 \label{sec:res-mnar}
-Este é, talvez, o resultado que mais condiciona tudo o mais. Dividimos as obras em quatro faixas fixas pelo número de leitores que as registraram no Hardcover --- menos de 10; de 10 a 99; de 100 a 999; 1\,000 ou mais (84, 41, 100 e 27 obras, respectivamente) --- e contamos quantas têm algum alerta de conteúdo. Na faixa menos lida, praticamente nenhuma (1,2\%). Na mais lida, quase todas (93\%). Os cortes seguem ordens de grandeza, e não quartis, por uma razão prática: 76 obras têm no máximo dois leitores, de modo que qualquer divisão em grupos de tamanho igual separaria arbitrariamente livros indistinguíveis em popularidade. A Figura~\ref{fig:cobertura} mostra o mesmo padrão para todos os tipos de etiqueta, e a correlação entre número de leitores e quantidade de etiquetas é altíssima ($\rho = 0{,}91$).
+Este é, talvez, o resultado que mais condiciona tudo o mais. Dividimos as obras em quatro faixas fixas pelo número de leitores que as registraram no Hardcover --- menos de 10; de 10 a 99; de 100 a 999; 1\,000 ou mais (83, 39, 100 e 29 obras, respectivamente) --- e contamos quantas têm algum alerta de conteúdo. Na faixa menos lida, praticamente nenhuma (1,2\%). Na mais lida, quase todas (90\%). Os cortes seguem ordens de grandeza, e não quartis, por uma razão prática: 67 obras têm no máximo dois leitores, de modo que qualquer divisão em grupos de tamanho igual separaria arbitrariamente livros indistinguíveis em popularidade. A Figura~\ref{fig:cobertura} mostra o mesmo padrão para todos os tipos de etiqueta, e a correlação entre número de leitores e quantidade de etiquetas é altíssima ($\rho = 0{,}92$).
 
 O que isso significa na prática: se um livro pouco lido não tem alerta de violência, não sabemos se é porque não há violência ou porque ninguém o marcou. É exatamente a situação de dado faltante não aleatório descrita na Seção~\ref{sec:fund}, e é a razão pela qual nosso rótulo admite ``indeterminado'' em vez de forçar uma resposta.
+
+Temos também uma evidência direta de que essa informação está em movimento. Comparando duas coletas das mesmas 281 obras, separadas por catorze dias (1º e 15 de novembro de 2026), 197 ganharam leitores, 114 ganharam etiquetas e 11 ganharam alertas de conteúdo --- uma delas saindo de nenhum alerta para algum. E o crescimento acompanha a popularidade: na faixa com menos de dez leitores, a mediana de novos leitores foi zero; na faixa com mil ou mais, foi 159. Em duas semanas, o livro invisível continuou invisível e o livro popular acumulou ainda mais informação. ``Sem alerta'' é, portanto, um estado transitório, e a sua probabilidade de persistir depende de quão pouco lido o livro é.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.8\textwidth]{fig_11_cobertura_popularidade.pdf}
@@ -239,17 +241,17 @@ O que isso significa na prática: se um livro pouco lido não tem alerta de viol
 
 \subsection{O que o rótulo diz sobre as 252 obras}
 \label{sec:res-rotulo}
-Pouco mais de quatro em cada dez obras (107, ou 42\%) receberam o rótulo \emph{alto} --- 66 com evidência forte e 41 com evidência fraca. Dezessete (7\%) foram classificadas como \emph{provavelmente baixo}. E metade (128, ou 51\%) ficou \emph{indeterminada} (Figura~\ref{fig:label}). Esse último número não é uma falha do método; é o método funcionando. Os indeterminados concentram-se nos grupos menos lidos (104 dos 128 estão na metade menos popular), exatamente onde faltam etiquetas.
+Pouco mais de quatro em cada dez obras (110, ou 44\%) receberam o rótulo \emph{alto} --- 67 com evidência forte e 43 com evidência fraca. Dezesseis (6\%) foram classificadas como \emph{provavelmente baixo}. E metade (125, ou 50\%) ficou \emph{indeterminada} (Figura~\ref{fig:label}). Esse último número não é uma falha do método; é o método funcionando. Os indeterminados concentram-se nos grupos menos lidos (104 dos 128 estão na metade menos popular), exatamente onde faltam etiquetas.
 
 Um dado chama a atenção: \textbf{nenhuma obra recebeu o rótulo ``baixo''}. Etiquetas que indicariam explicitamente um livro leve (\emph{closed door}, \emph{clean romance}) simplesmente não ocorrem na amostra. Isso revela algo sobre a cultura das plataformas --- leitores avisam sobre o que há, não sobre o que não há --- e tem uma implicação metodológica que discutimos na Seção~\ref{sec:discussao}: nosso rótulo detecta presença de sinal, nunca ausência de conteúdo.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.85\textwidth]{fig_14_spice_label.pdf}
-\caption{Distribuição do rótulo nas 252 obras, por grau de confiança.}
+\caption{Distribuição do rótulo nas 251 obras, por grau de confiança.}
 \label{fig:label}
 \end{figure}
 
-A proporção de obras \emph{alto} sobe de 11\% na faixa menos lida para 93\% na mais lida (Figura~\ref{fig:pop}). Seria tentador concluir que livros populares são mais explícitos. Parte disso pode ser verdade, mas parte é apenas o efeito da Seção~\ref{sec:res-mnar}: nos livros populares, o conteúdo sensível é \emph{visível}; nos demais, pode existir sem ser registrado. Separar os dois efeitos exigirá a validação humana.
+A proporção de obras \emph{alto} sobe de 11\% na faixa menos lida para 90\% na mais lida (Figura~\ref{fig:pop}). Seria tentador concluir que livros populares são mais explícitos. Parte disso pode ser verdade, mas parte é apenas o efeito da Seção~\ref{sec:res-mnar}: nos livros populares, o conteúdo sensível é \emph{visível}; nos demais, pode existir sem ser registrado. Separar os dois efeitos exigirá a validação humana.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_12_spice_vs_popularidade.pdf}
@@ -257,16 +259,16 @@ A proporção de obras \emph{alto} sobe de 11\% na faixa menos lida para 93\% na
 \label{fig:pop}
 \end{figure}
 
-A nota média atribuída pelos leitores, por outro lado, não distingue as obras (Figura~\ref{fig:nota}). Restringindo a análise às 150 obras com ao menos dez avaliações --- notas com um ou dois votos são ruído: todas as treze obras com média 5,0 têm um único voto --- a proporção de rótulo \emph{alto} fica entre 60\% e 69\% nas três faixas de nota, com intervalos amplamente sobrepostos. O mesmo vale para o sinal erótico. Registramos o resultado por ser descritivo e porque a nota é uma variável óbvia a se perguntar; mas ele não autoriza nenhuma leitura causal, e a restrição a obras bem avaliadas em número torna essa subamostra, por construção, mais popular que o conjunto.
+A nota média atribuída pelos leitores, por outro lado, não distingue as obras (Figura~\ref{fig:nota}). Restringindo a análise às 149 obras com ao menos dez avaliações --- notas com um ou dois votos são ruído: todas as dez obras com média 5,0 têm no máximo três votos --- a proporção de rótulo \emph{alto} fica entre 61\% e 71\% nas três faixas de nota, com intervalos amplamente sobrepostos. O mesmo vale para o sinal erótico. Registramos o resultado por ser descritivo e porque a nota é uma variável óbvia a se perguntar; mas ele não autoriza nenhuma leitura causal, e a restrição a obras bem avaliadas em número torna essa subamostra, por construção, mais popular que o conjunto.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_12b_spice_vs_nota.pdf}
-\caption{Proporção de obras com rótulo \emph{alto} (a) e com sinal erótico explícito (b), por faixa de nota média no Hardcover, apenas entre as 150 obras com dez ou mais avaliações. As barras verticais indicam a incerteza estatística (IC de Wilson, 95\%).}
+\caption{Proporção de obras com rótulo \emph{alto} (a) e com sinal erótico explícito (b), por faixa de nota média no Hardcover, apenas entre as 149 obras com dez ou mais avaliações. As barras verticais indicam a incerteza estatística (IC de Wilson, 95\%).}
 \label{fig:nota}
 \end{figure}
 
 \subsection{Quais eixos aparecem, e como se combinam}
-Olhando eixo a eixo (Figura~\ref{fig:eixos}), cerca de quatro em cada dez obras (98, ou 39\%) apresentam algum sinal sensível. O eixo mais frequente é, como esperado para romances, o sexual (um terço das obras). Mas violência e abuso aparecem cada um em cerca de 15\% das obras, e drogas e álcool em 7\% --- frequências nada desprezíveis para livros vendidos com capas juvenis. E os eixos raramente vêm sozinhos: metade das obras sensíveis acumula dois ou mais, com a combinação ``sexo + violência + abuso'' sendo a segunda mais comum (Figura~\ref{fig:cooc}). ``Conteúdo sensível'', portanto, não é uma coisa só, e um estudo que olhasse apenas para o erotismo perderia boa parte do quadro.
+Olhando eixo a eixo (Figura~\ref{fig:eixos}), cerca de quatro em cada dez obras (102, ou 41\%) apresentam algum sinal sensível. O eixo mais frequente é, como esperado para romances, o sexual (um terço das obras). Mas violência e abuso aparecem cada um em cerca de 15\% das obras, e drogas e álcool em 7\% --- frequências nada desprezíveis para livros vendidos com capas juvenis. E os eixos raramente vêm sozinhos: metade das obras sensíveis acumula dois ou mais, com a combinação ``sexo + violência + abuso'' sendo a segunda mais comum (Figura~\ref{fig:cooc}). ``Conteúdo sensível'', portanto, não é uma coisa só, e um estudo que olhasse apenas para o erotismo perderia boa parte do quadro.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_15_eixos_sensiveis.pdf}
@@ -282,7 +284,15 @@ Olhando eixo a eixo (Figura~\ref{fig:eixos}), cerca de quatro em cada dez obras 
 
 \subsection{A sinopse não avisa}
 \label{sec:res-omissao}
-Este é o resultado mais diretamente ligado à motivação do trabalho. Tomamos as 60 obras em que os leitores registraram alerta de conteúdo em ao menos um dos quatro eixos e que possuem sinopse brasileira, e perguntamos: a sinopse menciona esse tema? Em 41 delas (68\%), não --- nenhuma palavra do vocabulário correspondente aparece. Por eixo, o silêncio é ainda mais eloquente (Figura~\ref{fig:omissao}): a sinopse omite o tema em três de cada quatro livros com alerta sexual, em mais de nove em cada dez com alerta de violência ou de abuso, e em \emph{todos} os dezoito livros com alerta de drogas ou álcool.
+Este é o resultado mais diretamente ligado à motivação do trabalho. Tomamos as 60 obras em que os leitores registraram alerta de conteúdo em ao menos um dos quatro eixos e que possuem sinopse brasileira, e perguntamos: a sinopse menciona esse tema? Em 41 delas (68\%), não --- nenhuma palavra do vocabulário correspondente aparece. Por eixo, o silêncio é ainda mais eloquente (Figura~\ref{fig:omissao}): a sinopse omite o tema em três de cada quatro livros com alerta sexual, em mais de nove em cada dez com alerta de violência ou de abuso, e em \emph{todos} os dezessete livros com alerta de drogas ou álcool.
+
+Existe, é verdade, uma fórmula editorial de aviso: ``conteúdo adulto'' é o bigrama mais frequente de todas as sinopses, presente em 33 obras (Figura~\ref{fig:bigramas}). Mas esse número engana. Um dos caminhos de busca usou exatamente essa expressão; excluindo as obras que entraram por ele, a fórmula sobrevive em apenas 7 sinopses --- menos do que ``comédia romântica'' (19) ou ``segunda chance'' (13), que não são afetadas pela exclusão. Em outras palavras, encontramos o aviso sobretudo porque o procuramos. Deixado a si mesmo, o vocabulário das sinopses é o dos tropos de romance, não o da advertência ao leitor. Isso é coerente com o resultado de omissão acima e é a razão de o rótulo tratar a sinopse dessas obras como evidência não independente (Seção~\ref{sec:triang}).
+
+\begin{figure}[H]
+\centering\includegraphics[width=0.9\textwidth]{fig_20_bigramas_sinopse.pdf}
+\caption{Os seis bigramas mais frequentes nas sinopses brasileiras (número de obras em que aparecem), em todas as obras e excluindo as que foram localizadas por um termo de busca de conteúdo. A queda de ``conteúdo adulto'' de 33 para 7 mede o quanto a frequência é artefato da própria coleta.}
+\label{fig:bigramas}
+\end{figure}
 
 É preciso cautela na interpretação: nosso vocabulário em português pode não capturar todas as formas de mencionar um tema, e a sinopse não tem a obrigação de ser um aviso de conteúdo. Ainda assim, o padrão é consistente e forte. Ele confirma, com números, a premissa de que o leitor que decide pela capa e pela sinopse decide com informação incompleta --- e sugere que a omissão é maior justamente nos temas menos ``vendáveis''.
 
@@ -298,7 +308,7 @@ Removendo uma fonte de evidência por vez, descobrimos quem sustenta o rótulo (
 
 Variando os parâmetros de decisão, o número de obras \emph{alto} não se altera, como esperado; apenas o rótulo \emph{provavelmente baixo}, por ser uma inferência, oscila entre 8 e 19 obras conforme o limiar de popularidade. Reportamos essa variação para que o leitor saiba que ela existe.
 
-Por fim, nas 48 obras em que duas ou mais fontes se manifestaram, \emph{todas} concordaram. Isso parece ótimo, mas é enganoso: concordaram porque todas disseram ``alto''. Nunca houve uma fonte dizendo ``baixo'' para outra discordar. É mais uma face do mesmo fato --- o sistema não tem um polo negativo mensurável.
+Por fim, nas 49 obras em que duas ou mais fontes se manifestaram, \emph{todas} concordaram. Isso parece ótimo, mas é enganoso: concordaram porque todas disseram ``alto''. Nunca houve uma fonte dizendo ``baixo'' para outra discordar. É mais uma face do mesmo fato --- o sistema não tem um polo negativo mensurável.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_17_ablacao.pdf}

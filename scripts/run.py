@@ -25,6 +25,7 @@ from pipeline_ptbr import config as C                       # noqa: E402
 from pipeline_ptbr.util import carregar_tabela              # noqa: E402
 
 ORDEM = ["seed", "ponte", "rotulagem", "capas", "eda"]
+EXTRAS = ["refresh"]          # etapas explicitas, fora do "rodar tudo" (refresh vem antes de rotulagem)
 log = logging.getLogger("run")
 
 
@@ -69,6 +70,15 @@ def etapa_capas(a):
     baixar_capas(a.limite)
 
 
+def etapa_refresh(a):
+    """Re-consulta as obras ja resolvidas (metricas/tags/CWs mudam); nao refaz a ponte. Fora do fluxo padrao."""
+    from pipeline_ptbr.refresh import executar_refresh, usar_snapshot
+    if a.usar_snapshot:
+        usar_snapshot(a.usar_snapshot, a.min_count_spice)
+    else:
+        executar_refresh(a.min_count_spice)
+
+
 def etapa_eda(a):
     if not os.path.exists(C.OUT_LIVROS) and not os.path.exists(C.OUT_LIVROS_ROTULADO):
         log.warning(f"[eda] {C.OUT_LIVROS} nao existe; pulando")
@@ -80,7 +90,7 @@ def etapa_eda(a):
 
 def main():
     ap = argparse.ArgumentParser(description="Pipeline BookTok PT-BR: seed -> ponte -> rotulagem -> capas -> eda")
-    ap.add_argument("--etapas", default=None, help=f"subconjunto de {','.join(ORDEM)} (padrao: todas)")
+    ap.add_argument("--etapas", default=None, help=f"subconjunto de {','.join(ORDEM + EXTRAS)} (padrao: {','.join(ORDEM)})")
     ap.add_argument("--teste", action="store_true",
                     help="amostra pequena (5 autoras, 3 termos, 2 paginas, 30 edicoes, 60 req); so seed+ponte.")
     ap.add_argument("--sondar", choices=["schema", "inverso", "rotulo", "avaliacao", "gold"], default=None,
@@ -107,6 +117,8 @@ def main():
     ap.add_argument("--min-count-spice", type=int, default=1,
                     help="votos minimos por tag p/ Flag_Spice_Tag E Spice_Nivel (mesmo limiar; padrao 1)")
     ap.add_argument("--retentar-falhas", action="store_true", help="refaz as edicoes que a ponte nao resolveu")
+    ap.add_argument("--usar-snapshot", default=None, metavar="AAAA-MM-DD",
+                    help="(etapa refresh) reconstroi as tabelas a partir de data/snapshots/obras_hardcover_<data>.json, sem consultar a API")
     ap.add_argument("--ano-min", type=int, default=C.ANO_MIN_PADRAO, help="ano minimo da edicao PT-BR (padrao 2015)")
     ap.add_argument("--pop-pct", type=float, default=C.POP_PCT_PADRAO, help="percentil de leitores p/ cobertura na rotulagem")
     a = ap.parse_args()
@@ -121,12 +133,13 @@ def main():
         if getattr(a, k, None) is None:
             setattr(a, k, val)
     etapas = [e.strip() for e in (a.etapas or ("seed,ponte" if a.teste else ",".join(ORDEM))).split(",") if e.strip()]
-    invalidas = [e for e in etapas if e not in ORDEM]
+    invalidas = [e for e in etapas if e not in ORDEM + EXTRAS]
     if invalidas:
-        sys.exit(f"Etapas invalidas: {invalidas}. Use: {ORDEM}")
+        sys.exit(f"Etapas invalidas: {invalidas}. Use: {ORDEM + EXTRAS}")
 
     tem_cache_ponte = os.path.exists(C.CACHE_PONTE) and os.path.exists(C.CACHE_OBRAS)
-    precisa_hc = a.sondar in ("schema", "inverso") or ("ponte" in etapas and (not tem_cache_ponte or a.retentar_falhas))
+    precisa_hc = a.sondar in ("schema", "inverso") or ("ponte" in etapas and (not tem_cache_ponte or a.retentar_falhas)) \
+        or ("refresh" in etapas and not a.usar_snapshot)
     if precisa_hc and not C.HC_TOKEN:
         sys.exit("HARDCOVER_API_TOKEN ausente no .env")
 
@@ -148,11 +161,12 @@ def main():
     fns = {
         "seed": etapa_seed,
         "ponte": etapa_ponte,
+        "refresh": etapa_refresh,
         "rotulagem": etapa_rotulagem,
         "capas": etapa_capas,
         "eda": etapa_eda,
     }
-    for e in ORDEM:
+    for e in ["seed", "ponte", "refresh", "rotulagem", "capas", "eda"]:
         if e in etapas:
             log.info(f"===== etapa: {e} =====")
             fns[e](a)

@@ -1,0 +1,25 @@
+REFRESH DAS OBRAS (Hardcover)
+============================================================
+Snapshots: 2026-11-01 -> 2026-11-15
+Obras comparadas: 281 | falhas na re-consulta (mantido valor antigo): 0
+
+leitores           mudaram:  197 obras | soma Δ:   8955 | mediana Δ: 6.0 | máx Δ: 793
+avaliações         mudaram:  166 obras | soma Δ:   3306 | mediana Δ: 2.0 | máx Δ: 303
+tags (todas)       mudaram:  114 obras | soma Δ:    187 | mediana Δ: 0.0 | máx Δ: 14
+content warnings   mudaram:    7 obras | soma Δ:     19 | mediana Δ: 0.0 | máx Δ: 6
+
+Obras que ganharam algum content warning: 11
+  das quais NÃO tinham nenhum CW antes: 1  (evidência direta de faltante não aleatório)
+
+  Top 15 por nº de CWs novos:
+    - Heated Rivalry                                     +7: Abuse-Child | Abuse-Emotional_Abuse | Abuse-Mental | Abuse-Psychological | Bigotry-Homopho
+    - Bad Bishop                                         +5: Death | Injury/Injury detail | Murder | Sexual assault | Torture
+    - Bride                                              +4: Abandonment | Murder | War | confinement
+    - The Serpent and the Wings of Night                 +3: Blood | Death | Sexual content
+    - The Cheat Sheet                                    +2: Car accident | Panic attacks/disorders
+    - Bunny                                              +2: Blood | Mental illness
+    - Game Changer                                       +2: Bigotry-Homophobia | Queer-Closeted
+    - Act Your Age, Eve Brown                            +1: Abuse-Child
+    - We Were Liars                                      +1: Abandonment
+    - Somewhere Beyond the Sea                           +1: Racism
+    - The Lost Bookshop                                  +1: Mental illness

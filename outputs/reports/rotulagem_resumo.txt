@@ -1,74 +1,74 @@
 ==========================================================================================
-ROTULAGEM TRIANGULADA DE CONTEÚDO INADEQUADO/SENSÍVEL (v3.1) | 2026-11-15 21:35:34
+ROTULAGEM TRIANGULADA DE CONTEÚDO INADEQUADO/SENSÍVEL (v3.1) | 2026-11-15 22:22:17
 ==========================================================================================
-Edições: 262 | Obras: 252 | limiar de cobertura: >= 102 leitores (percentil 50) + Gêneros + Moods + Tags Gerais preenchidos
+Edições: 261 | Obras: 251 | limiar de cobertura: >= 109 leitores (percentil 50) + Gêneros + Moods + Tags Gerais preenchidos
 
 RÓTULO FINAL (por obra)
 Sensivel_Label
-indeterminado     128
-alto              107
-provavel_baixo     17
+indeterminado     125
+alto              110
+provavel_baixo     16
 
 PREVALÊNCIA POR EIXO DE CONTEÚDO SENSÍVEL/PROBLEMÁTICO (por obra)
-  Sexo / Erotismo / Violência Sexual          : 83/252 (32.9%)
-  Violência / Crime / Brutalidade             : 38/252 (15.1%)
-  Drogas / Bebidas Alcoólicas / Vício         : 18/252 (7.1%)
-  Abuso / Relacionamento Tóxico / Saúde Mental: 39/252 (15.5%)
+  Sexo / Erotismo / Violência Sexual          : 87/251 (34.7%)
+  Violência / Crime / Brutalidade             : 38/251 (15.1%)
+  Drogas / Bebidas Alcoólicas / Vício         : 17/251 (6.8%)
+  Abuso / Relacionamento Tóxico / Saúde Mental: 38/251 (15.1%)
 
 Rótulo x confiança ('circular' = único voto alto era a sinopse de obra achada via termo:conteudo):
 Sensivel_Label_Confianca  circular  forte  fraca  nao_validado  sem_evidencia
 Sensivel_Label                                                               
-alto                             0     66     41             0              0
-indeterminado                    8      0      0             0            120
-provavel_baixo                   0      0      0            17              0
+alto                             0     67     43             0              0
+indeterminado                    8      0      0             0            117
+provavel_baixo                   0      0      0            16              0
 
 RÓTULO COM SINOPSE x RÓTULO SEM SINOPSE (use o 2º como alvo ao treinar/avaliar o módulo de texto: a sinopse é a entrada do módulo e o léxico dela vazaria para o alvo)
 Sensivel_Label_sem_sinopse  alto  indeterminado  provavel_baixo
 Sensivel_Label                                                 
-alto                          98              8               1
-indeterminado                  0            128               0
-provavel_baixo                 0              0              17
+alto                         101              8               1
+indeterminado                  0            125               0
+provavel_baixo                 0              0              16
 
 VOTOS POR FONTE (obra; vazio = abstenção)
-  V_tags     : {'abstem': 225, 'alto': 27}
-  V_vocab    : {'abstem': 225, 'alto': 27}
-  V_sinopse  : {'abstem': 205, 'alto': 47}
-  V_maturity : {'abstem': 211, 'alto': 41}
-  V_cw       : {'abstem': 191, 'alto': 61}
-  YA=84 | Cobertura_Boa=117 | YA & Cobertura_Boa=46
+  V_tags     : {'abstem': 228, 'alto': 23}
+  V_vocab    : {'abstem': 225, 'alto': 26}
+  V_sinopse  : {'abstem': 204, 'alto': 47}
+  V_maturity : {'abstem': 210, 'alto': 41}
+  V_cw       : {'abstem': 190, 'alto': 61}
+  YA=88 | Cobertura_Boa=120 | YA & Cobertura_Boa=45
 
 CIRCULARIDADE: Via_Termo_Conteudo x Sensivel_Label (sinopse dessas obras não conta como independente)
 Sensivel_Label      alto  indeterminado  provavel_baixo
 Via_Termo_Conteudo                                     
-False                 80            116              17
+False                 83            113              16
 True                  27             12               0
 
 CONCORDÂNCIA ENTRE FONTES (obras com voto em ambas; linhas=tags, colunas=sinopse)
 V_sinopse  alto
 V_tags         
-alto         12
+alto          9
 
 SANIDADE POR ESTRATO (face validity; NÃO é voto: estratos foram critério de amostragem)
 Sensivel_Label      alto  indeterminado  provavel_baixo
 Estrato                                                
-(fora_das_autoras)    31             57               2
-contemporaneo          5              5               0
+(fora_das_autoras)    32             56               2
+contemporaneo          6              4               0
 controle_fantasia      2              1               1
 controle_wf            3             18               0
-controle_ya            0              5               2
+controle_ya            0              5               1
 dark                   3              2               0
 esportivo             14              2               0
 indie_cauda            1              5               0
 nacional               0              7               0
-new_adult             13              6               3
-romantasia             9              8               3
-romcom                26             12               6
+new_adult             14              5               3
+romantasia            10              8               2
+romcom                25             12               7
 
 RÓTULO x FAIXA DE POPULARIDADE (nº de leitores; cortes fixos)
 Sensivel_Label  alto  indeterminado  provavel_baixo
 _users                                             
-<10                9             75               0
-10–99             12             29               0
-100–999           61             24              15
-≥1000             25              0               2
+<10                9             74               0
+10–99             12             27               0
+100–999           63             24              13
+≥1000             26              0               3
 

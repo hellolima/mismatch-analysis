@@ -1,0 +1,354 @@
+% !TEX program = lualatex
+% =====================================================================================
+%  PÔSTER 60 x 90 cm -- modelo "Mostra UFMG / DCC" (Projeto Orientado em Computação)
+%  Compilador: LuaLaTeX (Menu > Settings > Compiler).  Fontes do modelo: Tomorrow (títulos)
+%  e Titillium Web (texto), instaladas no servidor do Overleaf do DCC.
+%  O fundo (borda, faixa vermelha, subtítulo e rodapé com QR code e logos) vem de
+%  fundo_poster.pdf, que é o próprio modelo oficial sem o texto do título; a faixa vermelha
+%  e o subtítulo foram subidos 1,72 cm, acompanhando o título mais compacto.
+%
+%  COMO EDITAR
+%   - Título: \TituloLinhaUm e \TituloLinhaDois (duas linhas, como no modelo).
+%   - Autores: \Autores.
+%   - O conteúdo fica em duas colunas, \begin{coluna}{x} ... \end{coluna}, lidas de cima
+%     para baixo: primeiro a da esquerda, depois a da direita.
+%   - Dentro de cada coluna, as seções são separadas por \proxima. O espaço entre elas se
+%     ajusta sozinho para a coluna ir de \Ytopo a \Ybase (em cm, a partir do topo).
+%     Para trocar a ordem, basta mover a seção. Se uma coluna ficar cheia demais, o log
+%     mostra "Overfull \vbox": encurte um texto ou diminua um gráfico.
+%   - O texto é justificado, com hifenização em português.
+%   - Gráficos: os números estão no próprio código (procure "coordinates"). Fonte dos
+%     números: outputs/tables/*.csv (coleta de 15/11/2026) e relatorio.tex.
+%   - \gradetrue (no preâmbulo) desenha uma grade de 1 cm para ajudar a posicionar.
+% =====================================================================================
+\documentclass{article}
+\usepackage[paperwidth=60cm,paperheight=90cm,margin=0cm]{geometry}
+\usepackage{iftex}
+\usepackage{amsmath}
+\usepackage{fontspec}
+\IfFileExists{brazilian.ldf}{\usepackage[brazilian]{babel}}{%
+  \IfFileExists{portuges.ldf}{\usepackage[portuges]{babel}}{}}
+\IfFileExists{lualatex-math.sty}{\usepackage{unicode-math}\newcommand\temmath{1}}{}
+\usepackage{anyfontsize}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{eso-pic}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tabularx,array}
+\usepackage{ragged2e}
+\usepackage{csquotes}
+\usepackage{xspace}
+
+% ------------------------------------------------------------------ fontes do modelo
+% No Overleaf do DCC, Titillium Web e Tomorrow estão instaladas. Fora dele, o pôster usa
+% fontes parecidas do TeX Live (Fira Sans e Montserrat) só para não quebrar a compilação.
+\IfFontExistsTF{TitilliumWeb-Regular.ttf}{%
+  \setmainfont{TitilliumWeb}[Extension=.ttf, UprightFont=*-Regular, BoldFont=*-Bold,
+    ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic]
+  \newfontfamily\semib{TitilliumWeb-SemiBold.ttf}%
+}{\IfFontExistsTF{FiraSans-Regular.otf}{%
+  \setmainfont{FiraSans}[Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+    ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic]
+  \newfontfamily\semib{FiraSans-SemiBold.otf}%
+}{\setmainfont{Carlito}\newfontfamily\semib{Carlito}[UprightFont=* Bold]}}
+\IfFontExistsTF{Tomorrow-Bold.ttf}{%
+  \newfontfamily\tomorrow{Tomorrow-Bold.ttf}%
+}{\IfFontExistsTF{Montserrat-ExtraBold.otf}{\newfontfamily\tomorrow{Montserrat-ExtraBold.otf}}%
+  {\newfontfamily\tomorrow{Inter Display Black}}}
+\ifdefined\temmath\IfFontExistsTF{FiraMath-Regular.otf}{\setmathfont{FiraMath-Regular.otf}}{\setmathfont{Latin Modern Math}}\fi
+
+% ------------------------------------------------------------------ cores do modelo
+\definecolor{vermelho}{RGB}{201,12,12}     % a faixa e a borda do modelo
+\definecolor{preto}{RGB}{20,20,20}
+\definecolor{cinzaescuro}{RGB}{77,77,77}
+\definecolor{cinzamedio}{RGB}{150,150,150}
+\definecolor{cinzaclaro}{RGB}{242,242,242}
+
+% ------------------------------------------------------------------ fundo (modelo oficial)
+\AddToShipoutPictureBG*{\AtPageLowerLeft{%
+  \includegraphics[width=\paperwidth,height=\paperheight]{fundo_poster.pdf}}}
+
+% ------------------------------------------------------------------ título e autores
+\newcommand{\TituloLinhaUm}{O QUE A SINOPSE}
+\newcommand{\TituloLinhaDois}{NÃO CONTA}
+\newcommand{\Autores}{Gabriella de Lima Araujo \quad\textcolor{vermelho}{\textbullet}\quad
+  Orientadora: Michele Amaral Brandāo}
+
+% ------------------------------------------------------------------ estilo do texto
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3em}
+\newcommand{\corpo}{\fontsize{26}{32}\selectfont}
+\newcommand{\pequeno}{\fontsize{21}{26}\selectfont}
+\newcommand{\minusculo}{\fontsize{16}{20}\selectfont}
+\newcommand{\pp}{\,p.p.\@\xspace}
+
+% título de seção: Tomorrow em caixa alta, com a barra vermelha dos logos DCC/UFMG
+\newcommand{\secao}[1]{%
+  {\tomorrow\fontsize{37}{40}\selectfont\color{preto}#1\par}%
+  \vspace{0.08cm}{\color{vermelho}\rule{3.8cm}{0.28cm}}\par\vspace{0.18cm}}
+\newcommand{\rotulo}[1]{{\tomorrow\fontsize{23}{28}\selectfont\color{vermelho}#1}}
+
+\setlist[itemize]{label={\textcolor{vermelho}{\rule[0.13em]{0.42em}{0.42em}}},
+  leftmargin=1.15em, labelsep=0.55em, itemsep=0.32em, topsep=0.25em, parsep=0pt, partopsep=0pt}
+
+\newtcolorbox{destaque}[1][]{colback=cinzaclaro, colframe=vermelho, boxrule=0pt,
+  leftrule=0.45cm, arc=0pt, outer arc=0pt, left=0.9cm, right=0.9cm, top=0.7cm, bottom=0.7cm,
+  boxsep=0pt, before skip=0.2cm, after skip=0cm, halign=justify, #1}
+
+% ------------------------------------------------------------------ gráficos
+\pgfplotsset{
+  /pgf/number format/use comma,
+  every axis/.append style={font=\fontsize{24}{28}\selectfont, line width=1.6pt,
+    tick style={line width=1.4pt, color=cinzaescuro}, axis line style={cinzaescuro}},
+  every tick label/.append style={font=\fontsize{24}{28}\selectfont},
+  legend style={font=\fontsize{23}{28}\selectfont, draw=none, fill=none},
+}
+
+% linha de eixo de conteúdo: \eixo{prevalência}{nome}{o que leitores marcam / o que a sinopse diz}
+\newcommand{\eixo}[3]{%
+  \noindent\makebox[3.4cm][l]{\fontsize{31}{34}\selectfont\color{vermelho}#1}%
+  \parbox[t]{\dimexpr\linewidth-3.4cm\relax}{\raggedright\fontsize{24.5}{29}\selectfont
+    \leavevmode{\semib\color{preto}#2:} #3}\par\vspace{0.4cm}}
+% obstáculo: \obstaculo{número}{título}{texto}
+\newcommand{\obstaculo}[3]{%
+  \vspace{0.15cm}{\rotulo{#1\enspace#2}}\par\vspace{0.1cm}
+  {\fontsize{25}{31}\selectfont #3\par}
+  \vspace{0.2cm}{\color{cinzamedio!60}\rule{\linewidth}{1.2pt}}\par\vspace{0.1cm}}
+% linha do rótulo: \nivel{nome}{n}{significado}
+\newcommand{\nivel}[3]{%
+  \noindent\makebox[8.6cm][l]{\rotulo{#1}}%
+  \makebox[2.6cm][r]{\semib #2}\enspace
+  \parbox[t]{\dimexpr\linewidth-11.6cm\relax}{\raggedright\pequeno\color{cinzaescuro}#3}\par\vspace{0.25cm}}
+% fontes das caixas do diagrama do pipeline
+\newcommand{\cxnome}{\tomorrow\fontsize{21}{24}\selectfont\color{vermelho}}
+\newcommand{\cxdet}{\fontsize{18.5}{22}\selectfont\color{preto}}
+
+% ------------------------------------------------------------------ colunas
+\newcommand{\Ytopo}{15.2}         % topo das colunas (cm, a partir do topo da página)
+\newcommand{\Ybase}{78.7}         % base das colunas (o QR code do rodapé começa em 79,4 cm)
+\newcommand{\LarguraColuna}{26.2}  % colunas em x = 3 e x = 30,8
+\newenvironment{coluna}[1]{% #1 = x da coluna, em cm
+  \begin{textblock}{\LarguraColuna}(#1,\Ytopo)%
+  \begin{minipage}[t][\dimexpr\Ybase cm-\Ytopo cm\relax][s]{\LarguraColuna cm}%
+  \corpo\setlength{\emergencystretch}{1.5em}}%
+  {\par\end{minipage}\end{textblock}}
+\newcommand{\proxima}{\par\vfill}  % separa as seções de uma coluna
+
+% bloco de conteúdo: \begin{bloco}{largura}{x}{y} ... \end{bloco}  (em cm, a partir do canto
+% superior esquerdo da página)
+\newenvironment{bloco}[3]{\begin{textblock}{#1}(#2,#3)\corpo\setlength{\emergencystretch}{1.5em}}{\end{textblock}}
+
+% grade auxiliar de 1 cm (true = desenha)
+\newif\ifgrade \gradefalse
+\newcommand{\grade}{\ifgrade\begin{textblock}{60}(0,0)\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cyan!40,line width=0.4pt] (0,0) grid (60,-90);
+  \foreach \i in {0,5,...,60} \node[cyan,anchor=north west,font=\fontsize{14}{14}\selectfont] at (\i,0) {\i};
+  \foreach \j in {0,5,...,90} \node[cyan,anchor=north west,font=\fontsize{14}{14}\selectfont] at (0,-\j) {\j};
+  \end{tikzpicture}\end{textblock}\fi}
+
+% =====================================================================================
+\begin{document}
+\pagestyle{empty}
+\corpo
+\grade
+
+% ---------------------------------------------------------------- título (2 linhas)
+% A 1ª linha de base fica onde estava no modelo oficial (5,43 cm do topo); a 2ª fica 118 pt
+% abaixo (no modelo eram 144 pt). Se mudar o espaço entre as linhas, mude também o fundo.
+\begin{textblock}{56}(2,3.05)
+  \centering{\tomorrow\fontsize{90}{118}\selectfont\color{preto}\TituloLinhaUm\\\TituloLinhaDois\par}
+\end{textblock}
+
+% ---------------------------------------------------------------- autores
+\begin{textblock}{54}(3,13.53)
+  \centering{\semib\fontsize{32}{38}\selectfont\color{cinzaescuro}\Autores\par}
+\end{textblock}
+
+% =====================================================================================
+%  COLUNA DA ESQUERDA (lida primeiro, de cima para baixo)
+% =====================================================================================
+\begin{coluna}{3}
+% ---------------- abertura e pergunta
+  {\fontsize{26.5}{34}\selectfont
+  A capa é o primeiro contato de um leitor com um livro. Romances com sexo explícito, drogas, violência
+  e abuso são vendidos com capas ilustradas em um estilo que remete à literatura infanto juvenil. Para saber se a capa engana, é preciso antes saber
+  \textbf{o que o livro contém} e não existia uma forma de descobrir isso que fosse
+  independente da editora.\par}
+  \vspace{0.55cm}
+  \begin{destaque}[top=0.45cm,bottom=0.5cm,left=0.8cm,right=0.7cm]
+    \rotulo{PERGUNTA}\par\vspace{0.1cm}
+    {\fontsize{27}{33}\selectfont Como construir, para romances vendidos no Brasil, uma base
+    que diga o que cada livro de fato contém --- e a sinopse brasileira avisa?\par}
+  \end{destaque}
+\proxima
+
+% ---------------- a ideia e os dois obstáculos
+  \secao{METODOLOGIA}
+  Usamos a \textbf{folksonomia}: Etiquetas que leitores registram em plataformas de catalogação (Hardcover). É a opinião de quem leu, não de quem vende.\par
+  \vspace{0.1cm}{\color{cinzamedio!60}\rule{\linewidth}{1.2pt}}\par
+  \obstaculo{1}{PLATAFORMAS GLOBAIS}
+  {As plataformas são globais e catalogam, majoritariamente, a
+    obra original em sua língua natural (repsensar esse termo): é preciso \textbf{resolver entidades} edição~$\to$~obra.}
+  \obstaculo{2}{SILÊNCIO NÃO É NEUTRO}{Alertas são \textbf{escassos}, e a falta de alerta não
+    significa que não há o que alertar: livro pouco lido não foi marcado por ninguém. O dado
+    falta \textbf{de forma não aleatória} (MNAR).}
+\proxima
+
+% ---------------- o pipeline
+  \secao{COMO A BASE FOI CONSTRUÍDA}
+  {\centering
+  \begin{tikzpicture}[x=1cm, y=1cm,
+      caixa/.style={draw=vermelho, line width=2.2pt, fill=white, text width=5.1cm,
+        minimum height=4.3cm, align=center, inner sep=0.22cm},
+      fonte/.style={draw=cinzaescuro, line width=2.2pt, fill=cinzaclaro, text width=11.0cm,
+        minimum height=2.3cm, align=center, inner sep=0.22cm},
+      seta/.style={-{Latex[length=0.45cm,width=0.42cm]}, line width=2.8pt, preto},
+      num/.style={font=\fontsize{20}{24}\selectfont\semib, text=cinzaescuro, anchor=north}]
+    \node[caixa] (gb) at (2.8,0) {{\cxnome GOOGLE\\BOOKS}\\[0.12cm]{\cxdet edições PT-BR\\(ISBN 978-85/65),\\sinopse e capa}};
+    \node[caixa] (po) at (9.4,0) {{\cxnome PONTE}\\[0.12cm]{\cxdet edição $\to$ obra:\\ISBN, título, autora,\\\emph{fuzzy} e \emph{embeddings}}};
+    \node[caixa] (ro) at (16.0,0) {{\cxnome RÓTULO}\\[0.12cm]{\cxdet 5 evidências votam\\em 4 eixos;\\8 regras ordenadas}};
+    \node[caixa] (ba) at (22.6,0) {{\cxnome BASE}\\[0.12cm]{\cxdet capa validada,\\sinopse, rótulo e\\2 alvos por obra}};
+    \node[fonte] (hc) at (12.7,4.1) {{\cxnome\color{preto}HARDCOVER}\\[0.08cm]{\cxdet etiquetas e alertas de conteúdo registrados pelos leitores (obra original)}};
+    \draw[seta] (gb) -- (po);  \draw[seta] (po) -- (ro);  \draw[seta] (ro) -- (ba);
+    \draw[seta] (hc.south -| po.north) -- (po.north);
+    \draw[seta] (hc.south -| ro.north) -- (ro.north);
+    \node[num] at (gb.south) {646 edições};
+    \node[num] at (po.south) {291 ligadas (45\,\%)};
+    \node[num] at (ro.south) {4 eixos};
+    \node[num] at (ba.south) {251 obras};
+  \end{tikzpicture}\par}
+  \vspace{0.5cm}
+  \begin{itemize}
+    \item Ponte em \textbf{7 camadas}: ISBN $\to$ título $\to$ catálogo da autora $\to$
+      similaridade textual ou \emph{embeddings} multilíngues. Auditoria: \textbf{14/16 corretas}.
+    \item Nenhuma fonte sozinha reproduz o rótulo: a melhor erra em 49 obras.
+  \end{itemize}
+\proxima
+
+% ---------------- eixos e rótulo
+  \secao{QUATRO EIXOS, UM RÓTULO}
+  {\pequeno\color{cinzaescuro}Prevalência nas 251 obras; vocabulário bilíngue de 130 termos
+  (o que leitores marcam / o que a sinopse diz).\par}\vspace{0.25cm}
+  \eixo{35\,\%}{sexo / erotismo}{\emph{explicit, steamy} / \enquote{conteúdo adulto}}
+  \eixo{15\,\%}{violência}{\emph{murder, torture} / \enquote{sequestro}}
+  \eixo{15\,\%}{abuso / gatilhos}{\emph{toxic relationship} / \enquote{abuso psicológico}}
+  \eixo{7\,\%}{drogas / álcool}{\emph{alcoholism, addiction} / \enquote{dependência}}
+  \begin{destaque}[top=0.45cm,bottom=0.45cm,left=0.8cm,right=0.7cm]
+    \nivel{ALTO}{110}{evidência convergente (67 forte, 43 fraca)}
+    \nivel{PROV.\ BAIXO}{16}{sem voto, mas obra YA bem coberta: inferência}
+    \nivel{INDETERMINADO}{125}{abstenção honesta: \enquote{não sabemos}}
+    \nivel{BAIXO}{0}{etiquetas de leveza não ocorrem na amostra}
+    \vspace{0.1cm}\textbf{Regra de ouro:} ausência de evidência \textbf{nunca} vira \enquote{baixo}.
+  \end{destaque}
+\end{coluna}
+
+% =====================================================================================
+%  COLUNA DA DIREITA (lida depois, de cima para baixo)
+% =====================================================================================
+\begin{coluna}{30.8}
+% ---------------- achado principal
+  \secao{A SINOPSE NÃO AVISA}
+  Entre as \textbf{60 obras} em que leitores registraram alerta de conteúdo, a sinopse
+  brasileira \textbf{não menciona o tema} em:\par\vspace{0.2cm}
+  {\centering
+  \begin{tikzpicture}
+    \begin{axis}[ybar, bar width=2.6cm, width=25.5cm, height=8.4cm, ymin=0, ymax=118,
+      enlarge x limits=0.14, symbolic x coords={q,sx,vi,ab,dr}, xtick=data,
+      xticklabels={{qualquer eixo\\41/60},{sexo\\35/47},{violência\\30/32},{abuso\\34/36},{drogas/álcool\\17/17}},
+      xticklabel style={align=center, font=\fontsize{21}{24}\selectfont},
+      ylabel={sinopse omite (\%)}, ytick={0,25,50,75,100}, axis lines*=left,
+      ymajorgrids, grid style={cinzamedio!40, line width=1pt},
+      nodes near coords={\pgfmathprintnumber{\pgfplotspointmeta}\,\%},
+      every node near coord/.append style={font=\fontsize{25}{29}\selectfont\semib, color=preto,
+        /pgf/number format/fixed, /pgf/number format/precision=0}]
+      \addplot[fill=cinzaescuro, draw=none, bar shift=0pt] coordinates {(q,68)};
+      \addplot[fill=vermelho, draw=none, bar shift=0pt] coordinates {(sx,74) (vi,94) (ab,94) (dr,100)};
+    \end{axis}
+  \end{tikzpicture}\par}
+  \begin{destaque}[top=0.45cm,bottom=0.5cm,left=0.8cm,right=0.7cm]
+    {\fontsize{27}{33}\selectfont Em \textbf{2 de cada 3} livros que os leitores marcam como
+    sensíveis, a sinopse não diz nada
+  \end{destaque}
+  \vspace{0.2cm}{\pequeno\color{cinzaescuro}\enquote{Conteúdo adulto} é o bigrama mais
+  frequente das sinopses (33 obras), mas cai para \textbf{7} quando excluímos as obras que
+  entraram na base por esse mesmo termo de busca: achamos o aviso porque o procuramos.\par}
+\proxima
+
+% ---------------- popularidade / MNAR
+  \secao{SEM ALERTA $\neq$ SEM CONTEÚDO}
+  {\centering
+  \begin{tikzpicture}
+    \begin{axis}[ybar, bar width=1.5cm, width=25.5cm, height=7.8cm, ymin=0, ymax=112,
+      enlarge x limits=0.16, symbolic x coords={a,b,c,d}, xtick=data,
+      xticklabels={{$<10$\\83 obras},{10--99\\39},{100--999\\100},{$\geq 1000$\\29}},
+      xticklabel style={align=center, font=\fontsize{21}{24}\selectfont},
+      xlabel={leitores da obra no Hardcover}, ylabel={obras (\%)},
+      ytick={0,25,50,75,100}, axis lines*=left,
+      ymajorgrids, grid style={cinzamedio!40, line width=1pt},
+      legend style={at={(0.02,0.98)}, anchor=north west, legend cell align=left},
+      legend image code/.code={\fill[#1] (0cm,-0.22cm) rectangle (0.45cm,0.22cm);},
+      nodes near coords={\pgfmathprintnumber{\pgfplotspointmeta}},
+      every node near coord/.append style={font=\fontsize{20}{24}\selectfont\semib, color=preto,
+        /pgf/number format/fixed, /pgf/number format/precision=0}]
+      \addplot[fill=cinzamedio, draw=none] coordinates {(a,1.2) (b,7.7) (c,35) (d,89.7)};
+      \addplot[fill=vermelho, draw=none] coordinates {(a,10.8) (b,30.8) (c,63) (d,89.7)};
+      \legend{com alerta de conteúdo, rótulo \emph{alto}}
+    \end{axis}
+  \end{tikzpicture}\par}
+  O que sabemos de um livro depende de \textbf{quantos o leram} ($\rho = 0{,}92$ entre
+  leitores e etiquetas). Por isso o rótulo \textbf{admite não saber}: os 125 indeterminados
+  estão quase todos na metade menos popular.
+\proxima
+
+% ---------------- funil e perda desigual
+  \secao{A AMOSTRA NÃO É O MERCADO}
+  {\centering
+  \begin{tikzpicture}
+    \begin{axis}[xbar, bar width=1.25cm, width=25.5cm, height=6.6cm, xmin=0, xmax=820,
+      y dir=reverse, enlarge y limits=0.22, symbolic y coords={s,p,o,a}, ytick=data,
+      yticklabels={coletadas, ligadas à obra, obras únicas, rótulo \emph{alto}},
+      xtick=\empty, axis x line=none, axis y line*=left, axis line style={draw=none},
+      nodes near coords, every node near coord/.append style={font=\fontsize{24}{28}\selectfont\semib,
+        color=preto, /pgf/number format/fixed, /pgf/number format/precision=0}]
+      \addplot[fill=cinzamedio, draw=none, bar shift=0pt] coordinates {(646,s) (291,p) (251,o)};
+      \addplot[fill=vermelho, draw=none, bar shift=0pt] coordinates {(110,a)};
+    \end{axis}
+  \end{tikzpicture}\par}
+\proxima
+
+% ---------------- conclusões
+  \secao{CONCLUSÕES}
+  \begin{itemize}
+    \item A base existe: \textbf{251 obras}, 261 edições, 49 editoras, com capa validada,
+      sinopse e rótulo em 4 eixos.
+    \item A sinopse \textbf{não é} fonte confiável do conteúdo; os leitores são.
+    \item Popularidade é \textbf{variável de controle obrigatória} em qualquer estudo de
+      capa~$\times$~conteúdo.
+  \end{itemize}
+  \vspace{0.15cm}
+  {\pequeno\color{cinzaescuro}\textbf{Limites:} rótulo detecta presença de sinal, nunca
+  ausência; vocabulário é uma escolha;
+  \textbf{Próximo passo:} comparar a estética das capas com o conteúdo, controlando
+  popularidade.\par}
+\end{coluna}
+
+% ---------------------------------------------------------------- referências (rodapé)
+\begin{bloco}{18.6}{17.9}{80.0}
+  {\fontsize{15}{18}\selectfont\color{cinzaescuro}
+  [1] IFLA. \emph{Functional Requirements for Bibliographic Records} (FRBR), 1998.\par
+  [2] Christen. \emph{Data Matching}. Springer, 2012.\par
+  [3] Ratner et al. Snorkel: rapid training data creation with weak supervision. VLDB, 2017.\par
+  [4] Bekker e Davis. Learning from positive and unlabeled data: a survey. \emph{Mach. Learn.}, 2020.\par
+  [5] Little e Rubin. \emph{Statistical Analysis with Missing Data}. Wiley, 2019.\par
+  [6] Brasil. Lei nº 15.211/2025 (Estatuto Digital da Criança e do Adolescente).\par}
+\end{bloco}
+
+\end{document}

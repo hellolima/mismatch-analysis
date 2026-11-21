@@ -1,10 +1,10 @@
 Configuracao,alto,baixo,provavel_baixo,indeterminado,alto_forte,obras_que_mudaram_vs_completo
-completo (5 fontes),107,0,17,128,66,0
-sem tags,106,0,17,129,66,1
-sem vocab,103,0,18,131,66,4
-sem sinopse,98,0,18,136,64,9
-sem maturity,85,0,19,148,62,22
-sem cw,74,0,30,148,15,33
-so comunidade (tags+vocab),31,0,39,182,0,76
-so sinopse,18,0,37,197,0,89
-so cw,61,0,23,168,61,46
+completo (5 fontes),110,0,16,125,67,0
+sem tags,109,0,16,126,67,1
+sem vocab,105,0,18,128,67,5
+sem sinopse,101,0,17,133,64,9
+sem maturity,89,0,18,144,61,21
+sem cw,74,0,31,146,14,36
+so comunidade (tags+vocab),29,0,41,181,0,81
+so sinopse,18,0,37,196,0,92
+so cw,61,0,22,168,61,49

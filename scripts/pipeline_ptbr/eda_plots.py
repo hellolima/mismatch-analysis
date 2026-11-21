@@ -125,6 +125,32 @@ def _wc_img(freq: Dict[str, int], paleta: List[str], max_words: int, w: int = 12
                      font_path=None).generate_from_frequencies(dict(freq))
 
 
+def plotar_bigramas_sinopse(tab: pd.DataFrame, formatos: Tuple[str, ...] = ("png", "pdf"),
+                            out_dir: Path = Path(C.OUT_FIGURES)) -> None:
+    """Barras horizontais pareadas: freq. de documento dos top bigramas em todas as obras vs. sem as obras
+    achadas por termo de conteudo (guarda de circularidade). Substitui a wordcloud de sinopses."""
+    if tab is None or tab.empty:
+        return
+    n_all, n_sem = tab.attrs.get("n_todas", 0), tab.attrs.get("n_sem", 0)
+    t = tab.iloc[::-1]
+    ys = np.arange(len(t))
+    h = 0.4
+    fig, ax = plt.subplots(figsize=(W1 + 1.4, 0.45 * len(t) + 1.3))
+    ax.barh(ys + h / 2, t["Freq_Doc_Todas"], height=h, color=COR_PRIM, label=f"Todas as obras (n={n_all})")
+    ax.barh(ys - h / 2, t["Freq_Doc_Sem_Termo_Conteudo"], height=h, color=COR_SEC,
+            label=f"Sem obras achadas por termo de conteúdo (n={n_sem})")
+    for y, (a, b) in zip(ys, zip(t["Freq_Doc_Todas"], t["Freq_Doc_Sem_Termo_Conteudo"])):
+        ax.text(a + 0.4, y + h / 2, str(int(a)), va="center", fontsize=8)
+        ax.text(b + 0.4, y - h / 2, str(int(b)), va="center", fontsize=8, color=COR_CINZA)
+    ax.set_yticks(ys)
+    ax.set_yticklabels(t["Bigrama"])
+    ax.set_xlabel("Nº de obras cuja sinopse contém o bigrama")
+    ax.set_xlim(0, float(t["Freq_Doc_Todas"].max()) * 1.15)
+    ax.grid(axis="y", visible=False)
+    ax.legend(loc="lower right", fontsize=8, frameon=False)
+    salvar_fig(fig, "fig_20_bigramas_sinopse", formatos, out_dir)
+
+
 def plotar_wordclouds(para_plot: Dict[str, Tuple[Dict[str, int], Dict[str, int], int]],
                       formatos: Tuple[str, ...] = ("png", "pdf"),
                       fig_titulos: bool = False,

@@ -520,3 +520,24 @@ def calcular_ngramas_corpora(df: pd.DataFrame) -> Tuple[Dict[str, pd.DataFrame],
         tabelas[nome] = pd.DataFrame(rows)
         para_plot[nome] = (uni_f, bi_f, max_words)
     return tabelas, para_plot
+
+
+def bigramas_sinopse_vs_circularidade(df: pd.DataFrame, top: int = 6) -> Optional[pd.DataFrame]:
+    """Top bigramas das sinopses (freq. de documento) em TODAS as obras e EXCLUINDO as que entraram no seed
+    via termo de conteudo ('conteudo adulto' etc.). A diferenca mostra quanto da formula editorial e
+    artefato da propria busca. Substitui a wordcloud (sem eixo, sem contagem) por algo comparavel."""
+    ob = deduplicar_por_obra(df)
+    if "Sinopse_clean" not in ob.columns:
+        return None
+    via = ob["Tipos_Origem"].fillna("").astype(str).str.contains("termo:conteudo") if "Tipos_Origem" in ob.columns \
+        else pd.Series(False, index=ob.index)
+    stop = STOPWORDS_EDITORIAL | tokens_de_autores(ob)
+    textos_all = [t for t in ob["Sinopse_clean"].dropna() if t.strip()]
+    textos_sem = [t for t in ob.loc[~via, "Sinopse_clean"].dropna() if t.strip()]
+    _, bi_all = contar_ngramas(textos_all, stop)
+    _, bi_sem = contar_ngramas(textos_sem, stop)
+    linhas = [{"Bigrama": k, "Freq_Doc_Todas": v, "Freq_Doc_Sem_Termo_Conteudo": bi_sem.get(k, 0)}
+              for k, v in bi_all.most_common(top)]
+    out = pd.DataFrame(linhas)
+    out.attrs["n_todas"], out.attrs["n_sem"] = len(textos_all), len(textos_sem)
+    return out

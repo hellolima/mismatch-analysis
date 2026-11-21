@@ -150,6 +150,7 @@ def montar_obra(book_id: int, obra: dict, min_count_spice: int) -> dict:
     sep = " | "      # separador sem virgula: tags podem conter virgula (o EDA divide por '|')
     return {
         "Hardcover_Book_ID": book_id,
+        "Coletado_Em_Hardcover": obra.get("_coletado_em"),   # data do snapshot (ver refresh.py)
         "Titulo_Original_EN": obra.get("title"),
         "Autor_Original_EN": autor_en,
         "Autores_Hardcover": sep.join(autores),
