@@ -174,11 +174,11 @@ def gerar_relatorio_eda(df: pd.DataFrame,
             cob = cobertura_por_popularidade(ob)
             if cob is not None:
                 cob.to_csv(tables_dir / "cobertura_por_popularidade.csv", encoding="utf-8")
-                f.write("  Cobertura de tags por faixa de popularidade (nº de leitores; queda nas faixas baixas = faltante NÃO aleatório):\n    "
+                f.write("  Cobertura de tags por faixa de popularidade (usuários com a obra na estante; queda nas faixas baixas = faltante NÃO aleatório):\n    "
                         + cob.to_string().replace("\n", "\n    ") + "\n")
             if "spearman_users_ntags" in extra:
                 rho, pv, n = extra["spearman_users_ntags"]
-                f.write(f"  Spearman (nº de leitores x nº total de tags): rho={rho:.3f}, p={pv:.4f}, n={n}\n")
+                f.write(f"  Spearman (usuários com a obra na estante x nº total de tags): rho={rho:.3f}, p={pv:.4f}, n={n}\n")
             if "spice_por_pop" in extra:
                 f.write("  Spice positivo por faixa de popularidade (Wilson 95%):\n    "
                         + extra["spice_por_pop"].round(3).to_string(index=False).replace("\n", "\n    ") + "\n")

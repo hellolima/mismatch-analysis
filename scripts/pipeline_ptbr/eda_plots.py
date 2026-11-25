@@ -350,7 +350,7 @@ def gerar_visualizacoes(df: pd.DataFrame, stats_tags: Dict, stats_dist: Dict, st
         annot_cob = (c2 * 100).round(1).astype(str).map(lambda s: s.replace(".", ",") + "%")
         sns.heatmap(c2, annot=annot_cob, fmt="", cmap=CMAP_SEQ, vmin=0, vmax=1, linewidths=0.6, linecolor="white",
                     cbar_kws={"label": "Fração de obras com ≥1 tag"}, ax=ax, annot_kws={"fontsize": 9, "fontweight": "bold"})
-        ax.set_ylabel("Faixa de popularidade (leitores)")
+        ax.set_ylabel("Usuários com a obra na estante")
         ax.set_xlabel("")
         plt.setp(ax.get_xticklabels(), rotation=25, ha="right")
         salvar_fig(fig, "fig_11_cobertura_popularidade", formatos, out_dir)
@@ -388,7 +388,7 @@ def gerar_visualizacoes(df: pd.DataFrame, stats_tags: Dict, stats_dist: Dict, st
         salvar_fig(fig, nome, formatos, out_dir)
 
     _fig_prop_por_faixa(extra.get("sensivel_por_pop"), extra.get("spice_por_pop"),
-                        "Faixa de popularidade (nº de leitores)", "fig_12_spice_vs_popularidade")
+                        "Usuários com a obra na estante", "fig_12_spice_vs_popularidade")
     _fig_prop_por_faixa(extra.get("sensivel_por_nota"), extra.get("spice_por_nota"),
                         "Faixa de nota média (obras com ≥10 avaliações)", "fig_12b_spice_vs_nota")
 

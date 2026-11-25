@@ -40,7 +40,7 @@
 % =========================================================================
 % Dados do Documento
 % =========================================================================
-\title{\textbf{Construçāo de uma base de dados para estudar a discrepância entre a aparência e o conteúdo de (romances) no Brasil}}
+\title{\textbf{Construção de uma base de dados para estudar a discrepância entre a aparência e o conteúdo de romances no Brasil}}
 
 \author{Gabriella de Lima Araujo\inst{1}}
 \date{}
@@ -50,8 +50,8 @@
 \begin{center}
 \vspace{-0.8cm}
 {\small
-$^1$Departamento de Ciência da Computação -- Universidade Federal de Minas Gerais (UFMG)\\
-Belo Horizonte -- MG -- Brasil\\[3pt]
+$^1$Departamento de Ciência da Computação, Universidade Federal de Minas Gerais (UFMG)\\
+Belo Horizonte, MG, Brasil\\[3pt]
 \texttt{gabriella.lima@dcc.ufmg.br}
 }
 \vspace{0.5cm}
@@ -59,73 +59,75 @@ Belo Horizonte -- MG -- Brasil\\[3pt]
 
 % -------------------------------------------------------------------------
 \begin{abstract}
-A book cover is the first thing a reader sees, and it sets expectations about what is inside. In Brazil, a growing number of romance novels that contain explicit sex, drug and alcohol use, violence or abuse are sold with soft, pastel, cartoon-like covers that look like they were made for teenagers. To study this mismatch between appearance and content, one first needs a dataset that, for each Brazilian edition, pairs the cover and the synopsis with an \emph{independent} description of what the book actually contains. No such dataset existed. This work builds one. We collected 646 Brazilian editions, linked 291 of them to their original works on a reader community platform where people tag books and leave content warnings, and combined five different pieces of evidence into a label that says, for each book, whether there is convergent evidence of sensitive content along four axes: sex, drugs/alcohol, violence and abuse. Two findings stand out. First, in about two thirds of the books that readers flag as sensitive, the Brazilian synopsis says nothing about it. Second, the information readers provide depends heavily on how popular a book is, which means that ``no warning'' cannot be read as ``nothing to warn about''. We explain why this matters, how we dealt with it, and what the resulting dataset can and cannot be used for.
+Book covers and synopses are the primary cues readers use to form expectations about a book. In Brazil, romance novels containing explicit sexual content, drug and alcohol use, violence, or abuse are frequently marketed with illustrated covers whose aesthetics resemble young adult literature. Investigating this mismatch between editorial presentation and content requires a dataset that associates each Brazilian edition's cover and synopsis with an \emph{independent} characterization of its content. To address this gap, we built a reproducible pipeline that collected 646 Brazilian editions, linked 291 of them to their original works on a social cataloging platform where readers assign tags and content warnings, and combined five sources of evidence into a work-level label across four sensitive-content axes: sex, drugs/alcohol, violence, and abuse. Two empirical patterns stand out in the resulting dataset of 251 unique works. First, in 68\% of works flagged with reader content warnings, the Brazilian synopsis does not mention the corresponding theme. Second, reader-provided metadata depends strongly on work popularity, meaning that the absence of warnings cannot be interpreted as the absence of sensitive content. We detail the methodology, evaluate the robustness of the labeling scheme, and discuss the scope and limitations of the resulting dataset.
 \end{abstract}
 
 \begin{resumo}
-A capa é a primeira coisa que o leitor vê, e é ela que cria a expectativa sobre o que há dentro do livro. No Brasil, alguns romances com sexo explícito, uso de drogas e álcool, violência ou abuso são vendidos com capas suaves, em tons pastéis e estilo de desenho, com aparência de livro para adolescentes. Para estudar essa discrepância entre aparência e conteúdo, é preciso antes ter uma base de dados que, para cada edição brasileira, reúna a capa, a sinopse e uma descrição \emph{independente} do que o livro de fato contém. Coletamos 646 edições brasileiras, ligamos 291 delas às obras originais em uma plataforma em que leitores marcam livros e registram alertas de conteúdo, e combinamos cinco evidências diferentes em um rótulo que diz, para cada livro, se há indícios convergentes de conteúdo sensível em quatro eixos: sexo, drogas/álcool, violência e abuso. Em cerca de dois terços dos livros que os leitores apontam como sensíveis, a sinopse brasileira não diz nada a respeito. Além disso, a informação que os leitores fornecem depende muito da popularidade do livro, de modo que ``nenhum alerta'' não pode ser lido como ``nada a alertar''. Explicamos por que isso importa, como lidamos com o problema e para que a base resultante pode e não pode ser usada.
+A capa e a sinopse são os principais elementos utilizados pelos leitores para formar expectativas sobre um livro. No Brasil, romances que abordam sexo explícito, uso de drogas e álcool, violência ou abuso têm sido comercializados com capas ilustradas cuja estética remete à literatura infantojuvenil. Para investigar a discrepância entre apresentação editorial e conteúdo, é necessário dispor previamente de uma base de dados que associe, para cada edição brasileira, a capa, a sinopse e uma caracterização \emph{independente} do conteúdo da obra. Neste trabalho, construímos um processo automatizado e reprodutível que coletou 646 edições brasileiras, ligou 291 delas às obras originais em uma plataforma social de catalogação em que leitores registram etiquetas e alertas de conteúdo, e combinou cinco fontes de evidência em um rótulo por obra distribuído em quatro eixos de conteúdo sensível: sexo, drogas/álcool, violência e abuso. Na base resultante de 251 obras únicas, destacam-se dois resultados. Primeiro, em 68\% das obras com alerta de conteúdo registrado por leitores, a sinopse brasileira não menciona o tema correspondente. Segundo, a disponibilidade de informações comunitárias depende fortemente da popularidade da obra, de modo que a ausência de alertas não pode ser interpretada como ausência de conteúdo sensível. Apresentamos a metodologia de construção, avaliamos a robustez da rotulagem e discutimos os limites de uso da base produzida.
 \end{resumo}
 
 % =========================================================================
 \section{Introdução}
 \label{sec:intro}
 
-Cores, tipo de letra e estilo de ilustração dizem ao leitor, em um relance, se aquele é um romance leve, um suspense ou um livro infantil \cite{TODO-design-capas}. A capa funciona, portanto, como uma promessa. O problema é que promessas podem não ser cumpridas --- o mesmo fenômeno que a internet batizou de \emph{clickbait}: um título ou uma imagem chamativa que entrega algo bem diferente do que sugeria \cite{TODO-clickbait}.
+A capa e a sinopse constituem o primeiro contato do leitor com um livro. Elementos visuais como paleta de cores, tipografia e estilo de ilustração funcionam como sinais iniciais de gênero e público-alvo \cite{iwana2016judging,leenstra2023covers}. Entretanto, a expectativa criada pela apresentação visual nem sempre corresponde ao conteúdo efetivo da obra, em um fenômeno análogo ao observado em títulos e miniaturas enganosas (\emph{clickbait}) em ambientes digitais \cite{yu2024multimodal,naveed2025thumbnailtruth,islam2026ytclickbait21k}.
 
-Nos últimos anos, esse descompasso ganhou uma forma particular no mercado de romances. Impulsionados pela comunidade de leitores do TikTok --- o chamado BookTok ---, livros com cenas de sexo explícito, personagens que abusam de álcool e drogas, violência gráfica ou relações abusivas passaram a ser vendidos com capas ilustradas, coloridas e ``fofas'', em um estilo que historicamente sinalizava literatura juvenil. Chamamos isso de \emph{discrepância entre capa e conteúdo}. E a sinopse, que em tese deveria corrigir a primeira impressão, muitas vezes não o faz: como veremos, ela costuma silenciar justamente sobre o que os leitores consideram digno de aviso.
+Nos últimos anos, esse descompasso tornou-se particularmente visível no segmento de romances contemporâneos. Impulsionadas por comunidades literárias em redes sociais, como o BookTok, obras que contêm cenas de sexo explícito, uso de álcool e drogas, violência gráfica ou relações abusivas passaram a ser publicadas com capas ilustradas em tons suaves, estética historicamente associada à literatura infantojuvenil. Referimo-nos a esse fenômeno como \emph{discrepância entre apresentação editorial e conteúdo}. Embora a sinopse pudesse complementar ou corrigir a impressão inicial transmitida pela capa, ela frequentemente omite os temas que leitores consideram dignos de alerta.
 
-Crianças e adolescentes também compram e leem esses livros, e a capa é o principal sinal que eles e seus responsáveis usam para julgar se a obra é adequada \cite{TODO-exposicao-conteudo}. No Brasil, a preocupação ganhou peso legal: a Lei nº~15.211/2025, o Estatuto Digital da Criança e do Adolescente, passou a exigir de serviços digitais mecanismos de proteção, controle parental e verificação de idade \cite{TODO-lei15211}. Como a descoberta e a compra de livros acontecem cada vez mais em redes sociais e lojas virtuais \cite{TODO-social-media-livros}, a pergunta ``esta capa representa honestamente este conteúdo?'' deixa de ser apenas uma escolha estética da editora e passa a ser uma questão de informação ao consumidor em ambiente digital.
+A questão envolve também aspectos informacionais e regulatórios, uma vez que crianças e adolescentes consomem livros desse segmento e, juntamente com seus responsáveis, apoiam-se na capa e na sinopse para avaliar a adequação de uma obra \cite{TODO-exposicao-conteudo}. No contexto brasileiro, a Lei nº~15.211/2025 (Estatuto Digital da Criança e do Adolescente) reforçou exigências de proteção, controle parental e verificação etária em serviços digitais \cite{TODO-lei15211}. Como a descoberta e a aquisição de livros ocorrem cada vez mais em redes sociais e plataformas de comércio eletrônico \cite{TODO-social-media-livros}, avaliar a correspondência entre apresentação visual e conteúdo torna-se relevante sob a perspectiva da transparência informacional ao consumidor.
 
-\subsection*{O que falta para estudar o problema}
-Para investigar se há discrepância, e em que medida, é preciso comparar duas coisas: o que a capa sugere e o que o livro contém. A primeira parte é tratável com técnicas de visão computacional. A segunda é mais difícil do que parece. Não podemos confiar na sinopse, porque ela é parte do problema. Não podemos ler centenas de livros. O que podemos fazer é recorrer aos leitores: em plataformas de catalogação social, milhares de pessoas registram, para cada livro que leram, etiquetas (\emph{tags}) sobre tema e tom e, cada vez mais, \emph{alertas de conteúdo} (\emph{content warnings}) --- avisos do tipo ``contém violência sexual'' ou ``contém alcoolismo''. Esses alertas são uma fonte de informação independente da editora.
+\subsection*{Lacuna e desafios técnicos}
+Investigar empiricamente a discrepância entre capa e conteúdo exige comparar o que a capa sugere com o que o livro efetivamente aborda. Enquanto o primeiro componente pode ser analisado por técnicas de visão computacional, caracterizar o conteúdo em escala apresenta dificuldades metodológicas. A sinopse editorial não pode ser tomada como referência única, pois integra o próprio fenômeno em estudo, e a leitura integral de centenas de livros é inviável. Uma alternativa independente da editora consiste em utilizar dados de plataformas sociais de catalogação, nas quais leitores registram etiquetas (\emph{tags}) temáticas e \emph{alertas de conteúdo} (\emph{content warnings}), como indicações de violência sexual ou alcoolismo.
 
-Usá-los, porém, impõe dois obstáculos que são o cerne técnico deste trabalho:
+O aproveitamento dessas fontes impõe dois obstáculos técnicos centrais:
 \begin{enumerate}
-  \item \textbf{As plataformas com essa informação são globais e em inglês}, e catalogam os livros pelo título original. Para saber o que os leitores dizem de \emph{Quarta Asa}, é preciso descobrir que ele é a tradução de \emph{Fourth Wing} --- e títulos traduzidos raramente são traduções literais. Ligar a edição brasileira à obra original é um problema conhecido em computação como \emph{resolução de entidades}.
-  \item \textbf{Os alertas são escassos e sua ausência não é neutra.} Um livro muito lido acumula dezenas de alertas; um livro pouco lido pode não ter nenhum, não porque seja inofensivo, mas porque ninguém o marcou. Tratar ``sem alerta'' como ``sem conteúdo sensível'' seria um erro sistemático.
+  \item \textbf{Resolução entre catálogos em idiomas distintos.} As plataformas com maior cobertura de alertas de conteúdo são globais, majoritariamente em inglês, e organizam os registros pela obra original. Associar uma edição brasileira como \emph{Quarta Asa} à obra original \emph{Fourth Wing} demanda técnicas de \emph{resolução de entidades}, pois títulos traduzidos frequentemente não são literais.
+  \item \textbf{Escassez e viés de ausência nos alertas.} Obras amplamente lidas acumulam dezenas de marcações comunitárias, ao passo que obras menos populares podem não apresentar nenhum alerta simplesmente por falta de registros, e não por ausência de conteúdo sensível. Interpretar a ausência de alerta como evidência de leveza introduziria erro sistemático.
 \end{enumerate}
 
-\subsection*{O que este trabalho entrega}
-Este texto descreve a primeira etapa de um projeto maior. O objetivo aqui não é ainda medir a discrepância, mas \textbf{construir a base de dados que torna essa medição possível} e entender suas limitações. Para isso:
+\subsection*{Objetivos e contribuições}
+Este trabalho corresponde à primeira etapa de um projeto mais amplo. O objetivo não é ainda mensurar a discrepância visual das capas, mas \textbf{construir uma base de dados confiável e documentada que viabilize essa investigação}, caracterizando explicitamente seus limites. As principais contribuições são:
 \begin{itemize}
-  \item montamos um processo automatizado e reprodutível que coleta edições brasileiras, as liga às obras originais e baixa suas capas;
-  \item definimos uma taxonomia de \textbf{quatro eixos de conteúdo sensível} --- sexo, drogas e álcool, violência, abuso e temas de saúde mental --- com um vocabulário explícito em português e em inglês;
-  \item criamos um \textbf{rótulo} para cada obra que combina cinco fontes de evidência e que, crucialmente, \emph{admite não saber} quando não há evidência suficiente;
-  \item verificamos a robustez desse rótulo e preparamos um protocolo de validação por pessoas.
+  \item o desenvolvimento de um processo automatizado e reprodutível que coleta edições brasileiras, realiza a ligação com as obras originais e obtém suas capas;
+  \item a definição de uma taxonomia com \textbf{quatro eixos de conteúdo sensível} (sexo, drogas e álcool, violência, e abuso e saúde mental), acompanhada de vocabulário explícito em português e inglês;
+  \item a proposta de um \textbf{rótulo por obra} baseado na combinação de cinco fontes de evidência, que prevê abstenção explícita quando a evidência disponível é insuficiente;
+  \item a avaliação interna da robustez desse rótulo e a definição de um protocolo de validação humana.
 \end{itemize}
 
-Ao longo do caminho, dois resultados emergem que vão além da construção da base: a confirmação quantitativa de que a sinopse brasileira omite a maior parte dos alertas que os leitores fazem, e a demonstração de que a informação disponível sobre um livro depende muito da sua popularidade. Ambos têm consequências para como qualquer estudo futuro deve ser desenhado.
+Além da infraestrutura de dados, o estudo produz dois achados empíricos relevantes para o desenho de pesquisas futuras: a verificação quantitativa de que a sinopse brasileira omite a maior parte dos alertas registrados por leitores e a demonstração de que a cobertura dessas anotações cresce fortemente com a popularidade da obra.
 
-O restante do texto está organizado assim: a Seção~\ref{sec:fund} apresenta, em linguagem acessível, os conceitos de que precisamos; a Seção~\ref{sec:metodo} explica como a base foi construída; a Seção~\ref{sec:resultados} apresenta o que encontramos e o que isso significa; a Seção~\ref{sec:discussao} discute os limites do que fizemos; e a Seção~\ref{sec:conclusao} conclui.
+O restante do artigo está organizado da seguinte forma: a Seção~\ref{sec:fund} apresenta os fundamentos conceituais e trabalhos relacionados; a Seção~\ref{sec:metodo} descreve a metodologia de construção da base; a Seção~\ref{sec:resultados} detalha os resultados obtidos; a Seção~\ref{sec:discussao} discute a interpretação e as limitações da base; e a Seção~\ref{sec:conclusao} apresenta as considerações finais.
 
 % =========================================================================
 \section{Conceitos e Trabalhos Relacionados}
 \label{sec:fund}
 
-\subsection{Obra e edição não são a mesma coisa}
-Quando dizemos ``o livro \emph{Fourth Wing}'', podemos estar falando de coisas diferentes: da história criada pela autora, da tradução para o português, ou do objeto físico publicado por uma editora específica com um determinado ISBN e uma determinada capa. A biblioteconomia formalizou essa distinção no modelo FRBR \cite{TODO-frbr}, que separa a \emph{obra} (a criação intelectual) da \emph{manifestação} (a edição concreta). A distinção é essencial para nós: a \textbf{capa} que queremos estudar pertence à edição brasileira, mas os \textbf{alertas dos leitores} descrevem a obra, independentemente da edição. Nossa base precisa, portanto, guardar as duas camadas e saber ligá-las.
+\subsection{Distinção entre obra e edição}
+Ao referir-se a um livro como \emph{Fourth Wing}, pode-se aludir a diferentes entidades: à criação intelectual da autora, à sua tradução para o português ou a um exemplar específico publicado por uma editora brasileira com determinado ISBN e capa. Na biblioteconomia, o modelo conceitual FRBR \cite{TODO-frbr} formaliza essa separação ao distinguir a \emph{obra} (criação intelectual) da \emph{manifestação} (edição concreta). Essa distinção é fundamental para este trabalho: a \textbf{capa} e a sinopse pertencem à edição brasileira, enquanto os \textbf{alertas dos leitores} descrevem a obra como um todo. A base construída preserva ambas as camadas e mantém o vínculo entre elas.
 
-\subsection{Como ligar registros que descrevem a mesma coisa}
-Descobrir que dois registros em bases diferentes se referem à mesma entidade --- aqui, que uma edição brasileira corresponde a uma obra em um catálogo em inglês --- é chamado de \emph{record linkage} ou resolução de entidades \cite{TODO-record-linkage}. Quando há um identificador comum (o ISBN), a ligação é trivial. Quando não há, é preciso comparar atributos como título e autor, admitindo variações, traduções e erros de digitação. A dificuldade está em ser permissivo o bastante para encontrar o par certo e rigoroso o bastante para não ligar livros diferentes.
+\subsection{Resolução de entidades bibliográficas}
+Identificar que registros provenientes de bases distintas representam a mesma entidade (neste caso, associar uma edição brasileira a uma obra em catálogo internacional) é um problema clássico de \emph{record linkage} ou resolução de entidades \cite{TODO-record-linkage}. Quando há um identificador compartilhado, como o ISBN, a correspondência é determinística. Na ausência desse identificador, recorre-se à comparação de atributos como título e autoria, lidando com variações ortográficas, traduções não literais e subtítulos promocionais. O desafio reside em equilibrar revocação suficiente para recuperar pares válidos e precisão suficiente para evitar ligações incorretas.
 
-\subsection{O que os leitores dizem: folksonomia e alertas de conteúdo}
-Plataformas como Goodreads, Skoob e Hardcover permitem que leitores etiquetem livros livremente. Esse conjunto de etiquetas criado de baixo para cima é chamado de \emph{folksonomia} \cite{TODO-folksonomia}. Entre as etiquetas, os \emph{content warnings} formam um vocabulário relativamente padronizado (\emph{sexual content}, \emph{alcoholism}, \emph{domestic abuse}) e, em algumas plataformas, vêm acompanhados do número de leitores que os confirmaram. Isso os torna um sinal de conteúdo mais confiável que a sinopse, com uma ressalva importante: eles só existem para livros que alguém leu e se deu ao trabalho de marcar.
+\subsection{Folksonomia e alertas de conteúdo}
+Plataformas de catalogação social como Goodreads, Skoob e Hardcover permitem que leitores atribuam etiquetas livres aos livros que leem. Esse sistema colaborativo de classificação é denominado \emph{folksonomia} \cite{golder2006usage}. Dentro desse ecossistema, os \emph{content warnings} compõem um vocabulário relativamente padronizado (\emph{sexual content}, \emph{alcoholism}, \emph{domestic abuse}) e, em algumas plataformas, incluem a contagem de usuários que confirmaram cada aviso. Embora ofereçam uma sinalização independente da editora, tais registros dependem do engajamento da comunidade e tendem a se concentrar em obras mais lidas.
 
-\subsection{Quando a ausência de dado é, ela mesma, informação}
-Em estatística, diz-se que um dado faltante é \emph{não aleatório} (MNAR, do inglês \emph{missing not at random}) quando a chance de ele estar ausente depende de algo relacionado ao próprio valor \cite{TODO-mnar}. É o nosso caso: a chance de um livro não ter alertas depende de quantas pessoas o leram, e a popularidade pode estar relacionada ao tipo de conteúdo. Ignorar isso levaria a conclusões enviesadas --- por exemplo, a de que livros de autoras pouco conhecidas são ``mais leves'', quando na verdade são apenas menos marcados.
+\subsection{Dados faltantes não aleatórios (MNAR)}
+Em estatística, um mecanismo de ausência é classificado como \emph{não aleatório} (MNAR, do inglês \emph{missing not at random}) quando a probabilidade de um dado estar ausente depende de fatores associados ao próprio fenômeno observado \cite{TODO-mnar}. No contexto deste estudo, a ausência de alertas de conteúdo depende do volume de usuários com a obra na estante, variável que pode se correlacionar com gênero, visibilidade editorial e características do conteúdo. Desconsiderar esse mecanismo levaria a inferências enviesadas, como assumir que obras menos conhecidas possuem conteúdo mais leve apenas por disporem de menos anotações.
 
-\subsection{Rótulos imperfeitos: supervisão fraca}
-Quando não é viável que pessoas rotulem manualmente todos os dados, uma alternativa é combinar várias regras automáticas imperfeitas em um rótulo único \cite{TODO-weak-supervision}. A ideia central é que, se fontes \emph{independentes} concordam, a chance de erro cai. Há um caso especial relevante para nós: quando só conseguimos observar evidência \emph{positiva} (alguém marcou que há violência) e nunca evidência negativa confiável (ninguém marca ``não há violência''), o rótulo resultante diz respeito apenas a presença de sinal. Na literatura, isso é chamado de aprendizado \emph{positive-unlabelled} \cite{TODO-pu-learning}, e voltaremos a ele porque define o que o nosso rótulo pode e não pode afirmar.
+\subsection{Supervisão fraca e aprendizado \emph{positive-unlabelled}}
+Quando a rotulagem manual exaustiva é inviável, abordagens de supervisão fraca combinam múltiplas fontes ou regras heurísticas imperfeitas para produzir rótulos agregados \cite{TODO-weak-supervision}. O princípio subjacente é que a convergência entre fontes \emph{independentes} reduz a incidência de erro. Um caso particular relevante ocorre quando se observa sobretudo evidência \emph{positiva} (leitores registram a presença de violência), sem evidência negativa equivalente (leitores raramente registram a ausência explícita de violência). Na literatura, essa configuração é tratada sob o paradigma \emph{positive-unlabelled} \cite{TODO-pu-learning}, que delimita diretamente a interpretação válida dos rótulos construídos neste trabalho.
 
 \subsection{Trabalhos relacionados}
-A discrepância entre apresentação e conteúdo foi estudada em vídeos (\emph{thumbnails}) e notícias (\emph{clickbait}) \cite{TODO-clickbait}. Em livros, há trabalhos que classificam o gênero a partir da capa \cite{TODO-cover-genre} e que estimam faixa etária a partir do texto \cite{TODO-age-text}. Não encontramos, porém, trabalhos que tratem do mercado brasileiro, que combinem capa, sinopse e alertas de leitores, ou que enfrentem explicitamente a escassez desses alertas. \emph{(Revisão bibliográfica a completar.)}
+A discrepância entre apresentação visual e conteúdo tem sido investigada principalmente no contexto de \emph{clickbait} multimodal e miniaturas enganosas em plataformas de vídeo, tanto na proposição de métodos de detecção com remoção de vieses \cite{yu2024multimodal} e modelos multimodais de linguagem \cite{naveed2025thumbnailtruth}, quanto na construção de bases anotadas \cite{islam2026ytclickbait21k}. No domínio editorial, diversos estudos exploram a relação entre atributos visuais de capas e o gênero das obras por meio de redes convolucionais e arquiteturas multimodais que combinam imagem e texto \cite{iwana2016judging,kundu2020deepmultimodal,yang2025enhancing}, enquanto análises qualitativas documentam a transição estética recente das capas de romance para formatos ilustrados e adaptados ao ambiente digital \cite{leenstra2023covers}.
+
+Em paralelo, a detecção automática de conteúdo sensível e alertas de gatilho em texto tem avançado em narrativas longas, como \emph{fan fiction}, formulada como classificação multirrótulo a partir de etiquetas comunitárias \cite{wiegmann2023multilabel,wolska2023trigger,sahin2023arcnlp}, bem como na identificação de conteúdo sexualmente explícito em outros gêneros textuais \cite{zamacola2026spanishlyrics}. Em relação à engenharia de dados em língua portuguesa, a metodologia de construção, documentação e rotulagem auditável de bases adotada neste trabalho dialoga com iniciativas voltadas à criação de conjuntos de dados rotulados para análise de irregularidades em documentos brasileiros \cite{silva2024lipset}. Não foram identificados, contudo, estudos voltados ao mercado editorial brasileiro que integrem capa, sinopse e alertas comunitários de leitores, nem que tratem explicitamente o caráter não aleatório da escassez desses alertas.
 
 % =========================================================================
-\section{Como a base foi construída}
+\section{Metodologia}
 \label{sec:metodo}
 
-\subsection{A ideia em uma figura}
-A Figura~\ref{fig:pipeline} resume o processo. Partimos de listas de busca (autoras, termos, editoras, títulos), consultamos o Google Books para obter edições brasileiras com sinopse e capa, ligamos cada edição à obra correspondente no Hardcover --- uma plataforma de leitores com API aberta --- para obter as etiquetas e alertas, e combinamos tudo em um rótulo por obra. Em paralelo, baixamos e validamos as capas para uso futuro. Cada etapa pode ser interrompida e retomada sem perder trabalho, o que importa porque as APIs têm limites diários de consulta. Os dados do Hardcover usados em todas as análises deste texto foram coletados em \textbf{15 de novembro de 2026}; como contagens, etiquetas e alertas mudam continuamente, cada coleta é guardada como um instantâneo datado, e uma coleta anterior (1º de novembro) é usada na Seção~\ref{sec:res-mnar} para medir quanto a informação muda em duas semanas.
+\subsection{Visão geral do processo}
+A Figura~\ref{fig:pipeline} resume o fluxo de construção da base. A partir de listas de busca compostas por autoras, termos, editoras e títulos, consultamos a API do Google Books para coletar edições brasileiras com sinopse e capa. Em seguida, associamos cada edição à obra correspondente na plataforma Hardcover, que disponibiliza API aberta com etiquetas e alertas registrados por leitores, e combinamos as evidências obtidas em um rótulo por obra. Em paralelo, as imagens de capa são baixadas e validadas para a etapa subsequente de análise visual. Todas as etapas suportam interrupção e retomada incremental, mitigando os limites diários de consulta das APIs. Os dados do Hardcover empregados nas análises deste artigo referem-se à coleta de \textbf{15 de novembro de 2026}; como as contagens e anotações evoluem continuamente, cada coleta é armazenada como um instantâneo datado, e um instantâneo anterior (1º de novembro de 2026) é utilizado na Seção~\ref{sec:res-mnar} para avaliar a variação temporal em um intervalo de duas semanas.
 
 \begin{figure}[H]
 \centering
@@ -146,42 +148,42 @@ A Figura~\ref{fig:pipeline} resume o processo. Partimos de listas de busca (auto
   \draw[arr] (ponte) -- (rot); \draw[arr] (gb) |- (cap); \draw[arr] (rot) -- (ds); \draw[arr] (cap) |- (ds);
   \draw[arr, dashed] (gold) -- (rot); \draw[arr, dashed] (gold.south) |- (ds);
 \end{tikzpicture}
-\caption{Visão geral do processo de construção da base.}
+\caption{Visão geral do processo de construção da base de dados.}
 \label{fig:pipeline}
 \end{figure}
 
-\subsection{De onde vêm os dados}
-As plataformas de leitores mais usadas no Brasil, Goodreads e Skoob, não oferecem acesso programático aberto \cite{TODO-goodreads-api}. Escolhemos o \textbf{Hardcover}, que disponibiliza uma API com etiquetas de gênero, \emph{moods} (o ``clima'' do livro) e alertas de conteúdo, cada um com a contagem de leitores que o confirmou. Como o catálogo do Hardcover é mantido pelos próprios usuários e está majoritariamente em inglês, usamos o \textbf{Google Books} --- cuja API é aberta e cobre bem o mercado brasileiro --- para obter as edições em português, com sinopse, editora, ano, categorias e capa.
+\subsection{Fontes de dados}
+As plataformas sociais de leitura mais populares no Brasil, Goodreads e Skoob, não oferecem acesso programático aberto \cite{TODO-goodreads-api}. Optou-se, portanto, pelo \textbf{Hardcover}, que disponibiliza uma API GraphQL com etiquetas de gênero, \emph{moods} (atmosfera narrativa) e alertas de conteúdo, acompanhados do número de leitores que confirmaram cada marcação. Como o catálogo do Hardcover é mantido por usuários e concentra-se em obras em inglês, utilizou-se a API aberta do \textbf{Google Books}, que apresenta boa cobertura do mercado editorial brasileiro, para obter as edições em português (ISBN brasileiro, sinopse, editora, ano de publicação, categorias e imagem de capa).
 
-\subsection{Quais livros entram: as listas de busca}
+\subsection{Coleta e composição amostral}
 \label{sec:seed}
-Não é possível coletar ``todos os romances brasileiros''. Construímos, em vez disso, uma amostra intencional, pensada para conter tanto livros que \emph{provavelmente} têm conteúdo sensível quanto livros que \emph{provavelmente} não têm --- porque, para estudar discrepância, precisamos dos dois polos. As buscas foram feitas por quatro caminhos: (i)~\textbf{autoras}, mais de quinhentas, organizadas por subgênero (\emph{new adult}, \emph{dark romance}, comédia romântica, romance esportivo, romantasia, autoras nacionais) e incluindo grupos de \emph{controle} de autoras de ficção leve, juvenil e fantasia sem romance; (ii)~\textbf{termos} de busca, como nomes de gênero (``romance erótico''), tropos (``inimigos para amantes'') e, separadamente, termos de conteúdo (``conteúdo adulto''); (iii)~\textbf{editoras} brasileiras; e (iv)~\textbf{títulos} citados em listas do BookTok. Guardamos, para cada edição, por qual caminho ela entrou.
+Como não é viável enumerar exaustivamente todos os romances publicados no Brasil, construiu-se uma amostra intencional planejada para contemplar tanto obras com provável presença de conteúdo sensível quanto obras potencialmente mais leves, de modo a cobrir ambos os polos necessários ao estudo de discrepância. As consultas ao Google Books foram estruturadas em quatro caminhos: (i)~\textbf{autoras}, totalizando mais de quinhentos nomes organizados por subgênero (\emph{new adult}, \emph{dark romance}, comédia romântica, romance esportivo, romantasia e autoras nacionais), além de grupos de \emph{controle} de ficção contemporânea leve, literatura juvenil e fantasia sem foco romântico; (ii)~\textbf{termos} de busca referentes a subgêneros (``romance erótico''), tropos narrativos (``inimigos para amantes'') e, em categoria separada, termos explícitos de conteúdo (``conteúdo adulto''); (iii)~\textbf{editoras} brasileiras; e (iv)~\textbf{títulos} recorrentes em listas do BookTok. A origem de cada edição coletada é preservada como metadado.
 
-Esse último detalhe é mais importante do que parece. Se buscamos livros pela expressão ``conteúdo adulto'' e depois usamos a presença dessa expressão na sinopse como evidência de conteúdo adulto, estamos nos enganando: encontramos o que plantamos. Por isso o caminho ``termos de conteúdo'' é tratado como um estrato à parte, e a Seção~\ref{sec:triang} explica como impedimos que ele contamine o rótulo.
+O registro do canal de origem é essencial para evitar viés circular na rotulagem. Caso uma obra seja recuperada especificamente pela consulta ``conteúdo adulto'' e, posteriormente, a ocorrência dessa mesma expressão na sinopse seja empregada como evidência independente de conteúdo sensível, o procedimento apenas confirmaria o próprio critério de busca. Por essa razão, o canal ``termos de conteúdo'' é monitorado separadamente e recebe tratamento específico na etapa de rotulagem (Seção~\ref{sec:triang}).
 
-Ao todo, as buscas renderam \textbf{646 edições brasileiras} distintas.
+Ao todo, a etapa de coleta resultou em \textbf{646 edições brasileiras} distintas (todas provenientes dos canais de autoras e termos; as consultas por editoras e títulos não acrescentaram edições brasileiras válidas inéditas à amostra final).
 
-\subsection{Ligando a edição brasileira à obra original}
+\subsection{Ligação entre edição brasileira e obra original}
 \label{sec:ponte}
-Para cada edição, tentamos encontrar a obra correspondente no Hardcover em uma sequência de tentativas, da mais segura à mais arriscada:
+Para cada edição brasileira coletada, busca-se a obra correspondente no Hardcover por meio de uma cascata de estratégias em ordem decrescente de rigor:
 \begin{enumerate}
-  \item \textbf{Pelo ISBN.} Se o Hardcover conhece a edição brasileira pelo seu código, a ligação é certa. Isso funciona em menos da metade dos casos: plataformas internacionais raramente cadastram edições brasileiras.
-  \item \textbf{Pelo catálogo da autora.} Buscamos todas as obras da autora no Hardcover e comparamos o título brasileiro (depois de remover ruído como ``--- o dark romance que conquistou o TikTok'') com os títulos originais e alternativos. A comparação usa duas medidas: uma puramente textual, que funciona quando a tradução é próxima (\emph{Indigo Ridge} / \emph{Aconteceu em Indigo Ridge}), e uma semântica, baseada em um modelo de linguagem multilíngue, que reconhece que \emph{Quarta Asa} e \emph{Fourth Wing} significam a mesma coisa mesmo sem letras em comum. Para evitar confundir volumes de uma mesma série, exigimos que o melhor candidato esteja claramente à frente do segundo.
-  \item \textbf{Por busca textual}, como último recurso.
+  \item \textbf{Correspondência por ISBN.} Quando o Hardcover possui registro da edição brasileira pelo código ISBN, a associação é determinística. Essa etapa resolve menos da metade dos casos, pois catálogos internacionais raramente indexam edições brasileiras.
+  \item \textbf{Correspondência no catálogo da autora.} Recuperam-se todas as obras associadas à autora no Hardcover e compara-se o título brasileiro (após remoção de subtítulos promocionais, como ``o dark romance que conquistou o TikTok'') com títulos originais e alternativos. A comparação combina uma métrica lexical aproximada, eficaz em traduções próximas (\emph{Indigo Ridge} e \emph{Aconteceu em Indigo Ridge}), e uma métrica semântica baseada em \emph{embeddings} multilíngues, capaz de alinhar traduções não literais ou sem sobreposição lexical (\emph{Quarta Asa} e \emph{Fourth Wing}). Para reduzir confusões entre volumes de uma mesma série, exige-se uma margem mínima entre o primeiro e o segundo melhores candidatos.
+  \item \textbf{Busca textual geral}, utilizada como último recurso quando as etapas anteriores não retornam correspondência.
 \end{enumerate}
-Em todas as etapas há uma verificação de autoria propositalmente rigorosa, que impede, por exemplo, que um livro de \emph{Christina Lauren} seja ligado a um de \emph{Lauren Asher}. E toda ligação que não veio do ISBN é marcada para revisão humana --- preferimos saber onde o processo pode ter errado a fingir que ele é infalível. Os limiares numéricos usados nas comparações foram fixados antes de ver os resultados e estão documentados no código.
+Em todas as etapas aplica-se uma verificação rigorosa de autoria, evitando associações equivocadas entre autoras com nomes parcialmente coincidentes (por exemplo, \emph{Christina Lauren} e \emph{Lauren Asher}). Além disso, todas as ligações não obtidas via ISBN são sinalizadas para auditoria manual, permitindo estimar a precisão das etapas probabilísticas. Os limiares de aceitação foram fixados previamente e encontram-se documentados no código-fonte.
 
-\subsection{Os quatro eixos de conteúdo sensível}
+\subsection{Taxonomia de conteúdo sensível}
 \label{sec:taxonomia}
-Quatro eixos foram definidos, descritos na Tabela~\ref{tab:eixos}. Para cada um, escrevemos um vocabulário explícito em duas línguas: os termos que os leitores usam no Hardcover (em inglês) e os termos que aparecem em sinopses brasileiras (em português). O vocabulário completo está no Apêndice~B, e duas escolhas merecem registro. Primeiro, violência sexual (``estupro'', \emph{rape}) conta em dois eixos ao mesmo tempo, porque é simultaneamente conteúdo sexual e tema de abuso. Segundo, palavras genéricas demais, como \emph{war} ou \emph{death}, ficaram de fora do eixo de violência: elas aparecem em qualquer fantasia épica e diriam pouco sobre adequação.
+Definiram-se quatro eixos temáticos de conteúdo sensível, sintetizados na Tabela~\ref{tab:eixos}. Para cada eixo, elaborou-se um vocabulário explícito bilíngue contemplando os termos utilizados por leitores no Hardcover (inglês) e as expressões empregadas em sinopses brasileiras (português). O léxico completo consta no Apêndice~B. Duas decisões taxonômicas merecem destaque: em primeiro lugar, termos relacionados à violência sexual (como ``estupro'' e \emph{rape}) são computados simultaneamente nos eixos de sexo e de abuso, por envolverem ambas as dimensões; em segundo lugar, termos excessivamente genéricos, como \emph{war} ou \emph{death}, foram excluídos do eixo de violência por ocorrerem amplamente em obras de fantasia sem indicar necessariamente conteúdo gráfico ou inadequação etária.
 
 \begin{table}[H]
 \centering\small
-\caption{Os quatro eixos de conteúdo sensível e exemplos do vocabulário usado para detectá-los.}
+\caption{Os quatro eixos de conteúdo sensível e exemplos do vocabulário utilizado em sua detecção.}
 \label{tab:eixos}
 \begin{tabular}{lp{5.2cm}p{5.2cm}}
 \toprule
-\textbf{Eixo} & \textbf{Como os leitores marcam (EN)} & \textbf{Como a sinopse diz (PT)} \\
+\textbf{Eixo} & \textbf{Termos da comunidade (EN)} & \textbf{Termos na sinopse (PT)} \\
 \midrule
 1. Sexo e erotismo & \emph{sexual content, explicit, steamy, open door, dark romance, rape} & conteúdo adulto, cenas quentes, +18, erótico, estupro \\
 2. Drogas e álcool & \emph{alcohol, alcoholism, drinking, drug use, addiction, overdose} & alcoolismo, embriaguez, bebidas alcoólicas, uso de drogas, dependência química \\
@@ -191,169 +193,169 @@ Quatro eixos foram definidos, descritos na Tabela~\ref{tab:eixos}. Para cada um,
 \end{tabular}
 \end{table}
 
-\subsection{Como chegamos a um rótulo por obra}
+\subsection{Rotulagem por combinação de evidências}
 \label{sec:triang}
-Nenhuma fonte de informação, sozinha, é confiável. A classificação etária do Google Books quase nunca é preenchida. A sinopse suaviza o conteúdo --- é parte do fenômeno que estudamos. As etiquetas dos leitores são ricas para livros populares e inexistentes para os demais. A solução foi fazer cada fonte ``votar'' separadamente e só confiar no resultado quando há convergência. Cinco fontes votam \emph{alto}, \emph{baixo} ou se abstêm: a escala de intensidade erótica derivada das etiquetas; o vocabulário dos quatro eixos nas etiquetas; o vocabulário dos quatro eixos na sinopse brasileira; a classificação etária do Google Books; e os alertas de conteúdo dos leitores.
+Isoladamente, cada fonte de metadados apresenta limitações relevantes: a classificação etária do Google Books possui baixa cobertura, a sinopse editorial tende a atenuar ou omitir temas sensíveis, e as etiquetas comunitárias concentram-se em obras populares. Para lidar com essas lacunas, adotou-se um esquema de triangulação no qual cinco fontes emitem votos independentes (\emph{alto}, \emph{baixo} ou abstenção): (i)~a escala de intensidade erótica inferida a partir das etiquetas; (ii)~o vocabulário dos quatro eixos aplicado às etiquetas e gêneros; (iii)~o vocabulário dos quatro eixos aplicado à sinopse brasileira; (iv)~a classificação etária do Google Books; e (v)~os alertas de conteúdo registrados por leitores.
 
-Os votos são então combinados por um conjunto de regras simples, aplicadas em ordem, que produzem um de quatro rótulos:
+Os votos são agregados por um conjunto ordenado de regras de decisão que atribuem um dentre quatro rótulos por obra:
 \begin{itemize}
-  \item \textbf{alto}: há evidência de conteúdo sensível. Chamamos de \emph{forte} quando duas fontes independentes concordam ou há um alerta explícito dos leitores, e de \emph{fraca} quando só uma fonte se manifestou;
-  \item \textbf{baixo}: há evidência explícita de que o livro é leve (etiquetas como \emph{closed door} ou ``romance clean'');
-  \item \textbf{provavelmente baixo}: nenhuma fonte se manifestou, mas o livro é catalogado como juvenil \emph{e} tem leitores suficientes para que, se houvesse algo a alertar, alguém provavelmente já teria alertado. Este rótulo é uma inferência, não uma medição, e é tratado como tal;
-  \item \textbf{indeterminado}: não há evidência suficiente para dizer nada.
+  \item \textbf{alto}: há evidência de conteúdo sensível. Classifica-se a confiança como \emph{forte} quando há concordância entre pelo menos duas famílias independentes de evidência ou presença de alerta explícito de leitores, e como \emph{fraca} quando apenas uma família se manifesta;
+  \item \textbf{baixo}: há evidência explícita de conteúdo leve, indicada por termos como \emph{closed door} ou ``romance clean'';
+  \item \textbf{provavelmente baixo}: nenhuma fonte sinaliza conteúdo sensível, mas a obra é catalogada como juvenil (\emph{young adult}) \emph{e} apresenta volume suficiente de registros em estantes e de etiquetas para sugerir que eventuais alertas tenderiam a ter sido registrados. Trata-se de uma inferência indireta, e não de uma observação direta;
+  \item \textbf{indeterminado}: a evidência disponível é insuficiente para classificação.
 \end{itemize}
 
-Três decisões de desenho merecem explicação porque vão contra o instinto de ``preencher todas as linhas''. A primeira é a \textbf{abstenção}: a ausência de evidência nunca vira ``baixo''. Dada a escassez de etiquetas em livros pouco lidos, qualquer outra escolha rotularia como leves exatamente os livros sobre os quais menos sabemos. A segunda é a \textbf{guarda contra circularidade}: se a única evidência de um livro é a sinopse, e esse livro entrou na amostra porque buscamos ``conteúdo adulto'', essa evidência não vale sozinha --- ela foi plantada pela própria busca. A terceira é que geramos também um \textbf{rótulo que ignora a sinopse}. Ele existe para o futuro: se um modelo for treinado para prever conteúdo a partir da sinopse, usar como alvo um rótulo que já leu a sinopse seria trapaça.
+Três escolhas de projeto orientam essa arquitetura. A primeira é a \textbf{abstenção explícita}: a ausência de evidência nunca é convertida automaticamente em rótulo \emph{baixo}, evitando classificar obras presentes em poucas estantes como leves apenas por escassez de registros. A segunda é a \textbf{guarda contra circularidade}: quando a sinopse é a única evidência disponível em uma obra coletada pelo canal ``termos de conteúdo'', esse voto não é suficiente para definir o rótulo, pois decorre do próprio critério de busca. A terceira é a geração paralela de um \textbf{rótulo sem sinopse}, destinado a experimentos futuros de classificação textual, de modo a evitar vazamento de dados (\emph{data leakage}) caso um modelo utilize a sinopse como entrada.
 
-\subsection{Como verificamos se o rótulo é confiável}
+\subsection{Protocolo de avaliação e validação}
 \label{sec:validacao}
-Um rótulo automático precisa ser testado. Fazemos isso de duas maneiras. A primeira é \textbf{humana}: duas pessoas, sem ver o rótulo automático, classificam 96 obras sorteadas de todos os níveis de popularidade, eixo por eixo, e uma amostra das ligações edição--obra é conferida manualmente. Isso permite medir quanto os anotadores concordam entre si e quão frequentemente o rótulo automático acerta. O protocolo está no Apêndice~C e a anotação está em andamento. A segunda é \textbf{interna}: removemos cada fonte de evidência por vez e observamos quanto o rótulo muda (\emph{ablação}); variamos os parâmetros de decisão e observamos a estabilidade (\emph{sensibilidade}); e medimos quanto as fontes concordam entre si quando mais de uma se manifesta.
+A confiabilidade do rótulo automático é avaliada sob duas frentes complementares. Na avaliação \textbf{humana}, dois anotadores classificam de forma independente e cega ao rótulo automático uma amostra estratificada de 96 obras distribuídas por diferentes faixas de popularidade, avaliando cada eixo individualmente; em paralelo, realiza-se a auditoria manual de uma amostra das ligações entre edição e obra. Esse protocolo permite mensurar a concordância entre anotadores e o desempenho do rótulo automático frente ao consenso humano (Apêndice~C; anotação em andamento). Na avaliação \textbf{interna}, mede-se a contribuição de cada fonte por meio de ablação (remoção individual de fontes e uso isolado de cada uma), analisa-se a estabilidade frente à variação dos limiares de decisão (análise de sensibilidade) e verifica-se o grau de concordância entre fontes quando mais de uma emite voto.
 
 % =========================================================================
-\section{O que encontramos --- e o que isso significa}
+\section{Resultados}
 \label{sec:resultados}
 
-\subsection{Do que coletamos ao que conseguimos usar}
+\subsection{Funil de coleta e cobertura da ligação}
 \label{sec:res-funil}
-Das 646 edições coletadas, conseguimos ligar 291 (45\%) a uma obra no Hardcover (Figura~\ref{fig:funil}). O número parece baixo, mas o padrão da perda é mais revelador que a perda em si: três em cada quatro edições encontradas pelo nome da autora foram ligadas, contra apenas uma em cada quatro das encontradas por termos de conteúdo. Em outras palavras, os livros mais explícitos do catálogo brasileiro --- frequentemente de autoras nacionais ou autopublicados --- são justamente os que menos existem na plataforma internacional. Isso tem uma consequência direta: a base final tende a conter mais autoras estrangeiras traduzidas por editoras grandes, e menos do que há de mais ``de nicho'' no mercado nacional. Qualquer conclusão sobre ``o mercado brasileiro'' deve ser lida com essa ressalva.
+Das 646 edições brasileiras coletadas no Google Books, 291 (45\%) foram associadas a uma obra no Hardcover (Figura~\ref{fig:funil}). Mais relevante que a taxa global de perda é a sua assimetria entre canais de origem: aproximadamente três em cada quatro edições coletadas pelo nome da autora foram ligadas com sucesso, frente a apenas uma em cada quatro entre aquelas recuperadas por termos de conteúdo. Esse padrão indica que títulos de nicho, obras autopublicadas e autoras nacionais apresentam menor presença na plataforma internacional. Consequentemente, a base resultante possui maior representatividade de autoras estrangeiras traduzidas por editoras tradicionais, ressalva que deve acompanhar qualquer interpretação sobre o mercado brasileiro.
 
-Após excluir edições anteriores a 2015 e agrupar reedições da mesma obra, a base final tem \textbf{251 obras} em 261 edições, publicadas por 49 editoras.
+Após a exclusão de edições anteriores a 2015 e o agrupamento de reedições pertencentes à mesma obra (modelo FRBR), a base consolidada reúne \textbf{251 obras únicas} correspondentes a 261 edições, publicadas por 49 editoras.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_16_funil.pdf}
-\caption{Quantos livros sobrevivem a cada etapa, da coleta ao rótulo definido.}
+\caption{Número de registros mantidos em cada etapa, da coleta inicial à atribuição do rótulo.}
 \label{fig:funil}
 \end{figure}
 
-\subsection{A informação dos leitores depende da popularidade}
+\subsection{Relação entre cobertura de etiquetas e popularidade}
 \label{sec:res-mnar}
-Este é, talvez, o resultado que mais condiciona tudo o mais. Dividimos as obras em quatro faixas fixas pelo número de leitores que as registraram no Hardcover --- menos de 10; de 10 a 99; de 100 a 999; 1\,000 ou mais (83, 39, 100 e 29 obras, respectivamente) --- e contamos quantas têm algum alerta de conteúdo. Na faixa menos lida, praticamente nenhuma (1,2\%). Na mais lida, quase todas (90\%). Os cortes seguem ordens de grandeza, e não quartis, por uma razão prática: 67 obras têm no máximo dois leitores, de modo que qualquer divisão em grupos de tamanho igual separaria arbitrariamente livros indistinguíveis em popularidade. A Figura~\ref{fig:cobertura} mostra o mesmo padrão para todos os tipos de etiqueta, e a correlação entre número de leitores e quantidade de etiquetas é altíssima ($\rho = 0{,}92$).
+A disponibilidade de anotações comunitárias varia fortemente conforme a popularidade da obra no Hardcover, medida pelo número de usuários que adicionaram o livro à sua estante na plataforma (incluindo listas de leitura futura, em andamento ou concluída). Agrupando as 251 obras em quatro faixas fixas segundo essa contagem (menos de 10; de 10 a 99; de 100 a 999; e 1\,000 ou mais usuários, contendo respectivamente 83, 39, 100 e 29 obras), observa-se que a proporção de obras com ao menos um alerta de conteúdo sobe de 1,2\% na faixa menos popular para 90\% na faixa mais popular. A opção por cortes em ordens de grandeza, em vez de quartis, decorre da concentração na cauda inferior: 67 obras foram adicionadas à estante por no máximo dois usuários, de forma que divisões em grupos de igual tamanho separariam arbitrariamente obras com popularidade idêntica. A Figura~\ref{fig:cobertura} mostra o mesmo comportamento monotônico para todos os tipos de etiqueta, com forte correlação entre o número de usuários com a obra na estante e o total de etiquetas registradas ($\rho = 0{,}92$).
 
-O que isso significa na prática: se um livro pouco lido não tem alerta de violência, não sabemos se é porque não há violência ou porque ninguém o marcou. É exatamente a situação de dado faltante não aleatório descrita na Seção~\ref{sec:fund}, e é a razão pela qual nosso rótulo admite ``indeterminado'' em vez de forçar uma resposta.
+Do ponto de vista metodológico, esse padrão confirma que a ausência de alertas em obras presentes em poucas estantes não permite distinguir ausência real de conteúdo sensível de ausência de registro comunitário. Trata-se de uma instância concreta de dados faltantes não aleatórios (Seção~\ref{sec:fund}), o que justifica a adoção da categoria \emph{indeterminado}.
 
-Temos também uma evidência direta de que essa informação está em movimento. Comparando duas coletas das mesmas 281 obras, separadas por catorze dias (1º e 15 de novembro de 2026), 197 ganharam leitores, 114 ganharam etiquetas e 11 ganharam alertas de conteúdo --- uma delas saindo de nenhum alerta para algum. E o crescimento acompanha a popularidade: na faixa com menos de dez leitores, a mediana de novos leitores foi zero; na faixa com mil ou mais, foi 159. Em duas semanas, o livro invisível continuou invisível e o livro popular acumulou ainda mais informação. ``Sem alerta'' é, portanto, um estado transitório, e a sua probabilidade de persistir depende de quão pouco lido o livro é.
+A comparação longitudinal entre dois instantâneos das mesmas 281 obras, separados por catorze dias (1º e 15 de novembro de 2026), reforça essa constatação. Nesse período, 197 obras foram adicionadas a novas estantes, 114 receberam novas etiquetas e 11 passaram a contar com novos alertas de conteúdo, sendo que uma delas deixou de não ter nenhum alerta para apresentar registro explícito. O ritmo de atualização acompanha a popularidade: na faixa com menos de dez usuários com a obra na estante, a mediana de novas adições foi zero, enquanto na faixa com mil ou mais usuários a mediana atingiu 159. Assim, a condição de ausência de alerta mostra-se transitória, com probabilidade de permanência diretamente associada à baixa visibilidade da obra.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.8\textwidth]{fig_11_cobertura_popularidade.pdf}
-\caption{Fração de obras que têm ao menos uma etiqueta de cada tipo, por faixa de popularidade (número de leitores no Hardcover). Quanto menos lido o livro, menos sabemos sobre ele.}
+\caption{Fração de obras com ao menos uma etiqueta de cada tipo por faixa de popularidade (número de usuários com a obra na estante no Hardcover).}
 \label{fig:cobertura}
 \end{figure}
 
-\subsection{O que o rótulo diz sobre as 252 obras}
+\subsection{Distribuição dos rótulos na base resultante}
 \label{sec:res-rotulo}
-Pouco mais de quatro em cada dez obras (110, ou 44\%) receberam o rótulo \emph{alto} --- 67 com evidência forte e 43 com evidência fraca. Dezesseis (6\%) foram classificadas como \emph{provavelmente baixo}. E metade (125, ou 50\%) ficou \emph{indeterminada} (Figura~\ref{fig:label}). Esse último número não é uma falha do método; é o método funcionando. Os indeterminados concentram-se nos grupos menos lidos (104 dos 128 estão na metade menos popular), exatamente onde faltam etiquetas.
+Entre as 251 obras consolidadas, 110 (44\%) receberam o rótulo \emph{alto}, sendo 67 com confiança forte e 43 com confiança fraca; 16 (6\%) foram classificadas como \emph{provavelmente baixo}; e 125 (50\%) permaneceram como \emph{indeterminado} (Figura~\ref{fig:label}). A elevada proporção de obras indeterminadas decorre diretamente da política de abstenção diante da baixa cobertura de metadados: 101 das 125 obras indeterminadas encontram-se nas duas faixas com menos de 100 usuários com a obra na estante.
 
-Um dado chama a atenção: \textbf{nenhuma obra recebeu o rótulo ``baixo''}. Etiquetas que indicariam explicitamente um livro leve (\emph{closed door}, \emph{clean romance}) simplesmente não ocorrem na amostra. Isso revela algo sobre a cultura das plataformas --- leitores avisam sobre o que há, não sobre o que não há --- e tem uma implicação metodológica que discutimos na Seção~\ref{sec:discussao}: nosso rótulo detecta presença de sinal, nunca ausência de conteúdo.
+Destaca-se ainda que \textbf{nenhuma obra recebeu o rótulo \emph{baixo}}. Etiquetas que sinalizam explicitamente conteúdo leve (\emph{closed door}, \emph{clean romance}) não ocorreram na amostra analisada. Esse comportamento reflete uma característica das folksonomias literárias, nas quais os leitores tendem a registrar a presença de elementos sensíveis, mas raramente registram sua ausência. Como consequência, o esquema de rotulagem detecta presença de evidência positiva, mas não fornece comprovação direta de ausência de conteúdo (Seção~\ref{sec:discussao}).
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.85\textwidth]{fig_14_spice_label.pdf}
-\caption{Distribuição do rótulo nas 251 obras, por grau de confiança.}
+\caption{Distribuição do rótulo de conteúdo sensível nas 251 obras, estratificada por nível de confiança.}
 \label{fig:label}
 \end{figure}
 
-A proporção de obras \emph{alto} sobe de 11\% na faixa menos lida para 90\% na mais lida (Figura~\ref{fig:pop}). Seria tentador concluir que livros populares são mais explícitos. Parte disso pode ser verdade, mas parte é apenas o efeito da Seção~\ref{sec:res-mnar}: nos livros populares, o conteúdo sensível é \emph{visível}; nos demais, pode existir sem ser registrado. Separar os dois efeitos exigirá a validação humana.
+A fração de obras classificadas como \emph{alto} eleva-se de 11\% na faixa menos popular para 90\% na faixa mais popular (Figura~\ref{fig:pop}). Esse resultado não permite inferir que obras populares sejam necessariamente mais explícitas: parte do gradiente pode refletir diferenças reais de conteúdo, mas parte substancial decorre da maior visibilidade e cobertura de anotações discutida na Seção~\ref{sec:res-mnar}. A separação entre ambos os efeitos dependerá da conclusão da validação humana.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_12_spice_vs_popularidade.pdf}
-\caption{Proporção de obras com rótulo \emph{alto} (a) e com sinal erótico explícito (b), por faixa de popularidade (número de leitores no Hardcover; cortes fixos por ordem de grandeza). As barras verticais indicam a incerteza estatística (IC de Wilson, 95\%).}
+\caption{Proporção de obras com rótulo \emph{alto} (a) e com sinal erótico explícito (b) por faixa de popularidade (número de usuários com a obra na estante no Hardcover, em cortes fixos por ordem de grandeza). As barras verticais representam intervalos de confiança de Wilson (95\%).}
 \label{fig:pop}
 \end{figure}
 
-A nota média atribuída pelos leitores, por outro lado, não distingue as obras (Figura~\ref{fig:nota}). Restringindo a análise às 149 obras com ao menos dez avaliações --- notas com um ou dois votos são ruído: todas as dez obras com média 5,0 têm no máximo três votos --- a proporção de rótulo \emph{alto} fica entre 61\% e 71\% nas três faixas de nota, com intervalos amplamente sobrepostos. O mesmo vale para o sinal erótico. Registramos o resultado por ser descritivo e porque a nota é uma variável óbvia a se perguntar; mas ele não autoriza nenhuma leitura causal, e a restrição a obras bem avaliadas em número torna essa subamostra, por construção, mais popular que o conjunto.
+Em contraste com a popularidade, a nota média atribuída pelos leitores não discrimina o rótulo das obras (Figura~\ref{fig:nota}). Restringindo a análise às 149 obras com ao menos dez avaliações (para evitar a variância excessiva de notas baseadas em pouquíssimos votos, dado que todas as dez obras com média 5,0 possuem no máximo três avaliações), a proporção de obras rotuladas como \emph{alto} varia entre 61\% e 71\% nas três faixas de nota, com ampla sobreposição dos intervalos de confiança. Comportamento semelhante é observado para o sinal erótico. O achado tem caráter estritamente descritivo, e a exigência mínima de dez avaliações seleciona, por construção, um subconjunto mais popular que a base completa.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_12b_spice_vs_nota.pdf}
-\caption{Proporção de obras com rótulo \emph{alto} (a) e com sinal erótico explícito (b), por faixa de nota média no Hardcover, apenas entre as 149 obras com dez ou mais avaliações. As barras verticais indicam a incerteza estatística (IC de Wilson, 95\%).}
+\caption{Proporção de obras com rótulo \emph{alto} (a) e com sinal erótico explícito (b) por faixa de nota média no Hardcover, considerando as 149 obras com dez ou mais avaliações. As barras verticais representam intervalos de confiança de Wilson (95\%).}
 \label{fig:nota}
 \end{figure}
 
-\subsection{Quais eixos aparecem, e como se combinam}
-Olhando eixo a eixo (Figura~\ref{fig:eixos}), cerca de quatro em cada dez obras (102, ou 41\%) apresentam algum sinal sensível. O eixo mais frequente é, como esperado para romances, o sexual (um terço das obras). Mas violência e abuso aparecem cada um em cerca de 15\% das obras, e drogas e álcool em 7\% --- frequências nada desprezíveis para livros vendidos com capas juvenis. E os eixos raramente vêm sozinhos: metade das obras sensíveis acumula dois ou mais, com a combinação ``sexo + violência + abuso'' sendo a segunda mais comum (Figura~\ref{fig:cooc}). ``Conteúdo sensível'', portanto, não é uma coisa só, e um estudo que olhasse apenas para o erotismo perderia boa parte do quadro.
+\subsection{Prevalência e coocorrência dos eixos de conteúdo}
+Analisando os quatro eixos separadamente (Figura~\ref{fig:eixos}), 102 das 251 obras (41\%) apresentam sinal em ao menos um eixo sensível. O eixo mais frequente é o sexual (35\% das obras), seguido por violência e abuso/gatilhos (cerca de 15\% cada) e por drogas e álcool (7\%). Além disso, os temas frequentemente ocorrem em conjunto: metade das obras com sinal sensível acumula dois ou mais eixos, sendo a combinação ``sexo + violência + abuso'' a segunda mais recorrente na amostra (Figura~\ref{fig:cooc}). Esses números indicam que o fenômeno de conteúdo sensível em romances ultrapassa a dimensão erótica, abrangendo também temáticas de violência, abuso e consumo de substâncias.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_15_eixos_sensiveis.pdf}
-\caption{Quantas obras apresentam cada eixo de conteúdo sensível. Uma obra pode contar em mais de um eixo.}
+\caption{Prevalência de cada eixo de conteúdo sensível nas 251 obras. Uma mesma obra pode ativar múltiplos eixos.}
 \label{fig:eixos}
 \end{figure}
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_18_coocorrencia.pdf}
-\caption{(a) Quanto os eixos se sobrepõem; (b) quantas obras têm um, dois, três ou quatro eixos ao mesmo tempo.}
+\caption{(a) Sobreposição entre os eixos de conteúdo sensível (índice de Jaccard); (b) distribuição do número de eixos presentes simultaneamente por obra.}
 \label{fig:cooc}
 \end{figure}
 
-\subsection{A sinopse não avisa}
+\subsection{Omissão de temas sensíveis nas sinopses brasileiras}
 \label{sec:res-omissao}
-Este é o resultado mais diretamente ligado à motivação do trabalho. Tomamos as 60 obras em que os leitores registraram alerta de conteúdo em ao menos um dos quatro eixos e que possuem sinopse brasileira, e perguntamos: a sinopse menciona esse tema? Em 41 delas (68\%), não --- nenhuma palavra do vocabulário correspondente aparece. Por eixo, o silêncio é ainda mais eloquente (Figura~\ref{fig:omissao}): a sinopse omite o tema em três de cada quatro livros com alerta sexual, em mais de nove em cada dez com alerta de violência ou de abuso, e em \emph{todos} os dezessete livros com alerta de drogas ou álcool.
+Para avaliar em que medida a apresentação textual brasileira informa o leitor sobre temas sensíveis, selecionaram-se as 60 obras que possuem simultaneamente sinopse em português e alerta comunitário em ao menos um dos quatro eixos, verificando se a sinopse contém algum termo do vocabulário correspondente. Em 41 dessas 60 obras (68\%), o tema sinalizado pelos leitores não é mencionado na sinopse. A desagregação por eixo evidencia taxas de omissão ainda mais elevadas (Figura~\ref{fig:omissao}): 74\% nas obras com alerta sexual, 94\% nas obras com alerta de violência ou de abuso, e 100\% nas dezessete obras com alerta relacionado a drogas ou álcool.
 
-Existe, é verdade, uma fórmula editorial de aviso: ``conteúdo adulto'' é o bigrama mais frequente de todas as sinopses, presente em 33 obras (Figura~\ref{fig:bigramas}). Mas esse número engana. Um dos caminhos de busca usou exatamente essa expressão; excluindo as obras que entraram por ele, a fórmula sobrevive em apenas 7 sinopses --- menos do que ``comédia romântica'' (19) ou ``segunda chance'' (13), que não são afetadas pela exclusão. Em outras palavras, encontramos o aviso sobretudo porque o procuramos. Deixado a si mesmo, o vocabulário das sinopses é o dos tropos de romance, não o da advertência ao leitor. Isso é coerente com o resultado de omissão acima e é a razão de o rótulo tratar a sinopse dessas obras como evidência não independente (Seção~\ref{sec:triang}).
+Embora a expressão ``conteúdo adulto'' apareça como o bigrama mais frequente no conjunto geral das sinopses, ocorrendo em 33 obras (Figura~\ref{fig:bigramas}), essa frequência é fortemente influenciada pela estratégia de coleta. Ao excluir as obras recuperadas pelo canal de termos de conteúdo, a ocorrência da expressão cai para apenas 7 sinopses, ficando abaixo de termos característicos de gênero e tropos narrativos, como ``comédia romântica'' (19) e ``segunda chance'' (13), que são pouco afetados pela exclusão. Esse resultado indica que o vocabulário típico das sinopses privilegia elementos de enredo e marketing de gênero em vez de advertências de conteúdo, reforçando tanto o achado de omissão quanto a necessidade da guarda contra circularidade adotada na Seção~\ref{sec:triang}.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.9\textwidth]{fig_20_bigramas_sinopse.pdf}
-\caption{Os seis bigramas mais frequentes nas sinopses brasileiras (número de obras em que aparecem), em todas as obras e excluindo as que foram localizadas por um termo de busca de conteúdo. A queda de ``conteúdo adulto'' de 33 para 7 mede o quanto a frequência é artefato da própria coleta.}
+\caption{Os seis bigramas mais frequentes nas sinopses brasileiras (número de obras em que ocorrem), no conjunto completo e após a exclusão das obras coletadas por termos de busca de conteúdo.}
 \label{fig:bigramas}
 \end{figure}
 
-É preciso cautela na interpretação: nosso vocabulário em português pode não capturar todas as formas de mencionar um tema, e a sinopse não tem a obrigação de ser um aviso de conteúdo. Ainda assim, o padrão é consistente e forte. Ele confirma, com números, a premissa de que o leitor que decide pela capa e pela sinopse decide com informação incompleta --- e sugere que a omissão é maior justamente nos temas menos ``vendáveis''.
+A interpretação desses resultados requer cautela: o vocabulário em português pode não abranger todas as formulações indiretas utilizadas em sinopses, e a sinopse comercial não tem a função formal de aviso de conteúdo. Ainda assim, a magnitude e a consistência do padrão confirmam quantitativamente que a sinopse brasileira não constitui uma fonte confiável para inferir a presença de temas sensíveis, especialmente em eixos menos convencionais na divulgação comercial de romances.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_19_omissao_editorial.pdf}
-\caption{Entre as obras que os leitores marcaram com alerta de cada tipo, a fração cuja sinopse brasileira não menciona o tema.}
+\caption{Proporção de obras com alerta comunitário em cada eixo cuja sinopse brasileira não menciona o tema correspondente.}
 \label{fig:omissao}
 \end{figure}
 
-\subsection{O rótulo é robusto?}
+\subsection{Robustez do rótulo: ablação, sensibilidade e concordância}
 \label{sec:res-robustez}
-Removendo uma fonte de evidência por vez, descobrimos quem sustenta o rótulo (Figura~\ref{fig:ablacao}). As etiquetas de gênero e vocabulário quase não fazem diferença. A sinopse muda o rótulo de 9 obras; a classificação etária, de 22. Os alertas de conteúdo dos leitores são de longe a fonte mais importante: sem eles, as decisões ``fortes'' caem de 66 para 15. Por outro lado, nenhuma fonte isolada reproduz o resultado completo --- a melhor delas, sozinha, erra em 46 obras. É o argumento empírico para combinar fontes em vez de escolher uma.
+O estudo de ablação (Figura~\ref{fig:ablacao}) quantifica a contribuição de cada fonte para o rótulo final. A retirada isolada das etiquetas eróticas ou do vocabulário nas etiquetas altera poucas obras (1 e 5 obras, respectivamente). A remoção da sinopse altera o rótulo de 9 obras, e a da classificação etária do Google Books altera 21 obras. Os alertas de conteúdo dos leitores configuram a fonte de maior peso: sem eles, 36 obras mudam de rótulo e o número de classificações \emph{alto} com confiança forte cai de 67 para 14. Por outro lado, nenhuma fonte isolada reproduz o conjunto completo; mesmo utilizando apenas os alertas de conteúdo, 49 obras mudam de rótulo em relação ao modelo de cinco fontes. Esses resultados sustentam empiricamente a estratégia de combinação de múltiplas evidências.
 
-Variando os parâmetros de decisão, o número de obras \emph{alto} não se altera, como esperado; apenas o rótulo \emph{provavelmente baixo}, por ser uma inferência, oscila entre 8 e 19 obras conforme o limiar de popularidade. Reportamos essa variação para que o leitor saiba que ela existe.
+Na análise de sensibilidade, a variação dos limiares de popularidade não modifica o número de obras classificadas como \emph{alto}, conforme esperado pela estrutura das regras. Apenas a categoria \emph{provavelmente baixo}, por depender do critério de cobertura comunitária, varia entre 7 e 19 obras conforme o percentil adotado.
 
-Por fim, nas 49 obras em que duas ou mais fontes se manifestaram, \emph{todas} concordaram. Isso parece ótimo, mas é enganoso: concordaram porque todas disseram ``alto''. Nunca houve uma fonte dizendo ``baixo'' para outra discordar. É mais uma face do mesmo fato --- o sistema não tem um polo negativo mensurável.
+Quanto à concordância interna, nas 49 obras em que duas ou mais fontes emitiram voto, observou-se 100\% de concordância. Contudo, essa unanimidade deve ser interpretada com reserva: ela ocorre porque todas as fontes ativas votaram \emph{alto}, sem que houvesse votos \emph{baixo} para gerar divergência. Trata-se de outra manifestação do caráter assimétrico dos dados, nos quais apenas o polo positivo é efetivamente observado.
 
 \begin{figure}[H]
 \centering\includegraphics[width=0.95\textwidth]{fig_17_ablacao.pdf}
-\caption{O que acontece com o rótulo quando removemos cada fonte de evidência. $\Delta$ indica quantas obras mudam de rótulo.}
+\caption{Variação na distribuição dos rótulos ao remover ou isolar cada fonte de evidência. $\Delta$ indica o número de obras cujo rótulo se altera em relação à configuração completa.}
 \label{fig:ablacao}
 \end{figure}
 
 \subsection{Validação humana}
 \label{sec:res-gold}
-\emph{(Em andamento. Esta seção reportará quanto os dois anotadores concordaram entre si, com que frequência o rótulo automático coincidiu com o julgamento humano, eixo por eixo, e qual a precisão da ligação edição--obra conferida manualmente.)}
+\emph{(Em andamento. Esta seção reportará a concordância inter-anotadores, a precisão e a revocação do rótulo automático frente ao consenso humano em cada eixo, bem como a precisão das ligações entre edição e obra conferidas manualmente.)}
 
 % =========================================================================
-\section{Discussão: o que esta base pode e não pode dizer}
+\section{Discussão}
 \label{sec:discussao}
 
-\subsection{Como ler o rótulo}
-O rótulo \emph{alto} significa ``há evidência convergente de conteúdo sensível''. O rótulo \emph{indeterminado} significa ``não há evidência'' --- e isso inclui tanto livros realmente leves quanto livros sensíveis que ninguém marcou. O rótulo \emph{provavelmente baixo} é uma aposta informada, não uma constatação, e usá-lo como se fosse um ``negativo confirmado'' em um estudo de capas seria raciocinar em círculo: estaríamos assumindo que capa juvenil implica conteúdo leve, que é precisamente a hipótese que queremos testar. Em termos técnicos, a base é \emph{positive-unlabelled}: serve para estudar o que tem sinal, não para afirmar o que não tem.
+\subsection{Interpretação do rótulo}
+Na leitura da base produzida, o rótulo \emph{alto} indica presença de evidência convergente de conteúdo sensível, enquanto \emph{indeterminado} indica ausência de evidência suficiente, podendo englobar tanto obras leves quanto obras sensíveis ainda não anotadas por leitores. O rótulo \emph{provavelmente baixo} representa uma inferência indireta, e não uma observação confirmada de leveza; utilizá-lo como classe negativa definitiva em um estudo de capas incorreria em circularidade, ao pressupor que a catalogação juvenil implica conteúdo leve, hipótese que a etapa seguinte pretende justamente testar. Em termos formais, a base caracteriza-se como um conjunto \emph{positive-unlabelled}: adequada para identificar presença de sinal sensível, mas não para certificar sua ausência sem validação humana adicional.
 
-\subsection{Limites}
-\textbf{Popularidade confunde.} Como vimos, livros populares têm mais etiquetas e, por isso, mais rótulos \emph{alto}. Qualquer análise futura que relacione capa e conteúdo precisa controlar a popularidade, sob pena de ``descobrir'' que capas de livros famosos são mais discrepantes apenas porque sabemos mais sobre livros famosos.
+\subsection{Limitações}
+\textbf{Viés de popularidade.} Como demonstrado na Seção~\ref{sec:res-mnar}, obras mais populares acumulam mais etiquetas e apresentam maior probabilidade de receber o rótulo \emph{alto}. Qualquer análise subsequente que relacione atributos visuais da capa ao conteúdo deverá incluir a popularidade como variável de controle, evitando confundir maior disponibilidade de metadados com maior incidência real de conteúdo sensível.
 
-\textbf{A amostra não é o mercado.} Perdemos mais da metade das edições na ligação com o Hardcover, e perdemos de forma desigual: autoras nacionais, autopublicação e livros de nicho estão sub-representados. Os números aqui descrevem a base construída, não o mercado editorial brasileiro.
+\textbf{Representatividade amostral.} Mais da metade das edições coletadas não foi localizada no Hardcover, e essa perda ocorreu de forma desigual entre canais de busca, resultando em sub-representação de autoras nacionais, obras autopublicadas e títulos de nicho. Os resultados descritos caracterizam a amostra construída, não devendo ser extrapolados diretamente para a totalidade do mercado editorial brasileiro.
 
-\textbf{O vocabulário é uma escolha.} Os quatro eixos e seus termos foram definidos por nós. É possível que o eixo de drogas e álcool, o menos frequente e o mais omitido pela sinopse, seja também o mais mal coberto pelo nosso vocabulário em português. A validação humana ajudará a estimar isso.
+\textbf{Definição do vocabulário.} A taxonomia de quatro eixos e seus respectivos termos em inglês e português refletem escolhas metodológicas dos autores. É possível que a baixa frequência e a taxa de 100\% de omissão observadas no eixo de drogas e álcool reflitam parcialmente limitações de cobertura do léxico em português, hipótese que poderá ser aferida após a conclusão da validação humana.
 
-\textbf{Buscamos o que queríamos achar.} Um dos caminhos de coleta usou termos de conteúdo adulto. Neutralizamos o efeito disso na sinopse, mas essas obras continuam na base. Sem elas, o rótulo \emph{alto} cai de 107 para 79 obras --- a direção dos resultados não muda, mas a magnitude depende da amostra.
+\textbf{Efeito da estratégia de busca.} Embora o efeito circular do canal de termos de conteúdo sobre o voto da sinopse tenha sido neutralizado na rotulagem, as obras coletadas por esse canal permanecem na amostra. Excluindo essas obras em uma análise de sensibilidade, o número de obras classificadas como \emph{alto} reduz-se de 110 para 83, preservando a direção dos padrões observados, mas alterando sua magnitude.
 
 \subsection{Implicações para a próxima etapa}
-A base oferece, para cada edição, capa validada, sinopse, rótulo em quatro eixos e dois alvos (com e sem sinopse). A próxima etapa --- comparar a estética da capa com o conteúdo --- deve comparar livros com rótulo \emph{alto} contra livros confirmados como leves por pessoas, nunca contra os indeterminados; deve tratar a popularidade como variável de controle; e deve considerar métodos adequados a dados em que só o lado positivo é observado.
+A base resultante disponibiliza, para cada edição, imagem de capa validada, sinopse em português, indicadores nos quatro eixos e duas versões de rótulo (com e sem uso da sinopse). Para a etapa seguinte do projeto, dedicada à comparação entre estética visual das capas e conteúdo das obras, os resultados aqui obtidos estabelecem três diretrizes metodológicas: comparar obras rotuladas como \emph{alto} apenas com obras confirmadas como leves por validação humana (nunca contra a categoria \emph{indeterminado}), controlar explicitamente a popularidade nas análises e considerar métodos compatíveis com dados \emph{positive-unlabelled}.
 
 % =========================================================================
 \section{Conclusão}
 \label{sec:conclusao}
-Partimos de uma pergunta simples --- capas juvenis estão sendo usadas para vender conteúdo adulto? --- e descobrimos que, antes de respondê-la, era preciso resolver um problema anterior: não existia uma forma confiável e independente da editora de saber o que um livro brasileiro contém. Construímos essa forma. O processo liga edições brasileiras às obras originais, lê o que milhares de leitores registraram sobre elas e combina essa informação com cautela, admitindo não saber quando não sabe.
+Este trabalho abordou uma etapa preparatória fundamental para o estudo da discrepância entre apresentação editorial e conteúdo em romances comercializados no Brasil: a ausência de uma base de dados independente das editoras que associe edições brasileiras a indicadores estruturados de conteúdo sensível. Para preencher essa lacuna, desenvolveu-se um processo automatizado e reprodutível capaz de coletar edições brasileiras, associá-las às obras originais em uma plataforma social de catalogação e combinar cinco fontes de evidência em um rótulo por obra com abstenção explícita diante da escassez de dados.
 
-No caminho, dois achados se impõem. O primeiro é que a sinopse brasileira silencia sobre a maior parte do que os leitores consideram digno de alerta --- em alguns temas, sobre tudo. Isso dá substância à preocupação que motivou o trabalho. O segundo é que a informação disponível sobre um livro é proporcional à sua fama, o que obriga qualquer estudo nessa área a distinguir ``não tem'' de ``não sabemos''. Com a base construída e suas limitações mapeadas, a próxima etapa --- olhar para as capas --- pode começar em terreno firme.
+Dois achados empíricos destacam-se na base consolidada de 251 obras. O primeiro é que a sinopse brasileira omite a maior parte dos temas sinalizados por leitores (68\% no conjunto geral e até 100\% no eixo de drogas e álcool), evidenciando que a sinopse não constitui fonte confiável para caracterizar conteúdo sensível. O segundo é que a cobertura das anotações comunitárias depende fortemente da popularidade da obra, o que impõe a distinção rigorosa entre ausência de conteúdo e ausência de informação e exige o controle dessa variável em estudos futuros. Com a base estruturada, avaliada quanto à sua robustez e documentada em suas limitações, cria-se a fundamentação necessária para a etapa subsequente de análise visual das capas.
 
 % -------------------------------------------------------------------------
 \section*{Disponibilidade}
-Código, vocabulário, tabelas e figuras estão em \url{https://github.com/hellolima/mismatch-analysis}.
+Código, vocabulário, tabelas e figuras estão disponíveis em \url{https://github.com/hellolima/mismatch-analysis}.
 
 % -------------------------------------------------------------------------
 \appendix
 \section{Detalhes técnicos e dicionário de dados}
-Os limiares da ligação edição--obra, as oito regras de decisão do rótulo e a descrição de cada coluna da base estão no documento \texttt{ARQUITETURA\_E\_PIPELINE.md} do repositório e nas tabelas \texttt{regras\_decisao.csv} e \texttt{aval\_*.csv}. \emph{(Reproduzir aqui a tabela de regras e as tabelas numéricas de ablação e sensibilidade.)}
+Os limiares da ligação entre edição e obra, as oito regras de decisão do rótulo e a descrição de cada coluna da base encontram-se no documento \texttt{ARQUITETURA\_E\_PIPELINE.md} do repositório e nas tabelas \texttt{regras\_decisao.csv} e \texttt{aval\_*.csv}. \emph{(Reproduzir aqui a tabela de regras e as tabelas numéricas de ablação e sensibilidade.)}
 
 \section{Vocabulário completo dos quatro eixos}
 Gerado automaticamente em \texttt{outputs/tables/lexico\_eixos.csv} (130 termos). \emph{(Importar como tabela.)}
@@ -363,20 +365,28 @@ Ver \texttt{data/gold\_standard/PROTOCOLO\_ANOTACAO.md}. \emph{(Reproduzir.)}
 
 % -------------------------------------------------------------------------
 \begin{thebibliography}{99}
-\bibitem{TODO-design-capas} \textsc{[A completar]} Design de capas como sinal de gênero e público.
-\bibitem{TODO-clickbait} \textsc{[A completar]} \emph{Clickbait} e \emph{thumbnails} enganosas.
 \bibitem{TODO-exposicao-conteudo} \textsc{[A completar]} Exposição de menores a conteúdo inadequado.
 \bibitem{TODO-lei15211} Brasil. Lei nº 15.211, de 2025. Estatuto Digital da Criança e do Adolescente.
 \bibitem{TODO-social-media-livros} \textsc{[A completar]} BookTok e o mercado editorial.
+\bibitem{TODO-goodreads-api} \textsc{[A completar]} Descontinuação da API do Goodreads (2020).
 \bibitem{TODO-frbr} IFLA. \emph{Functional Requirements for Bibliographic Records}; IFLA Library Reference Model.
 \bibitem{TODO-record-linkage} Christen, P. \emph{Data Matching}. Springer, 2012.
-\bibitem{TODO-folksonomia} \textsc{[A completar]} Folksonomia e catalogação social.
+\bibitem{golder2006usage} Golder, S. A.; Huberman, B. A. Usage patterns of collaborative tagging systems. \emph{Journal of Information Science}, v. 32, n. 2, p. 198-208, 2006.
 \bibitem{TODO-weak-supervision} Ratner, A. et al. Snorkel: rapid training data creation with weak supervision. \emph{VLDB}, 2017.
 \bibitem{TODO-pu-learning} Bekker, J.; Davis, J. Learning from positive and unlabeled data: a survey. \emph{Machine Learning}, 2020.
 \bibitem{TODO-mnar} Little, R.; Rubin, D. \emph{Statistical Analysis with Missing Data}. Wiley, 3.\ ed., 2019.
-\bibitem{TODO-cover-genre} \textsc{[A completar]} Classificação de gênero a partir de capas de livros.
-\bibitem{TODO-age-text} \textsc{[A completar]} Predição de faixa etária a partir de texto.
-\bibitem{TODO-goodreads-api} \textsc{[A completar]} Descontinuação da API do Goodreads (2020).
+\bibitem{yu2024multimodal} Yu, J. et al. Multimodal clickbait detection by de-confounding biases using causal representation inference. In: \emph{Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, p. 10300-10317, 2024.
+\bibitem{naveed2025thumbnailtruth} Naveed, W.; Uzmi, Z. A.; Qazi, Z. A. ThumbnailTruth: a multi-modal LLM approach for detecting misleading YouTube thumbnails across diverse cultural settings. \emph{arXiv preprint arXiv:2509.04714}, 2025.
+\bibitem{islam2026ytclickbait21k} Islam, M. M. et al. YTClickbait21K: human-annotated multimodal dataset for YouTube clickbait detection across diverse channels and content categories. \emph{arXiv preprint arXiv:2606.14780}, 2026.
+\bibitem{iwana2016judging} Iwana, B. K. et al. Judging a book by its cover. \emph{arXiv preprint arXiv:1610.09204}, 2016.
+\bibitem{kundu2020deepmultimodal} Kundu, C. S.; Zheng, L. Deep multi-modal networks for book genre classification based on its cover. \emph{arXiv preprint arXiv:2011.07658}, 2020.
+\bibitem{yang2025enhancing} Yang, X.; Zhang, Z. Enhancing book genre classification with BERT and InceptionV3: a deep learning approach for libraries. \emph{PeerJ Computer Science}, v. 11, e2934, 2025.
+\bibitem{leenstra2023covers} Leenstra, L. \emph{Covers of Lovers: A Multimodal Comparison of the Front Covers of Romance Novels in 2011 and 2021}. Dissertação de Mestrado, Utrecht University, 2023.
+\bibitem{wiegmann2023multilabel} Wiegmann, M. et al. Trigger warning assignment as a multi-label document classification problem. In: \emph{Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (ACL)}, v. 1, p. 12113-12134, 2023.
+\bibitem{wolska2023trigger} Wolska, M. et al. Trigger warnings: bootstrapping a violence detector for fan fiction. In: \emph{Findings of the Association for Computational Linguistics: EMNLP 2023}, p. 569-576, 2023.
+\bibitem{sahin2023arcnlp} Sahin, U.; Kucukkaya, I. E.; Toraman, C. ARC-NLP at PAN 2023: hierarchical long text classification for trigger detection. In: \emph{Working Notes of CLEF 2023}, CEUR Workshop Proceedings, v. 3497, 2023.
+\bibitem{zamacola2026spanishlyrics} Zamacola Sánchez de Lamadrid, D.; Garrido-Merchán, E. C. Fine-tuning large language models for automatic detection of sexually explicit content in Spanish-language song lyrics. \emph{arXiv preprint arXiv:2602.05485}, 2026.
+\bibitem{silva2024lipset} Silva, M. O. et al. LiPSet: a comprehensive dataset of labeled Portuguese public bidding documents. \emph{Journal of Information and Data Management (JIDM)}, v. 15, n. 1, p. 196-205, 2024.
 \end{thebibliography}
 
 \end{document}

@@ -355,7 +355,7 @@ def resumo(d: pd.DataFrame, pop_pct: float) -> None:
     caminho_resumo = os.path.join(C.OUT_REPORTS, "rotulagem_resumo.txt")
     with open(caminho_resumo, "w", encoding="utf-8") as f:
         f.write("=" * 90 + f"\nROTULAGEM TRIANGULADA DE CONTEÚDO INADEQUADO/SENSÍVEL (v3.1) | {datetime.now():%Y-%m-%d %H:%M:%S}\n" + "=" * 90 + "\n")
-        f.write(f"Edições: {len(d)} | Obras: {n} | limiar de cobertura: >= {d.attrs.get('pop_limiar', float('nan')):.0f} leitores "
+        f.write(f"Edições: {len(d)} | Obras: {n} | limiar de cobertura: >= {d.attrs.get('pop_limiar', float('nan')):.0f} usuários com a obra na estante "
                 f"(percentil {pop_pct:.0f}) + Gêneros + Moods + Tags Gerais preenchidos\n\n")
         f.write("RÓTULO FINAL (por obra)\n")
         f.write(ob["Sensivel_Label"].value_counts().to_string() + "\n\n")
@@ -391,7 +391,7 @@ def resumo(d: pd.DataFrame, pop_pct: float) -> None:
             f.write(pd.crosstab(e["Estrato"], e["Sensivel_Label"]).to_string() + "\n\n")
         if ob["_users"].notna().sum() >= 8:
             from pipeline_ptbr.eda_stats import faixa_popularidade
-            f.write("RÓTULO x FAIXA DE POPULARIDADE (nº de leitores; cortes fixos)\n")
+            f.write("RÓTULO x FAIXA DE POPULARIDADE (usuários com a obra na estante; cortes fixos)\n")
             f.write(pd.crosstab(faixa_popularidade(ob["_users"]), ob["Sensivel_Label"]).to_string() + "\n\n")
 
     conf = ob[ob["Sensivel_Label_Confianca"] == "conflito"]
